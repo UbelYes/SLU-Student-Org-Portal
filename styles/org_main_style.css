@@ -94,21 +94,35 @@ body {
     margin-bottom: 8px;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: bac 0.3s;
     display: flex;
     align-items: center;
     gap: 12px;
     font-size: 14px;
+    animation-duration: 0.5s;
 }
+
+
 
 .nav-item:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #FFD700;
+    color: #002850;
 }
 
-.nav-item.active {
+.nav-item:active {
+    background: #ffffff;
+    color: #003366;
+}
+
+.active-btn {
     background: #FFD700;
     color: #002850;
     font-weight: 600;
+}
+
+.inactive-btn {
+    background: #003366;
+    color: #ffffff;
 }
 
 .nav-item::before {
