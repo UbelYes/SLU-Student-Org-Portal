@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Organization Portal</title>
-    <link rel="stylesheet" href="styles\org_main_style.css">
-    <script src="scripts\main_page.js"></script>
+    <link rel="stylesheet" href="/styles/org-dashboard.css">
+    <script src="/scripts/main_page.js"></script>
+    <script src="/scripts/auth.js"></script>
 </head>
 <body>
     <aside class="sidebar">
@@ -91,5 +92,70 @@
             </div>
         </div>
     </main>
+     <script>
+        // Initialize dashboard when DOM is loaded
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Set up logout button
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+
+            // Check for authorization code in URL (OAuth callback)
+            const urlParams = getUrlParams();
+            const code = urlParams.get('code');
+            
+            if (code) {
+                // Process the authorization code
+                const success = await processAuthCode(code);
+                if (!success) {
+                    alert('Authentication failed. Please try again.');
+                    window.location.href = '/index.html';
+                    return;
+                }
+            } 
+            
+            // Check if user is authenticated
+            if (!checkAuth()) {
+                window.location.href = '/index.html';
+                return;
+            }
+            
+            // Load and display user data
+            try {
+                const userData = await fetchUserData();
+                if (!userData) throw new Error('Failed to get user data');
+                
+                // Update UI with user data
+                updateUserInterface(userData);
+            } catch (error) {
+                console.error('Error:', error);
+                AuthStorage.clearAll(); // Clear invalid data
+                window.location.href = '/index.html';
+            }
+        });
+
+        // Update UI with user data
+        function updateUserInterface(userData) {
+            // Update organization name
+            const orgNameElement = document.getElementById('org-name');
+            if (orgNameElement) {
+                orgNameElement.textContent = userData.name || 'Organization Name';
+            }
+            
+            // Update organization type
+            const orgTypeElement = document.getElementById('org-type');
+            if (orgTypeElement) {
+                orgTypeElement.textContent = userData.orgType || 'ORG';
+            }
+            
+            // Update avatar if available
+            const userAvatarElement = document.getElementById('user-avatar');
+            if (userAvatarElement && userData.picture) {
+                userAvatarElement.style.backgroundImage = `url('${userData.picture}')`;
+                userAvatarElement.style.backgroundSize = 'cover';
+                userAvatarElement.style.backgroundPosition = 'center';
+            }
+            
+            console.log('User data loaded successfully');
+        }
+    </script>
 </body>
 </html>
