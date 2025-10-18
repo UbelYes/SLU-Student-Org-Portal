@@ -192,8 +192,9 @@ body {
     background: #FFF9E6;
     display: block;
     margin: 0 auto;
-    width: fit-content;
+    width: 4rem;
     font-family: Poppins;
+    text-align: center;
 }
 
 .google-button {
