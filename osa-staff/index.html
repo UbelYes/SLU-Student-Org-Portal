@@ -10,6 +10,7 @@
         <link
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
             rel="stylesheet">
+        <script src="/scripts/osa-scripts/osa-login.js" defer></script>
     </head>
     <body>
         <div class="login-page">
@@ -32,31 +33,30 @@
                     </div>
                 </div>
 
-                <div class="form-inputs">
+                <form id="loginForm" class="form-inputs" onsubmit="return handleLogin(event)">
                     <div class="form-container">
                         <label class="form-label">Email</label>
                         <input class="input" placeholder="yourorg@slu.edu.ph"
-                            type="email" id="input-1" />
+                            type="email" id="email" name="email" required />
                     </div>
 
                     <div class="form-container">
                         <label class="form-label">Password</label>
                         <input class="input" placeholder="password"
-                            type="email" id="input-1" />
+                            type="password" id="password" name="password" required />
                     </div>
 
                     <div class="forgot-link">
                         <div class="forgot-text"><a href>Forgot
                                 password?</a></div>
                     </div>
-                    <button class="button">
+                    <button type="submit" class="button">
                         <div class="button-container">
-                            <div
-                                class="button-text">Sign In to
-                                Portal</div></div>
-
+                            <div class="button-text">Sign In to Portal</div>
+                        </div>
                     </button>
-                </div>
+                    <div id="error-message" style="color: #DC2626; margin-top: 10px; text-align: center; font-family: Poppins;"></div>
+                </form>
                 
                 <div class="or-container">
                     <p>OR</p>
