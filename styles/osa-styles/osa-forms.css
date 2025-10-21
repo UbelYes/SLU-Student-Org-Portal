@@ -235,10 +235,6 @@ body {
     flex-shrink: 0;
 }
 
-.form-header p{
-    margin: 0;
-}
-
 .form-description {
     display: flex;
     width: 324.875px;
@@ -268,7 +264,7 @@ body {
     flex-shrink: 0;
 }
 
-.forms-list p, h3{
+.forms-list h3{
     margin: 0;
 }
 
