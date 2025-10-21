@@ -3,159 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Organization Portal</title>
-    <link rel="stylesheet" href="/styles//org-styles/org-dashboard.css">
-    <script src="/scripts/main_page.js"></script>
-    <script src="/scripts/auth.js"></script>
+    <title>dashboard</title>
+    <link rel="stylesheet" href="\styles\org-styles\org-dashboard.css">
 </head>
 <body>
-    <aside class="sidebar">
-        <div class="logo-section">
-            <div class="logo-icon"></div>
-            <h3>Student<br>Organisation Portal</h3>
+    <div id="left-panel">
+        <div id="logo-panel">
+            <img src="\resources\images\Saint-Louis-University-PH-Logo.png" alt="Saint-Louis-University-PH-Logo" id="slu-logo">
+            <label for="slu-logo">Student Organization Portal</label>
+            <img src="\resources\images\Artists-in-motion.jpg" alt="Artists-in-motion" id="org-logo">
+            <label for="slu-logo">Artists in motion</label>
+       
         </div>
-
-        <div class="user-profile">
-            <div class="user-avatar"></div>
-            <div class="user-info">
-                <h4>SAMGS</h4>
-                <p>GOV</p>
-            </div>
+        <div id="menu-btn">
+            <button id="dash-btn" onclick="showDashboard()">Dashboard</button>
+            <button id="submission-history" onclick="showHistory()">Submission History</button>
         </div>
-
-    <nav class="nav-menu">
-        <div class="nav-item active-btn">Dashboard</div>
-        <div class="nav-item inactive-btn">Submission History</div>
-    </nav>
-
-        <button class="logout-btn">Logout</button>
-    </aside>
-
-    <main class="main-content">
-        <header class="header">
-            <div class="search-bar">
-                <input type="text" placeholder="Search forms...">
-            </div>
-            <div class="notifications">
-                <span class="notification-icon">🔔</span>
-                <span class="notification-badge"></span>
-            </div>
-        </header>
-
-        <div class="content-area">
-            <div class="content-header">
-                <h1>Available Forms</h1>
-                <div class="notification-panel">
-                    <h3>Notifications</h3>
-                    <div class="status-badge verified">VERIFIED</div>
-                    <div class="status-badge returned">RETURNED</div>
-                    <p class="no-notifications">No new notifications</p>
-                </div>
-            </div>
-
-            <div class="forms-grid">
-                <div class="form-card">
-                    <h3>Form 1</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
-                    <button class="fill-form-btn">Fill Form</button>
-                </div>
-
-                <div class="form-card">
-                    <h3>Form 2</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
-                    <button class="fill-form-btn">Fill Form</button>
-                </div>
-
-                <div class="form-card">
-                    <h3>Form 3</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
-                    <button class="fill-form-btn">Fill Form</button>
-                </div>
-
-                <div class="form-card">
-                    <h3>Form 4</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
-                    <button class="fill-form-btn">Fill Form</button>
-                </div>
-
-                <div class="form-card">
-                    <h3>Form 5</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
-                    <button class="fill-form-btn">Fill Form</button>
-                </div>
-
-                <div class="form-card">
-                    <h3>Form 6</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
-                    <button class="fill-form-btn">Fill Form</button>
-                </div>
-            </div>
-        </div>
-    </main>
-     <script>
-        // Initialize dashboard when DOM is loaded
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Set up logout button
-            document.getElementById('logoutBtn').addEventListener('click', logout);
-
-            // Check for authorization code in URL (OAuth callback)
-            const urlParams = getUrlParams();
-            const code = urlParams.get('code');
-            
-            if (code) {
-                // Process the authorization code
-                const success = await processAuthCode(code);
-                if (!success) {
-                    alert('Authentication failed. Please try again.');
-                    window.location.href = '/index.html';
-                    return;
-                }
-            } 
-            
-            // Check if user is authenticated
-            if (!checkAuth()) {
-                window.location.href = '/index.html';
-                return;
-            }
-            
-            // Load and display user data
-            try {
-                const userData = await fetchUserData();
-                if (!userData) throw new Error('Failed to get user data');
-                
-                // Update UI with user data
-                updateUserInterface(userData);
-            } catch (error) {
-                console.error('Error:', error);
-                AuthStorage.clearAll(); // Clear invalid data
-                window.location.href = '/index.html';
-            }
-        });
-
-        // Update UI with user data
-        function updateUserInterface(userData) {
-            // Update organization name
-            const orgNameElement = document.getElementById('org-name');
-            if (orgNameElement) {
-                orgNameElement.textContent = userData.name || 'Organization Name';
-            }
-            
-            // Update organization type
-            const orgTypeElement = document.getElementById('org-type');
-            if (orgTypeElement) {
-                orgTypeElement.textContent = userData.orgType || 'ORG';
-            }
-            
-            // Update avatar if available
-            const userAvatarElement = document.getElementById('user-avatar');
-            if (userAvatarElement && userData.picture) {
-                userAvatarElement.style.backgroundImage = `url('${userData.picture}')`;
-                userAvatarElement.style.backgroundSize = 'cover';
-                userAvatarElement.style.backgroundPosition = 'center';
-            }
-            
-            console.log('User data loaded successfully');
-        }
-    </script>
+        <button id="logout-btn" onclick="logOut()">Logout</button>
+    </div>
+    <div id="main-panel"> <div id="top-panel">
+        <input type="text" id="search" placeholder="search">
+    </div>
+    <div id="content">
+    </div>
+</div>
+    <script src="\scripts\org-scripts.js"></script>
 </body>
 </html>
