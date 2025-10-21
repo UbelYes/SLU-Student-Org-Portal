@@ -82,3 +82,26 @@ label {
     border: none;
     color: white;
 }
+
+#search-field {
+    width: 300px;
+    border-radius: 10px;
+    border-color: #003366;
+}
+
+#search-field::placeholder {
+    padding-left: 20px;
+}
+
+#content-label {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 43px;
+    color: #003366;
+}
+
+#content {
+    padding: 0px 20px;
+}
