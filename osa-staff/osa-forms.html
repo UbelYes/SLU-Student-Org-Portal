@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/styles/osa-styles/osa-forms.css" />
+        <link rel="stylesheet" href="/styles/osa-styles/osa-navbar.css">
+        <script src="/scripts/osa-scripts/osa-login.js" defer></script>
+        <!-- osa forms js script here -->
+        <script src="/scripts/osa-scripts/osa-navbar.js" defer></script>
+    </head>
+    <body>
+        <div class="OSA-homepage">
+
+            <nav class="navigation-side-bar">
+                <div class="navigation-container">
+                    <div class="banner">
+                        <div class="image-SLU-logo">
+                            <img
+                                src="/resources/images/Saint-Louis-University-PH-Logo.png"
+                                alt="SLU-logo">
+                        </div>
+                        <div class="banner-heading"><div
+                                class="banner-text-wrapper">OSA
+                                Student
+                                Organization Portal</div></div>
+                    </div>
+
+                    <div class="menu-container">
+                        <button class="menu-button" id="dashboard-button">
+                            <div class="menu-icon">
+                                <img class="menu-icon-img"
+                                    src="/resources/icons/home-icon.svg">
+                            </div>
+                            <div class="menu-text">Dashboard</div>
+                        </button>
+
+                        <button class="menu-button" id="forms-button">
+                            <div class="menu-icon">
+                                <img class="menu-icon-img"
+                                    src="/resources/icons/document-icon.svg"></div>
+                            <div class="menu-text">Forms</div>
+                        </button>
+
+                        <button class="menu-button" id="documents-button">
+                            <div class="menu-icon"><img class="menu-icon-img"
+                                    src="/resources/icons/folder-icon.svg"></div>
+                            <div class="menu-text">Documents</div>
+                        </button>
+
+                        <button class="menu-button" id="accounts-button">
+                            <div class="menu-icon"><img class="menu-icon-img"
+                                    src="/resources/icons/accounts-icon.svg"></div>
+                            <div class="menu-text">Accounts</div>
+                        </button>
+
+                        <button class="menu-button" id="settings-button">
+                            <div class="menu-icon">
+                                <img class="menu-icon-img"
+                                    src="/resources/icons/account-settings-icon.svg">
+                            </div>
+                            <div class="menu-text">Settings</div>
+                        </button>
+
+                    </div>
+                    <button class="logout-button" onclick="handleLogout()">
+                        <div class="logout-icon">
+                            <img class="vector-7"
+                                src="/resources/icons/logout-icon.svg">
+                        </div>
+                        <div class="logout-text">Logout</div>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="main-content">
+                <div class="forms-container">
+                    <div class="forms-title">Forms Management</div>
+                    <div class="forms-area">
+                        <div class="tab-buttons">
+                            <button class="form-tab-button"><div
+                                    class="text-wrapper">Forms</div></button>
+                            <button class="submission-tab-button">
+                                <div class="div">Submissions</div>
+                                <div class="submission-badge"><div
+                                        class="text-wrapper-2">1</div></div>
+                            </button>
+                        </div>
+
+                        <div class="forms">
+                            <div class="form-header">
+                                <div class="form-description">
+                                    <div class="form-title"><p>Requirement
+                                            Forms</p></div>
+                                    <div class="form-text-description"><p>Create
+                                            and manage forms
+                                            for clients to fill out</p></div>
+                                </div>
+                                <div class="create-form-button">
+                                    <div class="icon"><img class="vector"
+                                            src="img/vector.svg" /> <img
+                                            class="img"
+                                            src="img/image.svg" /></div>
+                                    <div class="text-wrapper-4">Create
+                                        Form</div>
+                                </div>
+                            </div>
+
+                            <div class="forms-list">
+                                <div class="form-card">
+                                    <div class="form-card-container">
+                                        <div class="form-card-description">
+                                            <div class="card-title"><p><h3>Event
+                                                    Proposal Form</h3></p></div>
+                                            <div class="card-description">
+                                                <p>Submit this form to
+                                                    propose a new event or
+                                                    activity for your
+                                                    organization.</p>
+                                            </div>
+                                            <div class="field-no"><p>8
+                                                    fields</p></div>
+                                        </div>
+                                        <div class="edit-delete">
+                                            <button class="card-edit-button">
+                                                <div class="icon-2">
+                                                    <img class="vector-2"
+                                                        src="img/vector-7.svg" />
+                                                    <img class="vector-3"
+                                                        src="img/vector-6.svg" />
+                                                </div>
+                                                <p>Edit</p>
+                                            </button>
+                                            <button class="card-delete-button">
+                                            <img class="delete-button"
+                                                src="img/card-delete-button-2.svg" />
+                                                </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
