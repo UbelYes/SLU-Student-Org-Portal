@@ -30,22 +30,6 @@ document.getElementById("settings-button").addEventListener("click", () => {
     window.location.href = "osa-settings.html";
 });
 
-const logoutbtn = document.querySelector('.logout-button');
-logoutbtn.addEventListener("click", () => {
-    window.location.href = "index.html";
-});
-
-logoutbtn.addEventListener("click", () => {
-    const confirmLogout = confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-        // If the user clicks "OK"
-        window.location.href = "index.html";
-    } else {
-        // If the user clicks "Cancel"
-        console.log("Logout canceled");
-    }
-});
-
 // Attach click listeners to all menu buttons
 document.querySelectorAll('.menu-button').forEach(button => {
     button.addEventListener('click', () => {
@@ -79,3 +63,20 @@ if (activeMenu) {
     const activeButton = document.getElementById(activeMenu);
     if (activeButton) activeButton.classList.add('active');
 }
+
+const logoutbtn = document.querySelector('.logout-button');
+logoutbtn.addEventListener("click", () => {
+    window.location.href = "index.html";
+    localStorage.setItem('activeMenu', 'dashboard-button'); // Clear active menu on logout
+});
+
+logoutbtn.addEventListener("click", () => {
+    const confirmLogout = confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+        // If the user clicks "OK"
+        window.location.href = "index.html";
+    } else {
+        // If the user clicks "Cancel"
+        console.log("Logout canceled");
+    }
+});
