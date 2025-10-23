@@ -9,7 +9,6 @@ html {
 
 body {
     margin: 0;
-    padding: 0;
 }
 
 .OSA-homepage {
@@ -30,6 +29,7 @@ body {
 .dashboard-container {
     display: flex;
     height: 90vh;
+    width: 78vw;
     padding: 24px 0 0 24px;
     flex-direction: column;
     align-items: flex-start;
@@ -52,11 +52,22 @@ body {
 
 .newsboard-description {
     display: flex;
-    width: 1053px;
+    width: 77vw;
     height: 40px;
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+}
+
+.create-post-button {
+    display: flex;
+    padding: 6.667px 9.938px 9.333px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    background: linear-gradient(94deg, #036 0.26%, #001F3F 103.21%);
+    color: white;
 }
 
 .news-post {
@@ -116,4 +127,36 @@ body {
     font-weight: 400;
     line-height: 24px;
     /* 150% */
+}
+
+.edit {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-button {
+    display: flex;
+    padding: 4.667px 10.073px 7.333px 10.667px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    border: 0.667px solid rgba(0, 0, 0, 0.10);
+    background: #FFF;
+}
+
+.edit-icon{
+    color: black;
+}
+
+.delete-button {
+    display: flex;
+    width: 37px;
+    height: 38px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: #D4183D;
 }
