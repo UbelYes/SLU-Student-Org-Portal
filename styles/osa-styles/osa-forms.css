@@ -1,3 +1,13 @@
+@font-face {
+    font-family: Poppins;
+    src: url(../resources/fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+    font-family: Arimo;
+    src: url(../resources/fonts/Arimo-VariableFont_wght.ttf);
+}
+
 html {
     background-color: #ffffff;
     opacity: 1;
@@ -12,136 +22,24 @@ body {
     padding: 0;
 }
 
-.OSA-homepage {
+.OSA-forms-page {
     display: flex;
-}
-
-.navigation-container {
-    width: 280px;
-    height: 100vh;
-    flex-shrink: 0;
-    background: linear-gradient(180deg, #036 0%, #001F3F 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.banner {
-    display: flex;
-    width: 280px;
-    padding: 20px 0 24px 0;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    flex-shrink: 0;
-}
-
-.image-SLU-logo img {
-    width: 77.922px;
-}
-
-.banner-heading {
-    display: flex;
-    width: 232px;
-    padding: 4px 14.109px 0 14.891px;
-    justify-content: center;
-    align-items: center;
-}
-
-.banner-text-wrapper {
-    width: 203px;
-    flex-shrink: 0;
-    color: #FFF;
-    text-align: center;
-    font-family: Poppins;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 26px;
-    /* 130% */
-}
-
-.menu-container {
-    display: flex;
-    width: 280px;
-    height: 60vh;
-    padding: 16px 0 0 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    flex-shrink: 0;
-}
-
-.menu-button {
-    display: flex;
-    width: 248px;
-    height: 48px;
-    padding-left: 12px;
-    align-items: center;
-    gap: 12px;
-    flex-shrink: 0;
-    border-radius: 12px;
-    background-color: transparent;
-    color: white;
-}
-
-.menu-button img {
-    filter: brightness(0) invert(1);
-    /* Make SVG white */
-}
-
-.menu-button:hover {
-    border-radius: 12px;
-    background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
-    opacity: 0.7;
-    box-shadow: 0 4px 12px 0 rgba(255, 215, 0, 0.40);
-    color: black;
-}
-
-.menu-button:hover img {
-    filter: brightness(0);
-    /* Make SVG black */
-}
-
-.active {
-    border-radius: 12px;
-    background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
-    box-shadow: 0 4px 12px 0 rgba(255, 215, 0, 0.40);
-    color: black;
-}
-
-.active img {
-    filter: brightness(0);
-    /* Make SVG black */
-}
-
-.logout-button {
-    display: flex;
-    width: 248px;
-    height: 48px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    background: #DC2626;
 }
 
 .main-content {
     display: flex;
     width: 75vw;
-    height: 90vh;
-    padding: 32px 32px 0 32px;
+    height: 140vh;
     flex-direction: column;
     align-items: flex-start;
     flex-shrink: 0;
-    /* add scroll behavior later */
+    font-family: "Arimo", sans-serif;
+    margin-left: 300px;
 }
 
 .forms-container {
     display: flex;
-    width: 1160px;
+    width: 1300px;
     padding: 32px;
     flex-direction: column;
     align-items: flex-start;
@@ -153,6 +51,7 @@ body {
     padding-right: 952px;
     align-items: center;
     align-self: stretch;
+    font-size: large;
 }
 
 /* .forms-title p format here */
@@ -176,6 +75,11 @@ body {
     flex-shrink: 0;
     border-radius: 14px;
     background: #ECECF0;
+}
+
+.tab-buttons{
+    margin-left: 20px;
+    gap: 10px;
 }
 
 .form-tab-button {
@@ -214,7 +118,7 @@ body {
 .forms {
     display: flex;
     width: 75vw;
-    height: 75vh;
+    height: 100vh;
     padding: 24px 0 24px 24px;
     flex-direction: column;
     align-items: flex-start;
@@ -244,20 +148,26 @@ body {
     flex-shrink: 0;
 }
 
+.form-header-title h2{
+    margin: 0;
+    padding: 0;
+}
+
 .create-form-button {
     display: flex;
     padding: 6.667px 10.74px 9.333px 12px;
     justify-content: center;
-    align-items: flex-end;
-    gap: 16px;
+    align-items: center;
+    gap: 10px;
     border-radius: 8px;
     background: linear-gradient(94deg, #036 1.19%, #001F3F 100.29%);
+    color: white;
+    font-weight: 500;
 }
 
 .forms-list {
-    display: flex;
     width: 60vw;
-    height: 40px;
+    height: 30vw;
     padding-right: 0;
     justify-content: space-between;
     align-items: center;
@@ -271,7 +181,7 @@ body {
 .form-card {
     display: flex;
     height: 107.333px;
-    width: 90vw;
+    width: 71vw;
     padding: 24px 0 0 24px;
     flex-direction: column;
     align-items: flex-start;
@@ -279,6 +189,7 @@ body {
     border-radius: 14px;
     border: 2px solid #036;
     background: #EFF3FF;
+    margin-bottom: 20px;
 }
 
 .form-card-container {

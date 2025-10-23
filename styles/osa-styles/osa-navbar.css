@@ -1,3 +1,17 @@
+@font-face {
+    font-family: "Poppins";
+    src: url(/resources/fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Arimo";
+    src: url(/resources/fonts/Arimo-VariableFont_wght.ttf);
+}
+
+.navigation-side-bar{
+    position: fixed;
+}
+
 .navigation-container {
     width: 280px;
     height: 100vh;
@@ -36,12 +50,15 @@
     flex-shrink: 0;
     color: #FFF;
     text-align: center;
-    font-family: Poppins;
-    font-size: 20px;
+    font-family: "Poppins", sans-serif;
     font-style: normal;
-    font-weight: 700;
     line-height: 26px;
-    /* 130% */
+}
+
+.banner-text-wrapper h1{
+    margin: 0;
+    padding: 0;
+    font-size: 30px
 }
 
 .menu-container {
@@ -53,6 +70,10 @@
     align-items: flex-start;
     gap: 8px;
     flex-shrink: 0;
+}
+
+.menu-container text{
+    font-family: "Arimo", sans-serif;
 }
 
 .menu-button {
