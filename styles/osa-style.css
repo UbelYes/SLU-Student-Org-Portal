@@ -1,3 +1,13 @@
+@font-face {
+    font-family: Poppins;
+    src: url(../resources/fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+    font-family: Arimo;
+    src: url(../resources/fonts/Arimo-VariableFont_wght.ttf);
+}
+
 html {
     background-color: #ffffff;
     opacity: 1;
