@@ -74,7 +74,7 @@ logoutbtn.addEventListener("click", () => {
     const confirmLogout = confirm("Are you sure you want to log out?");
     if (confirmLogout) {
         // If the user clicks "OK"
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
     } else {
         // If the user clicks "Cancel"
         console.log("Logout canceled");

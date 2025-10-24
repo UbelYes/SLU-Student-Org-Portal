@@ -20,7 +20,7 @@ function handleLogin(event) {
         localStorage.setItem('userEmail', email);
         
         // Redirect to dashboard
-        window.location.href = 'osa-dashboard.html';
+        window.location.href = './osa-staff/osa-dashboard.html';
     } else {
         errorMessage.textContent = 'Invalid email or password';
     }
@@ -33,7 +33,7 @@ function checkLoginStatus() {
     
     // If on login page and already logged in, redirect to dashboard
     if (currentPage.includes('index.html') && isLoggedIn === 'true') {
-        window.location.href = 'osa-dashboard.html';
+        window.location.href = './osa-staff/osa-dashboard.html';
     }
     
     // If on any other page and not logged in, redirect to login
