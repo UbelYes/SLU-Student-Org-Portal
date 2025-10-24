@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=div, initial-scale=1.0">
-     <link rel="stylesheet" href="/styles/osa-styles/osa-navbar.css">
-      <link rel="stylesheet" href="/styles/osa-styles/osa-documents.css">
-    <title>Document</title>
-</head>
-<body>
-    <div class="document-page">
-        <nav class="navigation-side-bar">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=div, initial-scale=1.0">
+        <link rel="stylesheet" href="/styles/osa-styles/osa-navbar.css">
+        <link rel="stylesheet" href="/styles/osa-styles/osa-documents.css">
+        <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="document-page">
+
+            <nav class="navigation-side-bar">
                 <div class="navigation-container">
                     <div class="banner">
                         <div class="image-SLU-logo">
@@ -18,9 +20,9 @@
                                 alt="SLU-logo">
                         </div>
                         <div class="banner-heading"><div
-                                class="banner-text-wrapper">OSA
+                                class="banner-text-wrapper"><h1>OSA
                                 Student
-                                Organization Portal</div></div>
+                                Organization Portal</h1></div></div>
                     </div>
 
                     <div class="menu-container">
@@ -71,75 +73,86 @@
             </nav>
             <div id="title-header"><h1>Document Management</h1></div>
 
-           <main class="main-content">
-            <div class="documents-container">
-                <div class="header"><h2>Document Management</h2></div>
-                <div class="placeholder-text"><p>View and manage uploaded documents from Student Organizations</p></div>
-                <div class="search-and-sort-container">
-                    <div class="search-box">
-                        <input type="text" id="document-search" placeholder="Search documents..." class="search-input">
+            <main class="main-content">
+                <div class="documents-container">
+                    <div class="header"><h2>Document Management</h2></div>
+                    <div class="placeholder-text"><p>View and manage uploaded
+                            documents from Student Organizations</p></div>
+                    <div class="search-and-sort-container">
+                        <div class="search-box">
+                            <input type="text" id="document-search"
+                                placeholder="Search documents..."
+                                class="search-input">
+                        </div>
+                        <div class="sort-dropdown">
+                            <label for="sort-by">Sort by:</label>
+                            <select id="sort-by" class="sort-select">
+                                <option value="date-newest">Date
+                                    (Newest)</option>
+                                <option value="date-oldest">Date
+                                    (Oldest)</option>
+                                <option value="name-az">Name (A-Z)</option>
+                                <option value="name-za">Name (Z-A)</option>
+                                <option value="org">Organization</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="sort-dropdown">
-                        <label for="sort-by">Sort by:</label>
-                        <select id="sort-by" class="sort-select">
-                            <option value="date-newest">Date (Newest)</option>
-                            <option value="date-oldest">Date (Oldest)</option>
-                            <option value="name-az">Name (A-Z)</option>
-                            <option value="name-za">Name (Z-A)</option>
-                            <option value="org">Organization</option>
-                        </select>
+
+                    <div class="documents-table-container">
+                        <table class="documents-table">
+                            <thead>
+                                <tr>
+                                    <th>File Name</th>
+                                    <th>Uploaded By</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Activity Proposal.pdf</td>
+                                    <td>Computer Science Society</td>
+                                    <td>2025-10-15</td>
+                                    <td><span
+                                            class="status-pending">Pending</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-view">View</button>
+                                        <button
+                                            class="btn-download">Download</button>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>Financial Report Q3.xlsx</td>
+                                    <td>Engineering Society</td>
+                                    <td>2025-10-14</td>
+                                    <td><span
+                                            class="status-approved">Approved</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-view">View</button>
+                                        <button
+                                            class="btn-download">Download</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Event Documentation.docx</td>
+                                    <td>Business Club</td>
+                                    <td>2025-10-12</td>
+                                    <td><span
+                                            class="status-rejected">Rejected</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-view">View</button>
+                                        <button
+                                            class="btn-download">Download</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div class="documents-table-container">
-                    <table class="documents-table">
-                        <thead>
-                            <tr>
-                                <th>File Name</th>
-                                <th>Uploaded By</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Activity Proposal.pdf</td>
-                                <td>Computer Science Society</td>
-                                <td>2025-10-15</td>
-                                <td><span class="status-pending">Pending</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn-view">View</button>
-                                    <button class="btn-download">Download</button>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>Financial Report Q3.xlsx</td>
-                                <td>Engineering Society</td>
-                                <td>2025-10-14</td>
-                                <td><span class="status-approved">Approved</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn-view">View</button>
-                                    <button class="btn-download">Download</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Event Documentation.docx</td>
-                                <td>Business Club</td>
-                                <td>2025-10-12</td>
-                                <td><span class="status-rejected">Rejected</span></td>
-                                <td class="action-buttons">
-                                    <button class="btn-view">View</button>
-                                    <button class="btn-download">Download</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-           </main>
-    </div>
-</body>
+            </main>
+        </div>
+    </body>
 </html>
