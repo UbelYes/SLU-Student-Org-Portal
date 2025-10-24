@@ -87,6 +87,9 @@
     border-radius: 12px;
     background-color: transparent;
     color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .menu-button img {
@@ -129,4 +132,7 @@
     flex-shrink: 0;
     border-radius: 10px;
     background: #DC2626;
+    border: none;
+    cursor: pointer;
+    color: white;
 }
