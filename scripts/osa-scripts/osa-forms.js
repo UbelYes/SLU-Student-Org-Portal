@@ -1,105 +1,141 @@
-// Keep track of all form cards
-let formCards = [];
-const CARDS_PER_PAGE = 4;
-let currentPage = 1;
+// Get DOM elements
+const searchInput = document.getElementById('search-input');
+const sortSelect = document.getElementById('sort-by');
+const tableBody = document.querySelector('.form-table tbody');
+const tableHeaders = document.querySelectorAll('.form-table th');
 
-// Initialize when document loads
+// Store the original table data
+let tableData = [];
+let currentSort = {
+    column: null,
+    ascending: true
+};
+
+// Initialize the table data when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    // Get existing cards
-    const existingCards = document.querySelectorAll('.form-card');
-    formCards = Array.from(existingCards);
-    
-    // Set up create form button
-    const createFormButton = document.querySelector('.create-form-button');
-    createFormButton.addEventListener('click', createNewFormCard);
-    
-    // Initial pagination setup
-    updatePagination();
-    showCurrentPage();
+    // Get all table rows and convert them to array of objects
+    const rows = Array.from(tableBody.querySelectorAll('tr'));
+    tableData = rows.map(row => {
+        const cells = row.querySelectorAll('td');
+        return {
+            element: row,
+            title: cells[0]?.textContent || '',
+            organization: cells[1]?.textContent || '',
+            submittedBy: cells[2]?.textContent || '',
+            date: cells[3]?.textContent || '',
+            school: cells[4]?.textContent || '',
+            status: cells[5]?.querySelector('.status-badge')?.textContent || ''
+        };
+    });
+
+    // Add event listeners
+    searchInput.addEventListener('input', filterAndSortTable);
+    sortSelect.addEventListener('change', filterAndSortTable);
+
+    // Add click event listeners to headers
+    tableHeaders.forEach((header, index) => {
+        header.addEventListener('click', () => handleHeaderClick(index));
+    });
 });
 
-function createNewFormCard() {
-    const newCard = document.createElement('div');
-    newCard.className = 'form-card';
-    newCard.innerHTML = `
-        <div class="form-card-container">
-            <div class="form-card-description">
-                <div class="card-title"><h3>New Form</h3></div>
-                <div class="card-description">
-                    Description for the new form goes here.
-                </div>
-                <div class="field-no">0 fields</div>
-            </div>
-            <div class="edit-delete">
-                <button class="card-edit-button">
-                    <img class="edit-icon" src="../resources/icons/edit-icon.svg" />
-                    <p>Edit</p>
-                </button>
-                <button class="card-delete-button">
-                    <img class="delete-button" src="../resources/icons/delete-icon.svg" />
-                </button>
-            </div>
-        </div>
-    `;
+// Function to handle header clicks
+function handleHeaderClick(columnIndex) {
+    const columns = ['title', 'organization', 'submittedBy', 'date', 'school', 'status'];
+    const column = columns[columnIndex];
 
-    // Add the new card to our array
-    formCards.push(newCard);
-    
-    // Update pagination and show the last page where the new card is
-    updatePagination();
-    currentPage = Math.ceil(formCards.length / CARDS_PER_PAGE);
-    showCurrentPage();
-}
+    // Remove sort classes from all headers
+    tableHeaders.forEach(header => {
+        header.classList.remove('sort-asc', 'sort-desc');
+    });
 
-function updatePagination() {
-    const totalPages = Math.ceil(formCards.length / CARDS_PER_PAGE);
-    const paginationContainer = document.querySelector('.pagination');
-    
-    // Clear existing pagination
-    paginationContainer.innerHTML = '';
-    
-    // Create pagination buttons
-    for (let i = 1; i <= totalPages; i++) {
-        const pageLink = document.createElement('a');
-        pageLink.href = '#';
-        pageLink.textContent = i;
-        if (i === currentPage) {
-            pageLink.classList.add('active');
-        }
-        pageLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            currentPage = i;
-            showCurrentPage();
-            updatePaginationActive();
-        });
-        paginationContainer.appendChild(pageLink);
+    // Update sort direction
+    if (currentSort.column === column) {
+        currentSort.ascending = !currentSort.ascending;
+    } else {
+        currentSort.column = column;
+        currentSort.ascending = true;
     }
+
+    // Add sort class to clicked header
+    tableHeaders[columnIndex].classList.add(
+        currentSort.ascending ? 'sort-asc' : 'sort-desc'
+    );
+
+    filterAndSortTable();
 }
 
-function updatePaginationActive() {
-    const paginationLinks = document.querySelectorAll('.pagination a');
-    paginationLinks.forEach((link, index) => {
-        if (index + 1 === currentPage) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
+// Function to filter and sort the table
+function filterAndSortTable() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const sortBy = sortSelect.value;
+
+    // Filter the data based on search term
+    let filteredData = tableData.filter(row => {
+        return row.title.toLowerCase().includes(searchTerm) ||
+            row.organization.toLowerCase().includes(searchTerm) ||
+            row.submittedBy.toLowerCase().includes(searchTerm) ||
+            row.school.toLowerCase().includes(searchTerm) ||
+            row.status.toLowerCase().includes(searchTerm);
     });
+
+    // Sort the filtered data
+    if (currentSort.column) {
+        // Header click sorting takes precedence
+        filteredData.sort((a, b) => {
+            let comparison = 0;
+            const aValue = a[currentSort.column];
+            const bValue = b[currentSort.column];
+
+            if (currentSort.column === 'date') {
+                comparison = new Date(aValue) - new Date(bValue);
+            } else {
+                comparison = aValue.localeCompare(bValue);
+            }
+
+            return currentSort.ascending ? comparison : -comparison;
+        });
+    } else {
+        // Dropdown sorting
+        filteredData.sort((a, b) => {
+            switch (sortBy) {
+                case 'date-newest':
+                    return new Date(b.date) - new Date(a.date);
+                case 'date-oldest':
+                    return new Date(a.date) - new Date(b.date);
+                case 'name-az':
+                    return a.title.localeCompare(b.title);
+                case 'name-za':
+                    return b.title.localeCompare(a.title);
+                case 'org':
+                    return a.organization.localeCompare(b.organization);
+                default:
+                    return 0;
+            }
+        });
+    }
+
+    // Update the table display
+    updateTableDisplay(filteredData);
 }
 
-function showCurrentPage() {
-    const formsContainer = document.querySelector('.forms-list');
-    const start = (currentPage - 1) * CARDS_PER_PAGE;
-    const end = start + CARDS_PER_PAGE;
-    
-    // Clear the container
-    formsContainer.innerHTML = '';
-    
-    // Show only cards for current page
-    formCards.slice(start, end).forEach(card => {
-        formsContainer.appendChild(card.cloneNode(true));
-    });
-    
-    // Update active pagination link
-    updatePaginationActive();
+// Function to update the table display
+function updateTableDisplay(data) {
+    // Clear the table body
+    tableBody.innerHTML = '';
+
+    if (data.length === 0) {
+        // Show no results message
+        const noResultsRow = document.createElement('tr');
+        noResultsRow.innerHTML = `
+            <td colspan="7" style="text-align: center; padding: 20px;">
+                No matching records found
+            </td>
+        `;
+        tableBody.appendChild(noResultsRow);
+    } else {
+        // Add filtered and sorted rows
+        data.forEach(row => {
+            tableBody.appendChild(row.element.cloneNode(true));
+        });
+    }
 }

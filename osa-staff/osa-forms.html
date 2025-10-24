@@ -97,7 +97,8 @@
                             </div>
 
                             <div class="sort-container">
-                                <img src="../resources/icons/magnify-icon.svg" alt="search">
+                                <img src="../resources/icons/magnify-icon.svg"
+                                    alt="search">
                                 <form action="search">
                                     <input type="text" id="search-input"
                                         name="search"
@@ -105,39 +106,36 @@
                                         class="search-bar">
                                 </form>
 
-                                <select id="school" name="school" class="school-dropdown">
-                                    <option value disabled selected>Select a
-                                        School</option>
-                                    <option value="samcis">SAMCIS</option>
-                                    <option value="sea">SEA</option>
-                                    <option value="sonhabs">SONHABS</option>
-                                    <option value="stella">STELLA</option>
-                                    <option value="som">SOM</option>
-                                    <option value="sol">SOL</option>
-                                </select>
+                                <div class="sort-dropdown">
+                                    <label for="sort-by">Sort by:</label>
+                                    <select id="sort-by" class="sort-select">
+                                        <option value="date-newest">Date
+                                            (Newest)</option>
+                                        <option value="date-oldest">Date
+                                            (Oldest)</option>
+                                        <option value="name-az">Name
+                                            (A-Z)</option>
+                                        <option value="name-za">Name
+                                            (Z-A)</option>
+                                        <option
+                                            value="org">Organization</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="forms-list">
                                 <div class="form-card" id="form-card">
                                     <div class="form-card-container">
                                         <table class="form-table">
-
                                             <thead>
                                                 <tr class="table-headers">
-                                                    <td
-                                                        class="sub-title">Submission
-                                                        Title</td>
-                                                    <td
-                                                        class="org-name">Organization
-                                                        Name</td>
-                                                    <td class="sub-by">Submitted
-                                                        By</td>
-                                                    <td class="sub-date">Date
-                                                        Submitted</td>
-                                                    <td
-                                                        class="category">School</td>
-                                                    <td class="stat">Status</td>
-                                                    <td class="act">Actions</td>
+                                                    <th>Submission Title</th>
+                                                    <th>Organization Name</th>
+                                                    <th>Submitted By</th>
+                                                    <th>Date Submitted</th>
+                                                    <th>School</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
 
@@ -149,56 +147,86 @@
                                                     <td>Amogus 69</td>
                                                     <td>10/3/25</td>
                                                     <td>SAMCIS</td>
-                                                    <td>Pending</td>
+                                                    <td><span
+                                                            class="status-badge pending">Pending</span></td>
                                                     <td>
                                                         <div
                                                             class="action-container">
                                                             <button
                                                                 class="view-button">
-                                                                <img src="../resources/icons/view-icon.svg" alt="view">
+                                                                <img
+                                                                    src="../resources/icons/view-icon.svg"
+                                                                    alt="view">
                                                                 View
                                                             </button>
                                                             <button
                                                                 class="download-button">
-                                                                <img src="../resources/icons/download-icon.svg" alt="downl;oad">
+                                                                <img
+                                                                    src="../resources/icons/download-icon-white.svg"
+                                                                    alt="download">
                                                             </button>
                                                         </div>
                                                     </td>
                                                 </tr>
 
                                                 <tr class="table-data">
-                                                    <td>End Term Requirement
+                                                    <td>Mid Term Requirement
                                                         2024</td>
                                                     <td>ICON</td>
-                                                    <td>Amogus 69</td>
+                                                    <td>Amogus 420</td>
                                                     <td>10/3/25</td>
                                                     <td>SAMCIS</td>
-                                                    <td>Pending</td>
+                                                    <td><span
+                                                            class="status-badge approved">Approved</span></td>
                                                     <td>
                                                         <div
                                                             class="action-container">
                                                             <button
                                                                 class="view-button">
-                                                                <img src="../resources/icons/view-icon.svg" alt="view">
+                                                                <img
+                                                                    src="../resources/icons/view-icon.svg"
+                                                                    alt="view">
                                                                 View
                                                             </button>
                                                             <button
                                                                 class="download-button">
-                                                                <img src="../resources/icons/download-icon.svg" alt="downl;oad">
+                                                                <img
+                                                                    src="../resources/icons/download-icon-white.svg"
+                                                                    alt="download">
                                                             </button>
                                                         </div>
                                                     </td>
-
                                                 </tr>
-                                                    <!-- Empty rows to keep table height consistent -->
-                                                    <tr class="table-data"><td colspan="7">&nbsp;</td></tr>
-                                                    <tr class="table-data"><td colspan="7">&nbsp;</td></tr>
-                                                    <tr class="table-data"><td colspan="7">&nbsp;</td></tr>
-                                                    <tr class="table-data"><td colspan="7">&nbsp;</td></tr>
-                                                    <tr class="table-data"><td colspan="7">&nbsp;</td></tr>
-                                                    <tr class="table-data"><td colspan="7">&nbsp;</td></tr>
-                                                    <tr class="table-data"><td colspan="7">&nbsp;</td></tr>
-                                                    <tr class="table-data"><td colspan="7">&nbsp;</td></tr>
+
+<tr class="table-data">
+                                                    <td>Mid Term Requirement
+                                                        2024</td>
+                                                    <td>ICON</td>
+                                                    <td>Amogus 420</td>
+                                                    <td>10/3/25</td>
+                                                    <td>SAMCIS</td>
+                                                    <td><span
+                                                            class="status-badge returned">Returned</span></td>
+                                                    <td>
+                                                        <div
+                                                            class="action-container">
+                                                            <button
+                                                                class="view-button">
+                                                                <img
+                                                                    src="../resources/icons/view-icon.svg"
+                                                                    alt="view">
+                                                                View
+                                                            </button>
+                                                            <button
+                                                                class="download-button">
+                                                                <img
+                                                                    src="../resources/icons/download-icon-white.svg"
+                                                                    alt="download">
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
                                             </tbody>
                                         </table>
                                     </div>
