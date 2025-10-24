@@ -82,16 +82,6 @@
                 <div class="forms-container">
                     <div class="forms-title"><h1>Forms Management</h1></div>
                     <div class="forms-area">
-                        <div class="tab-buttons">
-                            <button class="form-tab-button"><div
-                                    class="text-wrapper">Forms</div></button>
-                            <button class="submission-tab-button">
-                                <div class="div">Submissions</div>
-                                <div class="submission-badge"><div
-                                        class="text-wrapper-2">1</div></div>
-                            </button>
-                        </div>
-
                         <div class="forms">
                             <div class="form-header">
                                 <div class="form-description">
@@ -102,15 +92,12 @@
                                         student forms</div>
                                 </div>
                                 <div class="create-form-button">
-                                    <div class="icon"><img class="add-icon"
-                                            src="../resources/icons/add-icon.svg"
-                                            alt="add-icon"></div>
-                                    <div class="text-wrapper-4">Create
-                                        Form</div>
+                                    <div class="text-wrapper-4">View Form</div>
                                 </div>
                             </div>
 
                             <div class="sort-container">
+                                <img src="../resources/icons/magnify-icon.svg" alt="search">
                                 <form action="search">
                                     <input type="text" id="search-input"
                                         name="search"
@@ -118,7 +105,7 @@
                                         class="search-bar">
                                 </form>
 
-                                <select id="school" name="school">
+                                <select id="school" name="school" class="school-dropdown">
                                     <option value disabled selected>Select a
                                         School</option>
                                     <option value="samcis">SAMCIS</option>
@@ -201,6 +188,7 @@
                                                             </button>
                                                         </div>
                                                     </td>
+
                                                 </tr>
                                                     <!-- Empty rows to keep table height consistent -->
                                                     <tr class="table-data"><td colspan="7">&nbsp;</td></tr>
