@@ -104,5 +104,41 @@ label {
 }
 
 #content {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 0px 0px;
+    background-color: #FFFFFF;
+    width: 120px;
+}
+
+#content-label {
+    padding: 40px;
+}
+
+.form-div {
+    border-radius: 15px;
+    width: 250px;
+
+    box-shadow: 0px 0px 5px rgb(223, 223, 223);
+    padding: 10px
+}
+
+.form-title-div {
+    font-size: 18px;
+    font-weight: bold;
+    color: #003366;
+    margin: 20px;
+}
+
+.form-detail-div {
+    text-align: justify;
     padding: 0px 20px;
+}
+
+.fill-btn-form {
+    margin: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #003366;
+    color: white;
 }
