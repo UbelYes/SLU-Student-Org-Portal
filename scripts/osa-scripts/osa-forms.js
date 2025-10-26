@@ -36,6 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
     tableHeaders.forEach((header, index) => {
         header.addEventListener('click', () => handleHeaderClick(index));
     });
+
+    // Delegate click events on the table body for dynamic rows (handles cloned rows)
+    tableBody.addEventListener('click', (e) => {
+        const viewBtn = e.target.closest('.view-button');
+        if (viewBtn) {
+            // Navigate to the OSA view page
+            // Use a relative path because this script runs from pages under /osa-staff/
+            window.location.href = 'osa-view.html';
+        }
+    });
 });
 
 // Function to handle header clicks
