@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Student Organization Portal</title>
+    <link rel="stylesheet" href="../styles/osa-styles/osa-navbar.css">
+    <link rel="stylesheet" href="../styles/admin-styles/admin-dashboard.css">
+    <script src="../scripts/admin-scripts/admin-navbar.js"></script>
+</head>
+
+<body>
+    <div>
+        <nav class="navigation-side-bar">
+            <div class="navigation-container">
+                <div class="banner">
+                    <div class="image-SLU-logo">
+                        <img src="../resources/images/Saint-Louis-University-PH-Logo.png" alt="SLU-logo">
+                    </div>
+                    <div class="banner-heading">
+                        <div class="banner-text-wrapper">
+                            <h1>OSA
+                                Admin portal</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-container">
+                    <button class="menu-button" id="dashboard-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img" src="../resources/icons/home-icon.svg">
+                        </div>
+                        <div class="menu-text">Dashboard</div>
+                    </button>
+
+
+                    <button class="menu-button" id="accounts-button"
+                        onclick="window.location.href='admin-accounts.html'">
+                        <div class="menu-icon"><img class="menu-icon-img" src="../resources/icons/accounts-icon.svg">
+                        </div>
+                        <div class="menu-text">Accounts</div>
+                    </button>
+
+                    <button class="menu-button" id="settings-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img" src="../resources/icons/account-settings-icon.svg">
+                        </div>
+                        <div class="menu-text">Settings</div>
+                    </button>
+
+                </div>
+                <button class="logout-button" onclick="handleLogout()">
+                    <div class="logout-icon">
+                        <img class="vector-7" src="../resources/icons/logout-icon.svg">
+                    </div>
+                    <div class="logout-text">Logout</div>
+                </button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <section class="active-users-section">
+                <h2>Number of Active Users</h2>
+                <p class="subtitle">Shows the number of active users</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">13</div>
+                        <div class="stat-label">Student organizations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">OSA Staff</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Administrators</div>
+                    </div>
+                </div>
+                <hr class="stats-divider">
+            </section>
+
+            <section class="weekly-login-section">
+                <h2>WEEKLY LOGIN DASHBOARD</h2>
+                <p class="subtitle">Average number of logins per week</p>
+                <div class="login-graph-container">
+                    <div class="graph-bar-wrapper">
+                        <div class="bar" style="height: 65%;"></div>
+                        <div class="bar" style="height: 90%;"></div>
+                        <div class="bar" style="height: 50%;"></div>
+                        <div class="bar" style="height: 100%;"></div>
+                        <div class="bar" style="height: 80%;"></div>
+                        <div class="bar" style="height: 65%;"></div>
+                        <div class="bar" style="height: 40%;"></div>
+                        <div class="bar" style="height: 75%;"></div>
+                        <div class="bar" style="height: 85%;"></div>
+                        <div class="bar" style="height: 70%;"></div>
+                        <div class="bar" style="height: 45%;"></div>
+                        <div class="bar" style="height: 60%;"></div>
+                        <div class="bar" style="height: 5%;"></div>
+                        <div class="bar" style="height: 10%;"></div>
+                        <div class="bar" style="height: 35%;"></div>
+                        <div class="bar" style="height: 50%;"></div>
+                        <div class="bar" style="height: 85%;"></div>
+                        <div class="bar" style="height: 65%;"></div>
+                        <div class="bar" style="height: 20%;"></div>
+                        <div class="bar" style="height: 5%;"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
