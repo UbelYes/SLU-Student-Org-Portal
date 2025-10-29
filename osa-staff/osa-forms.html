@@ -1,82 +1,77 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta charset="utf-8" />
-        <title>SLU OSA Forms</title>
-        <link rel="icon"
-            href="../resources/images/Saint-Louis-University-PH-Logo.png">
-        <link rel="stylesheet" href="../styles/osa-styles/osa-forms.css" />
-        <link rel="stylesheet" href="../styles/osa-styles/osa-navbar.css">
-        <script src="../scripts/osa-scripts/osa-login.js" defer></script>
-        <script src="../scripts/osa-scripts/osa-forms.js" defer></script>
-        <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
-    </head>
-    <body>
-        <div class="OSA-forms-page">
-
-            <nav class="navigation-side-bar">
-                <div class="navigation-container">
-                    <div class="banner">
-                        <div class="image-SLU-logo">
-                            <img
-                                src="../resources/images/Saint-Louis-University-PH-Logo.png"
-                                alt="SLU-logo">
-                        </div>
-                        <div class="banner-heading"><div
-                                class="banner-text-wrapper"><h1>OSA
-                                    Student
-                                    Organization Portal</h1></div></div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms Management - OSA Portal</title>
+    <link rel="icon" href="../resources/images/Saint-Louis-University-PH-Logo.png">
+    <link rel="stylesheet" href="../styles/osa-styles/osa-navbar.css">
+    <link rel="stylesheet" href="../styles/osa-styles/osa-forms.css">
+    <script src="../scripts/osa-scripts/osa-login.js" defer></script>
+    <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
+    <script src="../scripts/osa-scripts/osa-forms.js" defer></script>
+</head>
+<body>
+    <div class="OSA-forms-page">
+        <!-- Navigation Sidebar -->
+        <nav class="navigation-side-bar">
+            <div class="navigation-container">
+                <div class="banner">
+                    <div class="image-SLU-logo">
+                        <img src="../resources/images/Saint-Louis-University-PH-Logo.png" alt="SLU Logo">
                     </div>
-
-                    <div class="menu-container">
-                        <button class="menu-button" id="dashboard-button">
-                            <div class="menu-icon">
-                                <img class="menu-icon-img"
-                                    src="../resources/icons/home-icon.svg">
-                            </div>
-                            <div class="menu-text">Dashboard</div>
-                        </button>
-
-                        <button class="menu-button" id="forms-button">
-                            <div class="menu-icon">
-                                <img class="menu-icon-img"
-                                    src="../resources/icons/document-icon.svg"></div>
-                            <div class="menu-text">Forms</div>
-                        </button>
-
-                        <button class="menu-button" id="documents-button">
-                            <div class="menu-icon"><img class="menu-icon-img"
-                                    src="../resources/icons/folder-icon.svg"></div>
-                            <div class="menu-text">Documents</div>
-                        </button>
-
-                        <button class="menu-button" id="accounts-button">
-                            <div class="menu-icon"><img class="menu-icon-img"
-                                    src="../resources/icons/accounts-icon.svg"></div>
-                            <div class="menu-text">Accounts</div>
-                        </button>
-
-                        <button class="menu-button" id="settings-button">
-                            <div class="menu-icon">
-                                <img class="menu-icon-img"
-                                    src="../resources/icons/account-settings-icon.svg">
-                            </div>
-                            <div class="menu-text">Settings</div>
-                        </button>
-                    </div>
-
-                    <button class="logout-button" id="logout-button"
-                        onclick="handleLogout()">
-                        <div class="logout-icon">
-                            <img class="vector-7"
-                                src="../resources/icons/logout-icon.svg">
+                    <div class="banner-heading">
+                        <div class="banner-text-wrapper">
+                            <h1>OSA Student Organization Portal</h1>
                         </div>
-                        <div class="logout-text">Logout</div>
+                    </div>
+                </div>
+
+                <div class="menu-container">
+                    <button class="menu-button" id="dashboard-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img" src="../resources/icons/home-icon.svg" alt="Dashboard">
+                        </div>
+                        <div class="menu-text">Dashboard</div>
+                    </button>
+
+                    <button class="menu-button" id="forms-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img" src="../resources/icons/document-icon.svg" alt="Forms">
+                        </div>
+                        <div class="menu-text">Forms</div>
+                    </button>
+
+                    <button class="menu-button" id="documents-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img" src="../resources/icons/folder-icon.svg" alt="Documents">
+                        </div>
+                        <div class="menu-text">Documents</div>
+                    </button>
+
+                    <button class="menu-button" id="accounts-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img" src="../resources/icons/accounts-icon.svg" alt="Accounts">
+                        </div>
+                        <div class="menu-text">Accounts</div>
+                    </button>
+
+                    <button class="menu-button" id="settings-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img" src="../resources/icons/account-settings-icon.svg" alt="Settings">
+                        </div>
+                        <div class="menu-text">Settings</div>
                     </button>
                 </div>
 
-            </nav>
+                <button class="logout-button" onclick="handleLogout()">
+                    <div class="logout-icon">
+                        <img src="../resources/icons/logout-icon.svg" alt="Logout">
+                    </div>
+                    <div class="logout-text">Logout</div>
+                </button>
+            </div>
+        </nav>
 
             <main class="main-content">
                 <div class="forms-container">
@@ -85,166 +80,122 @@
                         <div class="forms">
                             <div class="form-header">
                                 <div class="form-description">
-                                    <div
-                                        class="form-header-title"><h2>Submitted
-                                            Forms</h2></div>
-                                    <div class="form-text-description">Manage
-                                        student forms</div>
+                                    <div class="form-header-title">
+                                        <h2>Submitted Forms</h2>
+                                    </div>
+                                    <div class="form-text-description">Manage student forms</div>
                                 </div>
-                                <div class="create-form-button">
-                                    <div class="text-wrapper-4">View Form</div>
-                                </div>
+                                <button class="create-form-button">View Form</button>
                             </div>
 
+                            <!-- Search and Sort Controls -->
                             <div class="sort-container">
-                                <img src="../resources/icons/magnify-icon.svg"
-                                    alt="search">
-                                <form action="search">
-                                    <input type="text" id="search-input"
-                                        name="search"
-                                        placeholder="Search forms"
-                                        class="search-bar">
-                                </form>
+                                <img src="../resources/icons/magnify-icon.svg" alt="Search">
+                                <input type="text" id="search-input" placeholder="Search forms" class="search-bar">
 
                                 <div class="sort-dropdown">
                                     <label for="sort-by">Sort by:</label>
                                     <select id="sort-by" class="sort-select">
-                                        <option value="date-newest">Date
-                                            (Newest)</option>
-                                        <option value="date-oldest">Date
-                                            (Oldest)</option>
-                                        <option value="name-az">Name
-                                            (A-Z)</option>
-                                        <option value="name-za">Name
-                                            (Z-A)</option>
-                                        <option
-                                            value="org">Organization</option>
+                                        <option value="date-newest">Date (Newest)</option>
+                                        <option value="date-oldest">Date (Oldest)</option>
+                                        <option value="name-az">Name (A-Z)</option>
+                                        <option value="name-za">Name (Z-A)</option>
+                                        <option value="org">Organization</option>
                                     </select>
                                 </div>
                             </div>
 
+                            <!-- Forms Table -->
                             <div class="forms-list">
-                                <div class="form-card" id="form-card">
-                                    <div class="form-card-container">
-                                        <table class="form-table">
-                                            <thead>
-                                                <tr class="table-headers">
-                                                    <th>Submission Title</th>
-                                                    <th>Organization Name</th>
-                                                    <th>Submitted By</th>
-                                                    <th>Date Submitted</th>
-                                                    <th>School</th>
-                                                    <th>Status</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
+                                <table class="form-table">
+                                    <thead>
+                                        <tr class="table-headers">
+                                            <th>Submission Title</th>
+                                            <th>Organization Name</th>
+                                            <th>Submitted By</th>
+                                            <th>Date Submitted</th>
+                                            <th>School</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="table-data">
+                                            <td>End Term Requirement 2024</td>
+                                            <td>ICON</td>
+                                            <td>Amogus 69</td>
+                                            <td>10/3/25</td>
+                                            <td>SAMCIS</td>
+                                            <td><span class="status-badge pending">Pending</span></td>
+                                            <td>
+                                                <div class="action-container">
+                                                    <button class="view-button">
+                                                        <img src="../resources/icons/view-icon.svg" alt="View">
+                                                        View
+                                                    </button>
+                                                    <button class="download-button">
+                                                        <img src="../resources/icons/download-icon-white.svg" alt="Download">
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
 
-                                            <tbody>
-                                                <tr class="table-data">
-                                                    <td>End Term Requirement
-                                                        2024</td>
-                                                    <td>ICON</td>
-                                                    <td>Amogus 69</td>
-                                                    <td>10/3/25</td>
-                                                    <td>SAMCIS</td>
-                                                    <td><span
-                                                            class="status-badge pending">Pending</span></td>
-                                                    <td>
-                                                        <div
-                                                            class="action-container">
-                                                            <button
-                                                                class="view-button">
-                                                                <img
-                                                                    src="../resources/icons/view-icon.svg"
-                                                                    alt="view">
-                                                                View
-                                                            </button>
-                                                            <button
-                                                                class="download-button">
-                                                                <img
-                                                                    src="../resources/icons/download-icon-white.svg"
-                                                                    alt="download">
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                        <tr class="table-data">
+                                            <td>Mid Term Requirement 2024</td>
+                                            <td>ICON</td>
+                                            <td>Amogus 420</td>
+                                            <td>10/3/25</td>
+                                            <td>SAMCIS</td>
+                                            <td><span class="status-badge approved">Approved</span></td>
+                                            <td>
+                                                <div class="action-container">
+                                                    <button class="view-button">
+                                                        <img src="../resources/icons/view-icon.svg" alt="View">
+                                                        View
+                                                    </button>
+                                                    <button class="download-button">
+                                                        <img src="../resources/icons/download-icon-white.svg" alt="Download">
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
 
-                                                <tr class="table-data">
-                                                    <td>Mid Term Requirement
-                                                        2024</td>
-                                                    <td>ICON</td>
-                                                    <td>Amogus 420</td>
-                                                    <td>10/3/25</td>
-                                                    <td>SAMCIS</td>
-                                                    <td><span
-                                                            class="status-badge approved">Approved</span></td>
-                                                    <td>
-                                                        <div
-                                                            class="action-container">
-                                                            <button
-                                                                class="view-button">
-                                                                <img
-                                                                    src="../resources/icons/view-icon.svg"
-                                                                    alt="view">
-                                                                View
-                                                            </button>
-                                                            <button
-                                                                class="download-button">
-                                                                <img
-                                                                    src="../resources/icons/download-icon-white.svg"
-                                                                    alt="download">
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
-<tr class="table-data">
-                                                    <td>Mid Term Requirement
-                                                        2024</td>
-                                                    <td>ICON</td>
-                                                    <td>Amogus 420</td>
-                                                    <td>10/3/25</td>
-                                                    <td>SAMCIS</td>
-                                                    <td><span
-                                                            class="status-badge returned">Returned</span></td>
-                                                    <td>
-                                                        <div
-                                                            class="action-container">
-                                                            <button
-                                                                class="view-button">
-                                                                <img
-                                                                    src="../resources/icons/view-icon.svg"
-                                                                    alt="view">
-                                                                View
-                                                            </button>
-                                                            <button
-                                                                class="download-button">
-                                                                <img
-                                                                    src="../resources/icons/download-icon-white.svg"
-                                                                    alt="download">
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                        <tr class="table-data">
+                                            <td>Mid Term Requirement 2024</td>
+                                            <td>ICON</td>
+                                            <td>Amogus 420</td>
+                                            <td>10/3/25</td>
+                                            <td>SAMCIS</td>
+                                            <td><span class="status-badge returned">Returned</span></td>
+                                            <td>
+                                                <div class="action-container">
+                                                    <button class="view-button">
+                                                        <img src="../resources/icons/view-icon.svg" alt="View">
+                                                        View
+                                                    </button>
+                                                    <button class="download-button">
+                                                        <img src="../resources/icons/download-icon-white.svg" alt="Download">
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
 
+                            <!-- Pagination -->
                             <div class="pagination">
-                                <a href>1</a>
-                                <a href>2</a>
-                                <a href>3</a>
-                                <a href>4</a>
-                                <a href>5</a>
+                                <a href="#">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <a href="#">5</a>
                             </div>
-
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
-    </body>
+            </div>
+        </main>
+    </div>
+</body>
 </html>

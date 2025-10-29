@@ -1,81 +1,37 @@
-// Get only the navigation menu buttons
-const menuButtons = document.querySelectorAll(".menu-button");
+// OSA Dashboard specific functionality
+// Note: Main navigation is handled by osa-navbar.js
 
-menuButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        // Remove 'active' from all menu buttons only
-        menuButtons.forEach((b) => b.classList.remove("active"));
-        // Add 'active' to the clicked menu button
-        btn.classList.add("active");
-    });
-});
-
-document.getElementById("dashboard-button").addEventListener("click", () => {
-    window.location.href = "osa-forms.html";
-});
-
-document.getElementById("forms-button").addEventListener("click", () => {
-    window.location.href = "osa-forms.html";
-});
-
-document.getElementById("documents-button").addEventListener("click", () => {
-    window.location.href = "osa-documents.html";
-});
-
-document.getElementById("accounts-button").addEventListener("click", () => {
-    window.location.href = "osa-accounts.html";
-});
-
-document.getElementById("settings-button").addEventListener("click", () => {
-    window.location.href = "osa-settings.html";
-});
-
-const logoutbtn = document.querySelector('.logout-button');
-logoutbtn.addEventListener("click", () => {
-    window.location.href = "index.html";
-});
-
-logoutbtn.addEventListener("click", () => {
-    const confirmLogout = confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-        // If the user clicks "OK"
-        window.location.href = "index.html";
-    } else {
-        // If the user clicks "Cancel"
-        console.log("Logout canceled");
+// Dashboard-specific initialization
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Dashboard loaded');
+    
+    // Add any dashboard-specific functionality here
+    // For example: load news posts, handle create post button, etc.
+    
+    const createPostButton = document.querySelector('.create-post-button');
+    if (createPostButton) {
+        createPostButton.addEventListener('click', () => {
+            console.log('Create post clicked');
+            // Add create post functionality here
+        });
     }
-});
-
-// Attach click listeners to all menu buttons
-document.querySelectorAll('.menu-button').forEach(button => {
-    button.addEventListener('click', () => {
-        // Save the clicked button's ID so the next page knows which one to highlight
-        localStorage.setItem('activeMenu', button.id);
-
-        // Navigate based on which button was clicked
-        switch (button.id) {
-            case 'dashboard-button':
-                window.location.href = 'osa-dashboard.html';
-                break;
-            case 'forms-button':
-                window.location.href = 'osa-forms.html';
-                break;
-            case 'documents-button':
-                window.location.href = 'osa-documents.html';
-                break;
-            case 'accounts-button':
-                window.location.href = 'osa-accounts.html';
-                break;
-            case 'settings-button':
-                window.location.href = 'osa-settings.html';
-                break;
-        }
+    
+    // Handle edit buttons
+    document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', () => {
+            console.log('Edit post clicked');
+            // Add edit functionality here
+        });
+    });
+    
+    // Handle delete buttons
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const confirmDelete = confirm('Are you sure you want to delete this post?');
+            if (confirmDelete) {
+                console.log('Delete post confirmed');
+                // Add delete functionality here
+            }
+        });
     });
 });
-
-// When the page loads, highlight the previously active button
-const activeMenu = localStorage.getItem('activeMenu');
-if (activeMenu) {
-    const activeButton = document.getElementById(activeMenu);
-    if (activeButton) activeButton.classList.add('active');
-}

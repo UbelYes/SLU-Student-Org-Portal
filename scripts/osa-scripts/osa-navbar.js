@@ -1,82 +1,60 @@
-// Get only the navigation menu buttons
-const menuButtons = document.querySelectorAll(".menu-button");
+// OSA Navigation Handler
+// Handles menu button clicks, active states, and page navigation
 
-menuButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        // Remove 'active' from all menu buttons only
-        menuButtons.forEach((b) => b.classList.remove("active"));
-        // Add 'active' to the clicked menu button
-        btn.classList.add("active");
-    });
-});
+// Navigation mapping
+const navigationRoutes = {
+    'dashboard-button': 'osa-forms.html', // Dashboard redirects to forms
+    'forms-button': 'osa-forms.html',
+    'documents-button': 'osa-documents.html',
+    'accounts-button': 'osa-accounts.html',
+    'settings-button': 'osa-settings.html'
+};
 
-document.getElementById("dashboard-button").addEventListener("click", () => {
-    window.location.href = "osa-forms.html";
-});
-
-document.getElementById("forms-button").addEventListener("click", () => {
-    window.location.href = "osa-forms.html";
-});
-
-document.getElementById("documents-button").addEventListener("click", () => {
-    window.location.href = "osa-documents.html";
-});
-
-document.getElementById("accounts-button").addEventListener("click", () => {
-    window.location.href = "osa-accounts.html";
-});
-
-document.getElementById("settings-button").addEventListener("click", () => {
-    window.location.href = "osa-settings.html";
-});
-
-// Attach click listeners to all menu buttons
+// Handle menu button clicks
 document.querySelectorAll('.menu-button').forEach(button => {
     button.addEventListener('click', () => {
-        // Save the clicked button's ID so the next page knows which one to highlight
+        // Remove active class from all buttons
+        document.querySelectorAll('.menu-button').forEach(btn => 
+            btn.classList.remove('active')
+        );
+        
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        // Save active menu to localStorage
         localStorage.setItem('activeMenu', button.id);
-
-        // Navigate based on which button was clicked
-        switch (button.id) {
-            case 'dashboard-button':
-                window.location.href = 'osa-forms.html';
-                break;
-            case 'forms-button':
-                window.location.href = 'osa-forms.html';
-                break;
-            case 'documents-button':
-                window.location.href = 'osa-documents.html';
-                break;
-            case 'accounts-button':
-                window.location.href = 'osa-accounts.html';
-                break;
-            case 'settings-button':
-                window.location.href = 'osa-settings.html';
-                break;
+        
+        // Navigate to the appropriate page
+        const route = navigationRoutes[button.id];
+        if (route) {
+            window.location.href = route;
         }
     });
 });
 
-// When the page loads, highlight the previously active button
-const activeMenu = localStorage.getItem('activeMenu');
-if (activeMenu) {
-    const activeButton = document.getElementById(activeMenu);
-    if (activeButton) activeButton.classList.add('active');
-}
-
-const logoutbtn = document.querySelector('.logout-button');
-logoutbtn.addEventListener("click", () => {
-    window.location.href = "index.html";
-    localStorage.setItem('activeMenu', 'dashboard-button'); // Clear active menu on logout
-});
-
-logoutbtn.addEventListener("click", () => {
-    const confirmLogout = confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-        // If the user clicks "OK"
-        window.location.href = "../index.html";
-    } else {
-        // If the user clicks "Cancel"
-        console.log("Logout canceled");
+// Restore active menu state on page load
+window.addEventListener('DOMContentLoaded', () => {
+    const activeMenuId = localStorage.getItem('activeMenu');
+    if (activeMenuId) {
+        const activeButton = document.getElementById(activeMenuId);
+        if (activeButton) {
+            activeButton.classList.add('active');
+        }
     }
 });
+
+// Handle logout with confirmation
+const logoutButton = document.querySelector('.logout-button');
+if (logoutButton) {
+    logoutButton.addEventListener('click', (e) => {
+        // Only show confirm if not using handleLogout() from osa-login.js
+        if (!logoutButton.getAttribute('onclick')) {
+            e.preventDefault();
+            const confirmLogout = confirm("Are you sure you want to log out?");
+            if (confirmLogout) {
+                localStorage.removeItem('activeMenu');
+                window.location.href = "../index.html";
+            }
+        }
+    });
+}

@@ -1,141 +1,134 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta charset="utf-8" />
-        <title>SLU OSA Forms</title>
-        <link rel="icon"
-            href="../resources/images/Saint-Louis-University-PH-Logo.png">
-        <link rel="stylesheet" href="../styles/osa-styles/osa-view.css" />
-        <link rel="stylesheet" href="../styles/osa-styles/osa-navbar.css">
-        <script src="../scripts/osa-scripts/osa-login.js" defer></script>
-        <script src="../scripts/osa-scripts/osa-forms.js" defer></script>
-        <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
-    </head>
-
-    
-    <body>
-        <nav class="navigation-side-bar">
-            <div class="navigation-container">
-                <div class="banner">
-                    <div class="image-SLU-logo">
-                        <img
-                            src="../resources/images/Saint-Louis-University-PH-Logo.png"
-                            alt="SLU-logo">
-                    </div>
-                    <div class="banner-heading"><div
-                            class="banner-text-wrapper"><h1>OSA
-                                Student
-                                Organization Portal</h1></div></div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Details - OSA Portal</title>
+    <link rel="icon" href="../resources/images/Saint-Louis-University-PH-Logo.png">
+    <link rel="stylesheet" href="../styles/osa-styles/osa-navbar.css">
+    <link rel="stylesheet" href="../styles/osa-styles/osa-view.css">
+    <script src="../scripts/osa-scripts/osa-login.js" defer></script>
+    <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
+    <script src="../scripts/osa-scripts/osa-forms.js" defer></script>
+</head>
+<body>
+    <!-- Navigation Sidebar -->
+    <nav class="navigation-side-bar">
+        <div class="navigation-container">
+            <div class="banner">
+                <div class="image-SLU-logo">
+                    <img src="../resources/images/Saint-Louis-University-PH-Logo.png" alt="SLU Logo">
                 </div>
-
-                <div class="menu-container">
-                    <button class="menu-button" id="dashboard-button">
-                        <div class="menu-icon">
-                            <img class="menu-icon-img"
-                                src="../resources/icons/home-icon.svg">
-                        </div>
-                        <div class="menu-text">Dashboard</div>
-                    </button>
-
-                    <button class="menu-button" id="forms-button">
-                        <div class="menu-icon">
-                            <img class="menu-icon-img"
-                                src="../resources/icons/document-icon.svg"></div>
-                        <div class="menu-text">Forms</div>
-                    </button>
-
-                    <button class="menu-button" id="documents-button">
-                        <div class="menu-icon"><img class="menu-icon-img"
-                                src="../resources/icons/folder-icon.svg"></div>
-                        <div class="menu-text">Documents</div>
-                    </button>
-
-                    <button class="menu-button" id="accounts-button">
-                        <div class="menu-icon"><img class="menu-icon-img"
-                                src="../resources/icons/accounts-icon.svg"></div>
-                        <div class="menu-text">Accounts</div>
-                    </button>
-
-                    <button class="menu-button" id="settings-button">
-                        <div class="menu-icon">
-                            <img class="menu-icon-img"
-                                src="../resources/icons/account-settings-icon.svg">
-                        </div>
-                        <div class="menu-text">Settings</div>
-                    </button>
-                </div>
-
-                <button class="logout-button" id="logout-button"
-                    onclick="handleLogout()">
-                    <div class="logout-icon">
-                        <img class="vector-7"
-                            src="../resources/icons/logout-icon.svg">
+                <div class="banner-heading">
+                    <div class="banner-text-wrapper">
+                        <h1>OSA Student Organization Portal</h1>
                     </div>
-                    <div class="logout-text">Logout</div>
+                </div>
+            </div>
+
+            <div class="menu-container">
+                <button class="menu-button" id="dashboard-button">
+                    <div class="menu-icon">
+                        <img class="menu-icon-img" src="../resources/icons/home-icon.svg" alt="Dashboard">
+                    </div>
+                    <div class="menu-text">Dashboard</div>
+                </button>
+
+                <button class="menu-button" id="forms-button">
+                    <div class="menu-icon">
+                        <img class="menu-icon-img" src="../resources/icons/document-icon.svg" alt="Forms">
+                    </div>
+                    <div class="menu-text">Forms</div>
+                </button>
+
+                <button class="menu-button" id="documents-button">
+                    <div class="menu-icon">
+                        <img class="menu-icon-img" src="../resources/icons/folder-icon.svg" alt="Documents">
+                    </div>
+                    <div class="menu-text">Documents</div>
+                </button>
+
+                <button class="menu-button" id="accounts-button">
+                    <div class="menu-icon">
+                        <img class="menu-icon-img" src="../resources/icons/accounts-icon.svg" alt="Accounts">
+                    </div>
+                    <div class="menu-text">Accounts</div>
+                </button>
+
+                <button class="menu-button" id="settings-button">
+                    <div class="menu-icon">
+                        <img class="menu-icon-img" src="../resources/icons/account-settings-icon.svg" alt="Settings">
+                    </div>
+                    <div class="menu-text">Settings</div>
                 </button>
             </div>
-        </nav>
 
-        <main class="main-content">
-            <div class="page-header">
-                <h1>Submission Details</h1>
-                <p>Review and manage organization submission</p>
+            <button class="logout-button" onclick="handleLogout()">
+                <div class="logout-icon">
+                    <img src="../resources/icons/logout-icon.svg" alt="Logout">
+                </div>
+                <div class="logout-text">Logout</div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Submission Details</h1>
+            <p>Review and manage organization submission</p>
+        </div>
+
+        <div class="submission-header">
+            <div class="submission-title">
+                <h2 id="submissionTitle">End-Term Submission - Computer Science Society</h2>
+                <div class="submission-meta">
+                    <span>📅 <span id="submissionDate">October 20, 2025</span></span>
+                    <span>🔖 <span id="submissionId">SUB-2025-001</span></span>
+                </div>
             </div>
+            <span class="status-badge" id="submissionStatus">Pending Review</span>
+        </div>
 
-            <div class="submission-header">
-                <div class="submission-title">
-                    <h2 id="submissionTitle">End-Term Submission - Computer
-                        Science Society</h2>
-                    <div class="submission-meta">
-                        <span>📅 <span id="submissionDate">October 20,
-                                2025</span></span>
-                        <span>🔖 <span
-                                id="submissionId">SUB-2025-001</span></span>
+        <div class="content-grid">
+            <!-- Organization Information -->
+            <div class="info-card">
+                <div class="info-card-header">
+                    <span>🏢</span>
+                    <h3>Organization Information</h3>
+                </div>
+                <div class="info-field">
+                    <label>Complete Name</label>
+                    <div class="value" id="orgName">Computer Science Society</div>
+                </div>
+                <div class="info-field">
+                    <label>Acronym / Short Name</label>
+                    <div class="value" id="orgAcronym">CSS</div>
+                </div>
+                <div class="info-field">
+                    <label>Official SLU Email</label>
+                    <div class="value">
+                        <a href="mailto:css@slu.edu.ph" id="orgEmail">css@slu.edu.ph</a>
                     </div>
                 </div>
-                <span class="status-badge" id="submissionStatus">Pending
-                    Review</span>
-            </div>
-
-            <div class="content-grid">
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <span>🏢</span>
-                        <h3>Organization Information</h3>
-                    </div>
-                    <div class="info-field">
-                        <label>Complete Name</label>
-                        <div class="value" id="orgName">Computer Science
-                            Society</div>
-                    </div>
-                    <div class="info-field">
-                        <label>Acronym / Short Name</label>
-                        <div class="value" id="orgAcronym">CSS</div>
-                    </div>
-                    <div class="info-field">
-                        <label>Official SLU Email</label>
-                        <div class="value"><a href="mailto:css@slu.edu.ph"
-                                id="orgEmail">css@slu.edu.ph</a></div>
-                    </div>
-                    <div class="info-field">
-                        <label>Social Media Links</label>
-                        <div class="social-links" id="socialLinks">
-                            <div
-                                class="social-link"><strong>Facebook:</strong>
-                                <a href="https://facebook.com/slu_css"
-                                    target="_blank">https://facebook.com/slu_css</a></div>
-                            <div
-                                class="social-link"><strong>Instagram:</strong>
-                                <a href="https://instagram.com/slu_css"
-                                    target="_blank">https://instagram.com/slu_css</a></div>
-                            <div
-                                class="social-link"><strong>Twitter:</strong>
-                                <a href="https://twitter.com/slu_css"
-                                    target="_blank">https://twitter.com/slu_css</a></div>
+                <div class="info-field">
+                    <label>Social Media Links</label>
+                    <div class="social-links" id="socialLinks">
+                        <div class="social-link">
+                            <strong>Facebook:</strong>
+                            <a href="https://facebook.com/slu_css" target="_blank">https://facebook.com/slu_css</a>
+                        </div>
+                        <div class="social-link">
+                            <strong>Instagram:</strong>
+                            <a href="https://instagram.com/slu_css" target="_blank">https://instagram.com/slu_css</a>
+                        </div>
+                        <div class="social-link">
+                            <strong>Twitter:</strong>
+                            <a href="https://twitter.com/slu_css" target="_blank">https://twitter.com/slu_css</a>
                         </div>
                     </div>
                 </div>
+            </div>
 
                 <div class="info-card">
                     <div class="info-card-header">
