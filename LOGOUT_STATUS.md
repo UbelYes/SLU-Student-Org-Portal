@@ -22,7 +22,6 @@ Fixed the missing `onclick="handleLogout()"` handlers on student organization lo
 ### 👔 OSA Staff Pages
 | Page | Status | Handler |
 |------|--------|---------|
-| osa-dashboard.html | ✅ Working | `onclick="handleLogout()"` |
 | osa-forms.html | ✅ Working | `onclick="handleLogout()"` |
 | osa-view.html | ✅ Working | `onclick="handleLogout()"` |
 | osa-documents.html | ✅ Working | `onclick="handleLogout()"` |

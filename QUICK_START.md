@@ -58,7 +58,7 @@ Password: icon123
         │
         ├─── Admin? ────────────► /admin/admin-dashboard.html
         │
-        ├─── OSA Staff? ────────► /osa-staff/osa-dashboard.html
+        ├─── OSA Staff? ────────► /osa-staff/osa-forms.html
         │
         └─── Student Org? ──────► /org/org-dashboard.html
 ```
@@ -127,8 +127,8 @@ SLU-Student-Org-Portal/
 │   ├── admin-dashboard.html       ← Admin dashboard (protected)
 │   └── admin-accounts.html        ← Admin accounts page (protected)
 ├── osa-staff/
-│   ├── osa-dashboard.html         ← OSA dashboard (protected)
-│   ├── osa-forms.html             ← OSA forms (protected)
+│   ├── osa-forms.html             ← OSA forms page (protected, landing page)
+│   ├── osa-documents.html         ← OSA documents (protected)
 │   └── ...
 ├── org/
 │   ├── org-dashboard.html         ← Student dashboard (protected)

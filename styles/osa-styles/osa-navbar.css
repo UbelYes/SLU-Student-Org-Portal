@@ -8,11 +8,6 @@
     src: url(/resources/fonts/Arimo-VariableFont_wght.ttf);
 }
 
-/* Hide the dashboard button for OSA staff */
-#dashboard-button {
-    display: none;
-}
-
 .navigation-side-bar{
     position: fixed;
     /* Keep the sidebar visually above main content (prevent content from overlapping) */

@@ -3,7 +3,6 @@
 
 // Navigation mapping
 const navigationRoutes = {
-    'dashboard-button': 'osa-forms.html', // Dashboard redirects to forms
     'forms-button': 'osa-forms.html',
     'documents-button': 'osa-documents.html',
     'accounts-button': 'osa-accounts.html',
