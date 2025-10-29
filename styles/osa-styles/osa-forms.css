@@ -34,16 +34,19 @@ body {
     align-items: flex-start;
     font-family: "Arimo", sans-serif;
     margin-left: 280px;
-    padding: 16px 20px;
+    padding: 40px 48px;
+    max-width: calc(100vw - 280px);
+    box-sizing: border-box;
 }
 
 .forms-container {
     display: flex;
     width: 100%;
-    padding: 24px;
+    max-width: 1400px;
+    padding: 0;
     flex-direction: column;
     align-items: stretch;
-    gap: 24px;
+    gap: 32px;
     box-sizing: border-box;
 }
 
@@ -51,8 +54,18 @@ body {
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: space-between;
-    font-size: 1.25rem;
+    justify-content: flex-start;
+    margin-bottom: 8px;
+}
+
+.forms-title h1 {
+    color: #0A0A0A;
+    font-family: "Arimo", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
 }
 
 /* .forms-title p format here */
