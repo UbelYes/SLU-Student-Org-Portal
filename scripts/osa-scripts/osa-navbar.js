@@ -9,6 +9,48 @@ const navigationRoutes = {
     'settings-button': 'osa-settings.html'
 };
 
+// Hamburger menu toggle
+const hamburgerToggle = document.getElementById('hamburger-toggle');
+const navigationSidebar = document.getElementById('navigation-sidebar');
+
+if (hamburgerToggle && navigationSidebar) {
+    hamburgerToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        hamburgerToggle.classList.toggle('active');
+        navigationSidebar.classList.toggle('active');
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 600) {
+            if (navigationSidebar.classList.contains('active') && 
+                !navigationSidebar.contains(e.target) && 
+                !hamburgerToggle.contains(e.target)) {
+                navigationSidebar.classList.remove('active');
+                hamburgerToggle.classList.remove('active');
+            }
+        }
+    });
+
+    // Close sidebar when clicking a menu item on mobile
+    document.querySelectorAll('.menu-button').forEach(button => {
+        button.addEventListener('click', () => {
+            if (window.innerWidth <= 600) {
+                navigationSidebar.classList.remove('active');
+                hamburgerToggle.classList.remove('active');
+            }
+        });
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 600) {
+            navigationSidebar.classList.remove('active');
+            hamburgerToggle.classList.remove('active');
+        }
+    });
+}
+
 // Handle menu button clicks
 document.querySelectorAll('.menu-button').forEach(button => {
     button.addEventListener('click', () => {

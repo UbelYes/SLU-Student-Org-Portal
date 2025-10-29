@@ -13,8 +13,15 @@
 </head>
 <body>
     <div class="OSA-forms-page">
+        <!-- Hamburger Menu Button (Mobile Only) -->
+        <button class="hamburger-menu" id="hamburger-toggle" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
         <!-- Navigation Sidebar -->
-        <nav class="navigation-side-bar">
+        <nav class="navigation-side-bar" id="navigation-sidebar">
             <div class="navigation-container">
                 <div class="banner">
                     <div class="image-SLU-logo">
@@ -104,19 +111,20 @@
 
                             <!-- Forms Table -->
                             <div class="forms-list">
-                                <table class="form-table">
-                                    <thead>
-                                        <tr class="table-headers">
-                                            <th>Submission Title</th>
-                                            <th>Organization Name</th>
-                                            <th>Submitted By</th>
-                                            <th>Date Submitted</th>
-                                            <th>School</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                <div class="form-table-wrapper">
+                                    <table class="form-table">
+                                        <thead>
+                                            <tr class="table-headers">
+                                                <th>Submission Title</th>
+                                                <th>Organization Name</th>
+                                                <th>Submitted By</th>
+                                                <th>Date Submitted</th>
+                                                <th>School</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                         <tr class="table-data">
                                             <td>End Term Requirement 2024</td>
                                             <td>ICON</td>
@@ -178,15 +186,40 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
 
-                            <!-- Pagination -->
-                            <div class="pagination">
-                                <a href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <a href="#">4</a>
-                                <a href="#">5</a>
+                            <!-- Pagination Controls -->
+                            <div class="pagination-container">
+                                <div class="pagination-info">
+                                    <span id="forms-pagination-info">Showing 0 of 0 forms</span>
+                                </div>
+                                <div class="pagination-controls">
+                                    <button class="btn-page" id="forms-first-page" onclick="formsGoToPage(1)" disabled>
+                                        <span>⏮</span> First
+                                    </button>
+                                    <button class="btn-page" id="forms-prev-page" onclick="formsPreviousPage()" disabled>
+                                        <span>◀</span> Previous
+                                    </button>
+                                    <div class="page-numbers" id="forms-page-numbers">
+                                        <button class="btn-page-num active">1</button>
+                                    </div>
+                                    <button class="btn-page" id="forms-next-page" onclick="formsNextPage()">
+                                        Next <span>▶</span>
+                                    </button>
+                                    <button class="btn-page" id="forms-last-page" onclick="formsGoToLastPage()">
+                                        Last <span>⏭</span>
+                                    </button>
+                                </div>
+                                <div class="items-per-page">
+                                    <label for="forms-items-per-page">Items per page:</label>
+                                    <select id="forms-items-per-page" onchange="formsChangeItemsPerPage()">
+                                        <option value="5">5</option>
+                                        <option value="10" selected>10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>

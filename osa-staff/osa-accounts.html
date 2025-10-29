@@ -13,8 +13,15 @@
 </head>
 <body>
     <div class="accounts-page">
+        <!-- Hamburger Menu Button (Mobile Only) -->
+        <button class="hamburger-menu" id="hamburger-toggle" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
         <!-- Navigation Sidebar -->
-        <nav class="navigation-side-bar">
+        <nav class="navigation-side-bar" id="navigation-sidebar">
             <div class="navigation-container">
                 <div class="banner">
                     <div class="image-SLU-logo">
@@ -123,6 +130,39 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <!-- Pagination for Recent Access -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="access-pagination-info">Showing 0 of 0 records</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn-page" id="access-first-page" onclick="accessGoToPage(1)" disabled>
+                                <span>⏮</span> First
+                            </button>
+                            <button class="btn-page" id="access-prev-page" onclick="accessPreviousPage()" disabled>
+                                <span>◀</span> Previous
+                            </button>
+                            <div class="page-numbers" id="access-page-numbers">
+                                <button class="btn-page-num active">1</button>
+                            </div>
+                            <button class="btn-page" id="access-next-page" onclick="accessNextPage()">
+                                Next <span>▶</span>
+                            </button>
+                            <button class="btn-page" id="access-last-page" onclick="accessGoToLastPage()">
+                                Last <span>⏭</span>
+                            </button>
+                        </div>
+                        <div class="items-per-page">
+                            <label for="access-items-per-page">Items per page:</label>
+                            <select id="access-items-per-page" onchange="accessChangeItemsPerPage()">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Form Submissions Tab -->
@@ -167,6 +207,39 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+
+                    <!-- Pagination for Form Submissions -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="submission-pagination-info">Showing 0 of 0 records</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn-page" id="submission-first-page" onclick="submissionGoToPage(1)" disabled>
+                                <span>⏮</span> First
+                            </button>
+                            <button class="btn-page" id="submission-prev-page" onclick="submissionPreviousPage()" disabled>
+                                <span>◀</span> Previous
+                            </button>
+                            <div class="page-numbers" id="submission-page-numbers">
+                                <button class="btn-page-num active">1</button>
+                            </div>
+                            <button class="btn-page" id="submission-next-page" onclick="submissionNextPage()">
+                                Next <span>▶</span>
+                            </button>
+                            <button class="btn-page" id="submission-last-page" onclick="submissionGoToLastPage()">
+                                Last <span>⏭</span>
+                            </button>
+                        </div>
+                        <div class="items-per-page">
+                            <label for="submission-items-per-page">Items per page:</label>
+                            <select id="submission-items-per-page" onchange="submissionChangeItemsPerPage()">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>

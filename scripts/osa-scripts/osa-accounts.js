@@ -13,6 +13,16 @@ const STORAGE_KEYS = {
 let accessLog = [];
 let formSubmissions = [];
 
+// Pagination state for access log
+let accessCurrentPage = 1;
+let accessItemsPerPage = 10;
+let accessFilteredData = [];
+
+// Pagination state for submissions
+let submissionCurrentPage = 1;
+let submissionItemsPerPage = 10;
+let submissionFilteredData = [];
+
 /**
  * Initialize the page
  */
@@ -120,7 +130,7 @@ function displayAccessData() {
     if (!tbody) return;
     
     // Filter data
-    let filteredData = accessLog.filter(entry => {
+    accessFilteredData = accessLog.filter(entry => {
         const matchesSearch = 
             entry.orgName.toLowerCase().includes(searchTerm) ||
             entry.studentName.toLowerCase().includes(searchTerm) ||
@@ -132,14 +142,23 @@ function displayAccessData() {
     });
     
     // Sort by most recent
-    filteredData.sort((a, b) => new Date(b.lastAccess) - new Date(a.lastAccess));
+    accessFilteredData.sort((a, b) => new Date(b.lastAccess) - new Date(a.lastAccess));
     
-    if (filteredData.length === 0) {
+    // Calculate pagination
+    const totalItems = accessFilteredData.length;
+    const totalPages = Math.ceil(totalItems / accessItemsPerPage);
+    const startIndex = (accessCurrentPage - 1) * accessItemsPerPage;
+    const endIndex = Math.min(startIndex + accessItemsPerPage, totalItems);
+    const pageData = accessFilteredData.slice(startIndex, endIndex);
+    
+    if (accessFilteredData.length === 0) {
         tbody.innerHTML = '<tr><td colspan="6" class="text-center">No access records found</td></tr>';
+        updateAccessPaginationInfo(0, 0, 0);
+        updateAccessPaginationControls(0);
         return;
     }
     
-    tbody.innerHTML = filteredData.map(entry => `
+    tbody.innerHTML = pageData.map(entry => `
         <tr>
             <td><strong>${escapeHtml(entry.orgName)}</strong></td>
             <td>${escapeHtml(entry.studentName)}</td>
@@ -149,6 +168,9 @@ function displayAccessData() {
             <td><span class="status-badge ${getStatusClass(entry.lastAccess)}">${getStatusText(entry.lastAccess)}</span></td>
         </tr>
     `).join('');
+    
+    updateAccessPaginationInfo(totalItems, startIndex, endIndex);
+    updateAccessPaginationControls(totalPages);
 }
 
 /**
@@ -163,7 +185,7 @@ function displaySubmissionData() {
     if (!tbody) return;
     
     // Filter data
-    let filteredData = formSubmissions.filter(entry => {
+    submissionFilteredData = formSubmissions.filter(entry => {
         const matchesSearch = 
             entry.organization.toLowerCase().includes(searchTerm) ||
             entry.formType.toLowerCase().includes(searchTerm) ||
@@ -176,14 +198,23 @@ function displaySubmissionData() {
     });
     
     // Sort by most recent
-    filteredData.sort((a, b) => new Date(b.submissionDate) - new Date(a.submissionDate));
+    submissionFilteredData.sort((a, b) => new Date(b.submissionDate) - new Date(a.submissionDate));
     
-    if (filteredData.length === 0) {
+    // Calculate pagination
+    const totalItems = submissionFilteredData.length;
+    const totalPages = Math.ceil(totalItems / submissionItemsPerPage);
+    const startIndex = (submissionCurrentPage - 1) * submissionItemsPerPage;
+    const endIndex = Math.min(startIndex + submissionItemsPerPage, totalItems);
+    const pageData = submissionFilteredData.slice(startIndex, endIndex);
+    
+    if (submissionFilteredData.length === 0) {
         tbody.innerHTML = '<tr><td colspan="6" class="text-center">No form submissions found</td></tr>';
+        updateSubmissionPaginationInfo(0, 0, 0);
+        updateSubmissionPaginationControls(0);
         return;
     }
     
-    tbody.innerHTML = filteredData.map(entry => `
+    tbody.innerHTML = pageData.map(entry => `
         <tr>
             <td><strong>${escapeHtml(entry.organization)}</strong></td>
             <td>${escapeHtml(entry.formType)}</td>
@@ -195,6 +226,9 @@ function displaySubmissionData() {
             </td>
         </tr>
     `).join('');
+    
+    updateSubmissionPaginationInfo(totalItems, startIndex, endIndex);
+    updateSubmissionPaginationControls(totalPages);
 }
 
 /**
@@ -472,3 +506,175 @@ function showNotification(message) {
 
 // Expose function globally for login script
 window.trackStudentAccess = trackStudentAccess;
+
+/**
+ * Pagination functions for Access Log
+ */
+function updateAccessPaginationInfo(total, start, end) {
+    const infoText = document.getElementById('access-pagination-info');
+    if (infoText) {
+        if (total === 0) {
+            infoText.textContent = 'Showing 0 of 0 records';
+        } else {
+            infoText.textContent = `Showing ${start + 1}-${end} of ${total} records`;
+        }
+    }
+}
+
+function updateAccessPaginationControls(totalPages) {
+    const firstBtn = document.getElementById('access-first-page');
+    const prevBtn = document.getElementById('access-prev-page');
+    const nextBtn = document.getElementById('access-next-page');
+    const lastBtn = document.getElementById('access-last-page');
+    const pageNumbers = document.getElementById('access-page-numbers');
+    
+    if (firstBtn) firstBtn.disabled = accessCurrentPage === 1;
+    if (prevBtn) prevBtn.disabled = accessCurrentPage === 1;
+    if (nextBtn) nextBtn.disabled = accessCurrentPage === totalPages || totalPages === 0;
+    if (lastBtn) lastBtn.disabled = accessCurrentPage === totalPages || totalPages === 0;
+    
+    if (pageNumbers) {
+        pageNumbers.innerHTML = generatePageNumbers(accessCurrentPage, totalPages);
+    }
+}
+
+function accessGoToPage(page) {
+    const totalPages = Math.ceil(accessFilteredData.length / accessItemsPerPage);
+    if (page < 1 || page > totalPages) return;
+    accessCurrentPage = page;
+    displayAccessData();
+}
+
+function accessNextPage() {
+    const totalPages = Math.ceil(accessFilteredData.length / accessItemsPerPage);
+    if (accessCurrentPage < totalPages) {
+        accessCurrentPage++;
+        displayAccessData();
+    }
+}
+
+function accessPreviousPage() {
+    if (accessCurrentPage > 1) {
+        accessCurrentPage--;
+        displayAccessData();
+    }
+}
+
+function accessGoToLastPage() {
+    const totalPages = Math.ceil(accessFilteredData.length / accessItemsPerPage);
+    accessCurrentPage = totalPages > 0 ? totalPages : 1;
+    displayAccessData();
+}
+
+function accessChangeItemsPerPage() {
+    const select = document.getElementById('access-items-per-page');
+    if (select) {
+        accessItemsPerPage = parseInt(select.value);
+        accessCurrentPage = 1;
+        displayAccessData();
+    }
+}
+
+/**
+ * Pagination functions for Submissions
+ */
+function updateSubmissionPaginationInfo(total, start, end) {
+    const infoText = document.getElementById('submission-pagination-info');
+    if (infoText) {
+        if (total === 0) {
+            infoText.textContent = 'Showing 0 of 0 records';
+        } else {
+            infoText.textContent = `Showing ${start + 1}-${end} of ${total} records`;
+        }
+    }
+}
+
+function updateSubmissionPaginationControls(totalPages) {
+    const firstBtn = document.getElementById('submission-first-page');
+    const prevBtn = document.getElementById('submission-prev-page');
+    const nextBtn = document.getElementById('submission-next-page');
+    const lastBtn = document.getElementById('submission-last-page');
+    const pageNumbers = document.getElementById('submission-page-numbers');
+    
+    if (firstBtn) firstBtn.disabled = submissionCurrentPage === 1;
+    if (prevBtn) prevBtn.disabled = submissionCurrentPage === 1;
+    if (nextBtn) nextBtn.disabled = submissionCurrentPage === totalPages || totalPages === 0;
+    if (lastBtn) lastBtn.disabled = submissionCurrentPage === totalPages || totalPages === 0;
+    
+    if (pageNumbers) {
+        pageNumbers.innerHTML = generatePageNumbers(submissionCurrentPage, totalPages);
+    }
+}
+
+function submissionGoToPage(page) {
+    const totalPages = Math.ceil(submissionFilteredData.length / submissionItemsPerPage);
+    if (page < 1 || page > totalPages) return;
+    submissionCurrentPage = page;
+    displaySubmissionData();
+}
+
+function submissionNextPage() {
+    const totalPages = Math.ceil(submissionFilteredData.length / submissionItemsPerPage);
+    if (submissionCurrentPage < totalPages) {
+        submissionCurrentPage++;
+        displaySubmissionData();
+    }
+}
+
+function submissionPreviousPage() {
+    if (submissionCurrentPage > 1) {
+        submissionCurrentPage--;
+        displaySubmissionData();
+    }
+}
+
+function submissionGoToLastPage() {
+    const totalPages = Math.ceil(submissionFilteredData.length / submissionItemsPerPage);
+    submissionCurrentPage = totalPages > 0 ? totalPages : 1;
+    displaySubmissionData();
+}
+
+function submissionChangeItemsPerPage() {
+    const select = document.getElementById('submission-items-per-page');
+    if (select) {
+        submissionItemsPerPage = parseInt(select.value);
+        submissionCurrentPage = 1;
+        displaySubmissionData();
+    }
+}
+
+/**
+ * Generate page number buttons
+ */
+function generatePageNumbers(currentPage, totalPages) {
+    if (totalPages === 0) {
+        return '<button class="btn-page-num active">1</button>';
+    }
+    
+    let pages = [];
+    const maxVisible = 5;
+    
+    if (totalPages <= maxVisible) {
+        for (let i = 1; i <= totalPages; i++) {
+            pages.push(i);
+        }
+    } else {
+        if (currentPage <= 3) {
+            pages = [1, 2, 3, 4, '...', totalPages];
+        } else if (currentPage >= totalPages - 2) {
+            pages = [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+        } else {
+            pages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+        }
+    }
+    
+    return pages.map(page => {
+        if (page === '...') {
+            return '<span class="page-ellipsis">...</span>';
+        }
+        const isActive = page === currentPage ? 'active' : '';
+        const clickHandler = document.getElementById('access-page-numbers') ? 
+            `accessGoToPage(${page})` : `submissionGoToPage(${page})`;
+        return `<button class="btn-page-num ${isActive}" onclick="${clickHandler}">${page}</button>`;
+    }).join('');
+}

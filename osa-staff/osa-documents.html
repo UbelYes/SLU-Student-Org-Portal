@@ -13,8 +13,15 @@
 </head>
 <body>
     <div class="document-page">
+        <!-- Hamburger Menu Button (Mobile Only) -->
+        <button class="hamburger-menu" id="hamburger-toggle" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
         <!-- Navigation Sidebar -->
-        <nav class="navigation-side-bar">
+        <nav class="navigation-side-bar" id="navigation-sidebar">
             <div class="navigation-container">
                 <div class="banner">
                     <div class="image-SLU-logo">
@@ -98,21 +105,23 @@
 
                 <!-- Documents Table -->
                 <div class="documents-table-container">
-                    <table class="documents-table">
-                        <thead>
-                            <tr>
-                                <th>File Name</th>
-                                <th>Uploaded By</th>
-                                <th>Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="documents-table-body">
-                            <tr>
-                                <td colspan="4" class="text-center loading">Loading documents...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="documents-table-wrapper">
+                        <table class="documents-table">
+                            <thead>
+                                <tr>
+                                    <th>File Name</th>
+                                    <th>Uploaded By</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="documents-table-body">
+                                <tr>
+                                    <td colspan="4" class="text-center loading">Loading documents...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <!-- Pagination Controls -->

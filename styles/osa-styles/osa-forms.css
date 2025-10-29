@@ -15,15 +15,20 @@ html {
     background-size: 10px 10px;
     margin: 0;
     padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 body {
     margin: 0;
     padding: 0;
+    min-height: 100%;
+    overflow-y: auto;
 }
 
 .OSA-forms-page {
     display: flex;
+    min-height: 100vh;
 }
 
 .main-content {
@@ -231,6 +236,28 @@ body {
     margin: 0;
 }
 
+.form-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 600px;
+}
+
+/* Scrollbar styling for table overflow */
+.form-table-wrapper::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+.form-table-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+}
+
+.form-table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 .form-table {
     width: 100%;
     height: auto;
@@ -241,11 +268,6 @@ body {
     background: #FFF;
     border: 1px solid #E5E5E6;
     box-sizing: border-box;
-}
-
-/* Allow horizontal scrolling for wide tables on small screens */
-.forms-list {
-    overflow-x: auto;
 }
 
 .forms-list::-webkit-scrollbar {
@@ -269,9 +291,18 @@ body {
 
 /* Responsive breakpoints for forms page */
 @media (max-width: 1260px) {
+    .main-content {
+        padding: 32px 24px;
+    }
+
     .forms-container {
-        padding: 18px;
-        max-width: 940px;
+        padding: 0;
+        max-width: 100%;
+        gap: 24px;
+    }
+
+    .forms-title h1 {
+        font-size: 28px;
     }
 
     .search-bar {
@@ -282,37 +313,107 @@ body {
     .sort-container {
         gap: 12px;
         flex-wrap: wrap;
-        align-items: flex-start;
     }
 
     .form-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
-        overflow-y: hidden;
     }
 
     .create-form-button {
         align-self: flex-start;
     }
+
+    .forms {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 24px 16px;
+    }
+
+    .forms-container {
+        gap: 20px;
+    }
+
+    .forms-title h1 {
+        font-size: 26px;
+    }
+
+    .sort-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-bar {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .sort-dropdown {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .btn-refresh {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .forms {
+        overflow: visible;
+    }
+
+    .form-table-wrapper {
+        overflow-x: auto;
+        max-height: 500px;
+    }
+
+    .form-table {
+        min-width: 700px;
+    }
+
+    .form-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .create-form-button {
+        width: 100%;
+    }
 }
 
 @media (max-width: 600px) {
-    /* Main area becomes full width (sidebar collapsed to small rail) */
+    /* Main area becomes full width with hamburger menu */
     .main-content {
-        margin-left: 70px; /* matches navbar collapsed width */
-        padding: 12px;
+        margin-left: 0;
+        padding: 80px 12px 12px 12px;
+        max-width: 100vw;
     }
 
     .forms-container {
         padding: 12px;
         max-width: none;
-        width: calc(100vw - 90px);
+        width: 100%;
+        gap: 20px;
+    }
+
+    .forms-title h1 {
+        font-size: 24px;
     }
 
     .forms {
-        padding: 12px;
-        gap: 12px;
+        padding: 16px;
+        gap: 16px;
+        overflow: visible;
+    }
+
+    .form-table-wrapper {
+        overflow-x: auto;
+        max-height: 450px;
     }
 
     .search-bar {
@@ -321,41 +422,109 @@ body {
         height: 40px;
     }
 
+    .sort-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .sort-dropdown {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .btn-refresh {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .form-table {
+        font-size: 13px;
+        min-width: 700px;
+    }
+
     .form-table th,
     .form-table td {
-        padding: 10px 12px;
+        padding: 12px 10px;
         font-size: 13px;
     }
 
     .form-header-title h2 {
-        font-size: 1rem;
+        font-size: 18px;
+    }
+
+    .form-text-description {
+        font-size: 13px;
+    }
+
+    .create-form-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 6px;
+        min-width: 90px;
+    }
+
+    .action-buttons button {
+        width: 100%;
     }
 }
 
 @media (max-width: 420px) {
     .main-content {
-        margin-left: 70px;
-        padding: 8px;
+        margin-left: 0;
+        padding: 80px 10px 10px 10px;
     }
 
     .forms-container {
-        padding: 8px;
-        width: calc(100vw - 80px);
+        padding: 10px;
+        gap: 16px;
+    }
+
+    .forms-title h1 {
+        font-size: 20px;
     }
 
     .forms {
-        padding: 8px;
+        padding: 12px;
+        overflow: visible;
+    }
+
+    .form-table-wrapper {
+        overflow-x: auto;
+        max-height: 400px;
+    }
+
+    .form-table {
+        min-width: 650px;
+        font-size: 12px;
     }
 
     .form-table th,
     .form-table td {
-        padding: 8px 10px;
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+
+    .form-header-title h2 {
+        font-size: 16px;
+    }
+
+    .form-text-description {
         font-size: 12px;
     }
 
     .create-form-button {
-        padding: 8px 10px;
-        font-size: 14px;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .action-buttons button {
+        font-size: 11px;
+        padding: 5px 8px;
     }
 }
 
@@ -479,35 +648,127 @@ body {
     color: #FFF;
 }
 
-.pagination {
+/* Pagination Styles */
+.pagination-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    align-self: stretch;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.pagination-info {
+    color: #666;
+    font-size: 14px;
+}
+
+.pagination-controls {
+    display: flex;
     gap: 8px;
-    margin-top: 24px;
+    align-items: center;
 }
 
-.pagination a {
-    text-decoration: none;
+.btn-page {
     padding: 8px 16px;
-    border: 1px solid #036;
-    color: #036;
+    background: white;
+    border: 1px solid #ddd;
     border-radius: 6px;
-    font-weight: 500;
-    background: #fff;
-    transition: background 0.2s, color 0.2s, border 0.2s;
     cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.pagination a.active {
-    background: linear-gradient(94deg, #036 1.19%, #001F3F 100.29%);
-    color: #fff;
-    border: 1px solid #036;
+.btn-page:hover:not(:disabled) {
+    background: #f5f5f5;
+    border-color: #444cf7;
+    color: #444cf7;
 }
 
-.pagination a:hover:not(.active) {
-    background: #036;
-    color: #fff;
-    border: 1px solid #036;
+.btn-page:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-page-num {
+    min-width: 36px;
+    height: 36px;
+    padding: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.btn-page-num:hover {
+    background: #f5f5f5;
+    border-color: #444cf7;
+    color: #444cf7;
+}
+
+.btn-page-num.active {
+    background: #444cf7;
+    color: white;
+    border-color: #444cf7;
+}
+
+.page-ellipsis {
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    color: #999;
+}
+
+.items-per-page {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+.items-per-page select {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Responsive Pagination Styles */
+@media (max-width: 768px) {
+    .pagination-container {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .pagination-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .btn-page span {
+        display: none;
+    }
+    
+    .btn-page {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
 }
