@@ -5,8 +5,7 @@
 const navigationRoutes = {
     'forms-button': 'osa-forms.html',
     'documents-button': 'osa-documents.html',
-    'accounts-button': 'osa-accounts.html',
-    'settings-button': 'osa-settings.html'
+    'accounts-button': 'osa-accounts.html'
 };
 
 // Hamburger menu toggle
