@@ -8,8 +8,15 @@
     src: url(/resources/fonts/Arimo-VariableFont_wght.ttf);
 }
 
+/* Hide the dashboard button for OSA staff */
+#dashboard-button {
+    display: none;
+}
+
 .navigation-side-bar{
     position: fixed;
+    /* Keep the sidebar visually above main content (prevent content from overlapping) */
+    z-index: 1200;
 }
 
 .navigation-container {
@@ -21,6 +28,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 1200; /* reinforce stacking for child container */
 }
 
 .banner {
@@ -139,4 +147,139 @@
 main {
     margin-left: 280px;
     padding: 20px;
+}
+
+/* Responsive adjustments */
+/* Tablet: reduce sidebar slightly */
+@media (max-width: 1260px) and (max-height: 800px) {
+    .menu-container {
+        height: 55vh;
+    }
+}
+
+@media (max-height: 900px) {
+    .menu-container {
+        height: 50vh;
+    }
+
+}
+
+/* Mobile: icon-only collapsed sidebar */
+@media (max-width: 600px) {
+    .navigation-container {
+        width: 70px;
+        align-items: center;
+        padding: 8px 0;
+        overflow-y: auto;
+    }
+
+    .banner {
+        padding: 10px 0;
+        gap: 6px;
+    }
+
+    .image-SLU-logo img {
+        width: 42px;
+    }
+
+    /* Hide large header text to save space */
+    .banner-text-wrapper,
+    .banner-text-wrapper h1 {
+        display: none;
+    }
+
+    .menu-container {
+        width: 70px;
+        padding: 8px 0 0 0;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Make menu buttons icon-only */
+    .menu-button {
+        display: flex;
+        width: 56px;
+        height: 56px;
+        padding-left: 0;
+        justify-content: center;
+        border-radius: 12px;
+        gap: 0;
+    }
+
+    .menu-button .menu-icon {
+        margin: 0;
+    }
+
+    /* Hide the text labels on small screens */
+    .menu-text,
+    .logout-text {
+        display: none;
+    }
+
+    .logout-button {
+        width: 56px;
+        height: 56px;
+        justify-content: center;
+        border-radius: 12px;
+    }
+
+    /* Make icons centered and slightly larger for touch */
+    .menu-button img,
+    .logout-button img {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* Adjust active state sizing */
+    .active,
+    .menu-button:hover,
+    .logout-button:hover {
+        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        transform: translateY(-1px);
+    }
+
+    main {
+        margin-left: 70px;
+        padding: 12px;
+    }
+}
+
+/* Very small phones: ensure comfortable hit targets */
+@media (max-width: 420px) {
+    .menu-button,
+    .logout-button {
+        width: 60px;
+        height: 60px;
+    }
+
+    .menu-button img,
+    .logout-button img {
+        width: 32px;
+        height: 32px;
+    }
+
+    main {
+        padding: 10px;
+    }
+}
+
+/* Smooth transitions */
+.navigation-container,
+.menu-button,
+.logout-button,
+main {
+    transition: all 200ms ease-in-out;
+}
+
+/* Ensure the sidebar can scroll if items overflow on short screens */
+.navigation-container {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    /* Hide native scrollbars but keep scrolling functional */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.navigation-container::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
 }

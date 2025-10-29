@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Organization Portal - End-Term Submission</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 240px;
+            background-color: #003366;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+        }
+
+        .sidebar__header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar__logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+        }
+
+        .sidebar__logo-img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sidebar__title {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .sidebar__user {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar__user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #ffd700;
+            margin: 0 auto 15px;
+            background-color: #004080;
+        }
+
+        .sidebar__user-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .sidebar__user-icon {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .sidebar__nav {
+            flex: 1;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #003366;
+            background-color: #ffd700;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-link--secondary {
+            background-color: transparent;
+            color: white;
+            border: 1px solid transparent;
+        }
+
+        .nav-link--secondary:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-link__icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .sidebar__footer {
+            margin-top: auto;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logout-btn__icon {
+            margin-right: 8px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 240px;
+            flex: 1;
+            padding: 30px;
+        }
+
+        .form-container {
+            max-width: 900px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .form-header__title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .form-header__subtitle {
+            font-size: 13px;
+            opacity: 0.95;
+        }
+
+        .form-body {
+            padding: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 35px;
+        }
+
+        .form-section__title {
+            font-size: 16px;
+            color: #007bff;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-label--required::after {
+            content: ' *';
+            color: #dc3545;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #f8f9fa;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #007bff;
+            background-color: white;
+        }
+
+        .form-input::placeholder {
+            color: #999;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #007bff;
+            margin-top: 5px;
+        }
+
+        .form-checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-checkbox__input {
+            margin-right: 8px;
+        }
+
+        .form-checkbox__label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-radio-group {
+            display: flex;
+            gap: 30px;
+        }
+
+        .form-radio {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-radio__input {
+            margin-right: 8px;
+        }
+
+        .form-radio__label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-file-upload {
+            border: 2px dashed #ddd;
+            border-radius: 4px;
+            padding: 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .form-alert {
+            background-color: #e7f3ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .form-alert__title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #004085;
+            margin-bottom: 5px;
+        }
+
+        .form-alert__text {
+            font-size: 13px;
+            color: #004085;
+            line-height: 1.5;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            padding: 0 30px 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn--primary {
+            background-color: #007bff;
+            color: white;
+            flex: 1;
+        }
+
+        .btn--primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn--secondary {
+            background-color: white;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+
+        .btn--secondary:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar__header">
+            <div class="sidebar__logo">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23ffd700'/%3E%3Ctext x='50' y='60' font-size='40' text-anchor='middle' fill='%23003366' font-weight='bold'%3ESLU%3C/text%3E%3C/svg%3E" alt="SLU Logo" class="sidebar__logo-img">
+            </div>
+            <h1 class="sidebar__title">Student<br>Organization Portal</h1>
+        </div>
+
+        <div class="sidebar__user">
+            <div class="sidebar__user-avatar"></div>
+            <div class="sidebar__user-name">SAMCIS</div>
+            <div class="sidebar__user-icon">iCON</div>
+        </div>
+
+        <nav class="sidebar__nav">
+            <a href="#" class="nav-link">
+                <span class="nav-link__icon">🏠</span>
+                Dashboard
+            </a>
+            <a href="#" class="nav-link nav-link--secondary">
+                <span class="nav-link__icon">🕒</span>
+                Submission History
+            </a>
+        </nav>
+
+        <div class="sidebar__footer">
+            <button class="logout-btn">
+                <span class="logout-btn__icon">↩</span>
+                Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="form-container">
+            <header class="form-header">
+                <h2 class="form-header__title">End-Term Submission Form</h2>
+                <p class="form-header__subtitle">Please fill out all required fields and upload necessary documents</p>
+            </header>
+
+            <form class="form-body">
+                <!-- Submission Title -->
+                <div class="form-group">
+                    <label class="form-label form-label--required">Submission Title</label>
+                    <input type="text" class="form-input" placeholder="e.g. End-Term Requirements 2024-2025, Mid-Year Report 2025">
+                    <div class="form-hint">Give this submission a descriptive title to help you identify it later</div>
+                </div>
+
+                <!-- Organization Information -->
+                <section class="form-section">
+                    <h3 class="form-section__title">Organization Information</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Complete Name of Organization or Publication</label>
+                        <input type="text" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Acronym or Short Name</label>
+                        <input type="text" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Official SLU Institutional Email</label>
+                        <input type="email" class="form-input" placeholder="organization@slu.edu.ph">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">URL Link/s to Official Social Media Pages</label>
+                        <input type="text" class="form-input" placeholder="https://facebook.com/yourorg, https://instagram.com/yourorg">
+                    </div>
+                </section>
+
+                <!-- Applicant Information -->
+                <section class="form-section">
+                    <h3 class="form-section__title">Applicant Information</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Name of Applicant Representing the Organization</label>
+                        <input type="text" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Position of Applicant</label>
+                        <input type="text" class="form-input" placeholder="e.g. President, Vice President">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Applicant's SLU Institutional Email</label>
+                        <input type="email" class="form-input" placeholder="applicant@slu.edu.ph">
+                    </div>
+                </section>
+
+                <!-- Adviser Information -->
+                <section class="form-section">
+                    <h3 class="form-section__title">Adviser Information</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Name of Adviser/s</label>
+                        <input type="text" class="form-input" placeholder="Separate multiple names with commas">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Adviser Email/s</label>
+                        <input type="text" class="form-input" placeholder="adviser@slu.edu.ph (separate multiple with commas)">
+                    </div>
+                </section>
+
+                <!-- Category -->
+                <section class="form-section">
+                    <h3 class="form-section__title">Category</h3>
+                    <div class="form-checkbox-group">
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="samcis" class="form-checkbox__input">
+                            <label for="samcis" class="form-checkbox__label">SAMCIS</label>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="sea" class="form-checkbox__input">
+                            <label for="sea" class="form-checkbox__label">SEA</label>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="som" class="form-checkbox__input">
+                            <label for="som" class="form-checkbox__label">SOM</label>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="sonahbs" class="form-checkbox__input">
+                            <label for="sonahbs" class="form-checkbox__label">SONAHBS</label>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="sol" class="form-checkbox__input">
+                            <label for="sol" class="form-checkbox__label">SOL</label>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="stela" class="form-checkbox__input">
+                            <label for="stela" class="form-checkbox__label">STELA</label>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="university-wide" class="form-checkbox__input">
+                            <label for="university-wide" class="form-checkbox__label">University-Wide</label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Type of Organization -->
+                <section class="form-section">
+                    <h3 class="form-section__title">Type of Organization</h3>
+                    <div class="form-radio-group">
+                        <div class="form-radio">
+                            <input type="radio" id="co-curricular" name="org-type" class="form-radio__input">
+                            <label for="co-curricular" class="form-radio__label">Co-Curricular</label>
+                        </div>
+                        <div class="form-radio">
+                            <input type="radio" id="extra-curricular" name="org-type" class="form-radio__input">
+                            <label for="extra-curricular" class="form-radio__label">Extra-Curricular</label>
+                        </div>
+                        <div class="form-radio">
+                            <input type="radio" id="publication" name="org-type" class="form-radio__input">
+                            <label for="publication" class="form-radio__label">Publication</label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Required Documents -->
+                <section class="form-section">
+                    <h3 class="form-section__title">Required Documents (PDF, max 1GB each)</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Strategic Plans 2025-2026</label>
+                        <div class="form-file-upload">Click to upload or drag and drop</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Annual Report 2024-2025</label>
+                        <div class="form-file-upload">Click to upload or drag and drop</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Constitution & By-Laws</label>
+                        <div class="form-file-upload">Click to upload or drag and drop</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label form-label--required">List of Officers (Spreadsheet)</label>
+                        <div class="form-file-upload">Click to upload or drag and drop</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Financial Statement 2023-2024</label>
+                        <div class="form-file-upload">Click to upload or drag and drop</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label form-label--required">Updated Infographics</label>
+                        <div class="form-file-upload">Click to upload or drag and drop</div>
+                    </div>
+                </section>
+
+                <!-- CBL Status -->
+                <section class="form-section">
+                    <h3 class="form-section__title">CBL Status</h3>
+                    <div class="form-radio-group">
+                        <div class="form-radio">
+                            <input type="radio" id="with-revisions" name="cbl-status" class="form-radio__input">
+                            <label for="with-revisions" class="form-radio__label">With Revisions</label>
+                        </div>
+                        <div class="form-radio">
+                            <input type="radio" id="without-revisions" name="cbl-status" class="form-radio__input">
+                            <label for="without-revisions" class="form-radio__label">Without Revisions</label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Video Link -->
+                <div class="form-group">
+                    <label class="form-label form-label--required">Link to 2-minute Video</label>
+                    <input type="url" class="form-input" placeholder="https://youtube.com/watch?v=...">
+                </div>
+
+                <!-- Important Reminder -->
+                <div class="form-alert">
+                    <div class="form-alert__title">⓵ Important Reminder:</div>
+                    <div class="form-alert__text">All information submitted will be treated with confidentiality and used solely for organizational accreditation purposes. Please ensure all documents are complete and accurate before submission.</div>
+                </div>
+            </form>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary">Submit Form</button>
+                <button type="button" class="btn btn--secondary">Clear Form</button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

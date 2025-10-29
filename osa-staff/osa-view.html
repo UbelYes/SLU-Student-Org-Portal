@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="utf-8" />
+        <title>SLU OSA Forms</title>
+        <link rel="icon"
+            href="../resources/images/Saint-Louis-University-PH-Logo.png">
+        <link rel="stylesheet" href="../styles/osa-styles/osa-view.css" />
+        <link rel="stylesheet" href="../styles/osa-styles/osa-navbar.css">
+        <script src="../scripts/osa-scripts/osa-login.js" defer></script>
+        <script src="../scripts/osa-scripts/osa-forms.js" defer></script>
+        <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
+    </head>
+
+    
+    <body>
+        <nav class="navigation-side-bar">
+            <div class="navigation-container">
+                <div class="banner">
+                    <div class="image-SLU-logo">
+                        <img
+                            src="../resources/images/Saint-Louis-University-PH-Logo.png"
+                            alt="SLU-logo">
+                    </div>
+                    <div class="banner-heading"><div
+                            class="banner-text-wrapper"><h1>OSA
+                                Student
+                                Organization Portal</h1></div></div>
+                </div>
+
+                <div class="menu-container">
+                    <button class="menu-button" id="dashboard-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img"
+                                src="../resources/icons/home-icon.svg">
+                        </div>
+                        <div class="menu-text">Dashboard</div>
+                    </button>
+
+                    <button class="menu-button" id="forms-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img"
+                                src="../resources/icons/document-icon.svg"></div>
+                        <div class="menu-text">Forms</div>
+                    </button>
+
+                    <button class="menu-button" id="documents-button">
+                        <div class="menu-icon"><img class="menu-icon-img"
+                                src="../resources/icons/folder-icon.svg"></div>
+                        <div class="menu-text">Documents</div>
+                    </button>
+
+                    <button class="menu-button" id="accounts-button">
+                        <div class="menu-icon"><img class="menu-icon-img"
+                                src="../resources/icons/accounts-icon.svg"></div>
+                        <div class="menu-text">Accounts</div>
+                    </button>
+
+                    <button class="menu-button" id="settings-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img"
+                                src="../resources/icons/account-settings-icon.svg">
+                        </div>
+                        <div class="menu-text">Settings</div>
+                    </button>
+                </div>
+
+                <button class="logout-button" id="logout-button"
+                    onclick="handleLogout()">
+                    <div class="logout-icon">
+                        <img class="vector-7"
+                            src="../resources/icons/logout-icon.svg">
+                    </div>
+                    <div class="logout-text">Logout</div>
+                </button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Submission Details</h1>
+                <p>Review and manage organization submission</p>
+            </div>
+
+            <div class="submission-header">
+                <div class="submission-title">
+                    <h2 id="submissionTitle">End-Term Submission - Computer
+                        Science Society</h2>
+                    <div class="submission-meta">
+                        <span>📅 <span id="submissionDate">October 20,
+                                2025</span></span>
+                        <span>🔖 <span
+                                id="submissionId">SUB-2025-001</span></span>
+                    </div>
+                </div>
+                <span class="status-badge" id="submissionStatus">Pending
+                    Review</span>
+            </div>
+
+            <div class="content-grid">
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span>🏢</span>
+                        <h3>Organization Information</h3>
+                    </div>
+                    <div class="info-field">
+                        <label>Complete Name</label>
+                        <div class="value" id="orgName">Computer Science
+                            Society</div>
+                    </div>
+                    <div class="info-field">
+                        <label>Acronym / Short Name</label>
+                        <div class="value" id="orgAcronym">CSS</div>
+                    </div>
+                    <div class="info-field">
+                        <label>Official SLU Email</label>
+                        <div class="value"><a href="mailto:css@slu.edu.ph"
+                                id="orgEmail">css@slu.edu.ph</a></div>
+                    </div>
+                    <div class="info-field">
+                        <label>Social Media Links</label>
+                        <div class="social-links" id="socialLinks">
+                            <div
+                                class="social-link"><strong>Facebook:</strong>
+                                <a href="https://facebook.com/slu_css"
+                                    target="_blank">https://facebook.com/slu_css</a></div>
+                            <div
+                                class="social-link"><strong>Instagram:</strong>
+                                <a href="https://instagram.com/slu_css"
+                                    target="_blank">https://instagram.com/slu_css</a></div>
+                            <div
+                                class="social-link"><strong>Twitter:</strong>
+                                <a href="https://twitter.com/slu_css"
+                                    target="_blank">https://twitter.com/slu_css</a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span>👤</span>
+                        <h3>Applicant Information</h3>
+                    </div>
+                    <div class="info-field">
+                        <label>Name of Applicant</label>
+                        <div class="value" id="applicantName">Juan Dela
+                            Cruz</div>
+                    </div>
+                    <div class="info-field">
+                        <label>Position of Applicant</label>
+                        <div class="value"
+                            id="applicantPosition">President</div>
+                    </div>
+                    <div class="info-field">
+                        <label>SLU Institutional Email</label>
+                        <div class="value"><a
+                                href="mailto:juan.delacruz@slu.edu.ph"
+                                id="applicantEmail">juan.delacruz@slu.edu.ph</a></div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span>🎓</span>
+                        <h3>Adviser Information</h3>
+                    </div>
+                    <div class="advisors-list" id="advisersList">
+                        <div class="advisor-item">
+                            <div class="info-field">
+                                <label>Adviser</label>
+                                <div class="value">Dr. Maria Santos</div>
+                            </div>
+                            <div class="info-field">
+                                <label>Email</label>
+                                <div class="value"><a
+                                        href="mailto:maria.santos@slu.edu.ph">maria.santos@slu.edu.ph</a></div>
+                            </div>
+                        </div>
+                        <div class="advisor-item">
+                            <div class="info-field">
+                                <label>Adviser</label>
+                                <div class="value">Prof. John
+                                    Rodriguez</div>
+                            </div>
+                            <div class="info-field">
+                                <label>Email</label>
+                                <div class="value"><a
+                                        href="mailto:john.rodriguez@slu.edu.ph">john.rodriguez@slu.edu.ph</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span>📂</span>
+                        <h3>Category and Type</h3>
+                    </div>
+                    <div class="info-field">
+                        <label>Category</label>
+                        <div class="value" id="category">SAMCIS (School of
+                            Accountancy, Management, Computing and
+                            Information Studies)</div>
+                    </div>
+                    <div class="info-field">
+                        <label>Type</label>
+                        <div class="value"
+                            id="submissionType">Co-Curricular</div>
+                    </div>
+                    <div class="info-field">
+                        <label>CBL Status</label>
+                        <span class="status-pill" id="cblStatus">Without
+                            Revisions</span>
+                    </div>
+                </div>
+
+                <div class="info-card full-width-card">
+                    <div class="info-card-header">
+                        <span>📄</span>
+                        <h3>Uploaded Documents</h3>
+                    </div>
+                    <div class="documents-grid" id="documentsList">
+                        <div class="document-item" data-doc-id="1">
+                            <div class="document-icon">📄</div>
+                            <div class="document-info">
+                                <h4>Strategic Plans 2025-2026</h4>
+                                <p>PDF Document</p>
+                            </div>
+                        </div>
+                        <div class="document-item" data-doc-id="2">
+                            <div class="document-icon">📄</div>
+                            <div class="document-info">
+                                <h4>Annual Report 2024-2025</h4>
+                                <p>PDF Document</p>
+                            </div>
+                        </div>
+                        <div class="document-item" data-doc-id="3">
+                            <div class="document-icon">📄</div>
+                            <div class="document-info">
+                                <h4>Constitution & By-Laws</h4>
+                                <p>PDF Document</p>
+                            </div>
+                        </div>
+                        <div class="document-item" data-doc-id="4">
+                            <div class="document-icon">📄</div>
+                            <div class="document-info">
+                                <h4>List of Officers</h4>
+                                <p>PDF Document</p>
+                            </div>
+                        </div>
+                        <div class="document-item" data-doc-id="5">
+                            <div class="document-icon">📄</div>
+                            <div class="document-info">
+                                <h4>Financial Statement 2023-2024</h4>
+                                <p>PDF Document</p>
+                            </div>
+                        </div>
+                        <div class="document-item" data-doc-id="6">
+                            <div class="document-icon">🖼️</div>
+                            <div class="document-info">
+                                <h4>Updated Infographics</h4>
+                                <p>Image/PDF</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card full-width-card">
+                    <div class="info-card-header">
+                        <span>🎥</span>
+                        <h3>1-Minute Video Presentation</h3>
+                    </div>
+                    <div class="video-section">
+                        <div class="video-container" id="videoContainer">
+                            <div class="video-placeholder">
+                                <p>Video Player</p>
+                                <p
+                                    style="font-size: 12px; margin-top: 5px;">Video
+                                    would be embedded here</p>
+                            </div>
+                        </div>
+                        <div class="video-link">
+                            <a
+                                href="https://www.youtube.com/watch?v=nQwdvgWdXcQ"
+                                id="videoUrl"
+                                target="_blank">https://www.youtube.com/watch?v=nQwdvgWdXcQ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-bar">
+                <p>Review this submission and take action:</p>
+                <div class="action-buttons">
+                    <button class="btn btn-back" id="backButton">
+                        Go back
+                    </button>
+                    <button class="btn btn-secondary"
+                        id="requestRevisionBtn">
+                        ⚠️ Request Revisions
+                    </button>
+                    <button class="btn btn-primary" id="approveBtn">
+                        ✓ Approve
+                    </button>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

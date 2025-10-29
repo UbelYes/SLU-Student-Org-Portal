@@ -11,7 +11,7 @@ menuButtons.forEach((btn) => {
 });
 
 document.getElementById("dashboard-button").addEventListener("click", () => {
-    window.location.href = "osa-dashboard.html";
+    window.location.href = "osa-forms.html";
 });
 
 document.getElementById("forms-button").addEventListener("click", () => {
@@ -39,7 +39,7 @@ document.querySelectorAll('.menu-button').forEach(button => {
         // Navigate based on which button was clicked
         switch (button.id) {
             case 'dashboard-button':
-                window.location.href = 'osa-dashboard.html';
+                window.location.href = 'osa-forms.html';
                 break;
             case 'forms-button':
                 window.location.href = 'osa-forms.html';
@@ -74,7 +74,7 @@ logoutbtn.addEventListener("click", () => {
     const confirmLogout = confirm("Are you sure you want to log out?");
     if (confirmLogout) {
         // If the user clicks "OK"
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
     } else {
         // If the user clicks "Cancel"
         console.log("Logout canceled");

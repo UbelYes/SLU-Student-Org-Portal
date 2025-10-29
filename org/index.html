@@ -3,13 +3,14 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charset="utf-8" />
+        <title>SLU Student Org Portal</title>
         <link rel="stylesheet" href="/styles/org-styles/org-login.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
             rel="stylesheet">
-             <script src="/scripts/auth.js"></script>
+        <script src="/scripts/osa-scripts/osa-login.js" defer></script>
     </head>
     <body>
     <div class="login-page">
@@ -28,61 +29,42 @@
                 </div>
             </div>
 
-            <div class="form-inputs">
+            <form id="loginForm" class="form-inputs" onsubmit="return handleLogin(event)">
                 <div class="form-container">
                     <label class="form-label">Email</label>
                     <input class="input" placeholder="yourorg@slu.edu.ph"
-                        type="email" id="input-email" />
+                        type="email" id="email" name="email" required />
                 </div>
 
                 <div class="form-container">
                     <label class="form-label">Password</label>
                     <input class="input" placeholder="password"
-                        type="password" id="input-password" />
+                        type="password" id="password" name="password" required />
                 </div>
 
                 <div class="forgot-link">
                     <div class="forgot-text"><a href="#">Forgot password?</a></div>
                 </div>
                 
-                <button class="button">
+                <button type="submit" class="button">
                     <div class="button-container">
                         <div class="button-text">Sign In to Portal</div>
                     </div>
                 </button>
-            </div>
+                <div id="error-message" style="color: #DC2626; margin-top: 10px; text-align: center; font-family: Poppins;"></div>
+            </form>
             
             <div class="or-container">
                 <p>OR</p>
             </div>
 
-        
-            <button class="google-button" onclick="handleGoogleLogin()">
+            <button class="google-button">
                 <div class="google-icon">
                     <img src="/resources/images/google-logo.png" />
                 </div>
                 <div class="google-text">Google</div>
             </button>
         </div>
-        <script>
-        // Check if already logged in when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            if (checkAuth()) {
-                // Already authenticated, redirect to dashboard
-                window.location.href = '/dashboard.html';
-            }
-        });
-
-        // Handle regular login button (if you want to implement it)
-        document.querySelector('.button').addEventListener('click', function() {
-            const email = document.getElementById('input-email').value;
-            const password = document.getElementById('input-password').value;
-            
-            // You can implement your regular login logic here
-            // For this example, just show an alert
-            alert('Regular login not implemented in this example. Please use Google login.');
-        });
-    </script>
     </div>
 </body>
 </html>
