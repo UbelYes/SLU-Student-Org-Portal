@@ -8,9 +8,52 @@
     src: url(/resources/fonts/Arimo-VariableFont_wght.ttf);
 }
 
-/* Hide the dashboard button for OSA staff */
-#dashboard-button {
+/* Hamburger Menu Button */
+.hamburger-menu {
     display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1300;
+    width: 50px;
+    height: 50px;
+    background: #036;
+    border: none;
+    border-radius: 12px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(0, 51, 102, 0.3);
+    transition: all 0.3s ease;
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger-menu:hover {
+    background: #001F3F;
+    box-shadow: 0 6px 16px rgba(0, 51, 102, 0.4);
+}
+
+.hamburger-menu.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
 }
 
 .navigation-side-bar{
@@ -43,6 +86,7 @@
 
 .image-SLU-logo img {
     width: 77.922px;
+    filter: none !important;
 }
 
 .banner-heading {
@@ -166,100 +210,123 @@ main {
 
 /* Mobile: icon-only collapsed sidebar */
 @media (max-width: 600px) {
+    /* Show hamburger menu on mobile */
+    .hamburger-menu {
+        display: flex;
+    }
+
+    /* Hide sidebar by default on mobile */
+    .navigation-side-bar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    /* Show sidebar when active */
+    .navigation-side-bar.active {
+        transform: translateX(0);
+    }
+
     .navigation-container {
-        width: 70px;
+        width: 280px;
         align-items: center;
-        padding: 8px 0;
+        padding: 20px 0;
         overflow-y: auto;
+        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
     }
 
     .banner {
-        padding: 10px 0;
-        gap: 6px;
+        padding: 20px 0;
+        gap: 12px;
     }
 
     .image-SLU-logo img {
-        width: 42px;
+        width: 77.922px;
     }
 
-    /* Hide large header text to save space */
+    /* Show header text on mobile when sidebar is open */
     .banner-text-wrapper,
     .banner-text-wrapper h1 {
-        display: none;
+        display: block;
     }
 
     .menu-container {
-        width: 70px;
-        padding: 8px 0 0 0;
-        align-items: center;
-        gap: 6px;
+        width: 280px;
+        padding: 16px 0 0 16px;
+        align-items: flex-start;
+        gap: 8px;
     }
 
-    /* Make menu buttons icon-only */
+    /* Full menu buttons with text */
     .menu-button {
         display: flex;
-        width: 56px;
-        height: 56px;
-        padding-left: 0;
-        justify-content: center;
+        width: 248px;
+        height: 48px;
+        padding-left: 12px;
+        justify-content: flex-start;
         border-radius: 12px;
-        gap: 0;
+        gap: 12px;
     }
 
     .menu-button .menu-icon {
         margin: 0;
     }
 
-    /* Hide the text labels on small screens */
+    /* Show text labels */
     .menu-text,
     .logout-text {
-        display: none;
+        display: block;
     }
 
     .logout-button {
-        width: 56px;
-        height: 56px;
+        width: 248px;
+        height: 48px;
         justify-content: center;
-        border-radius: 12px;
+        border-radius: 10px;
     }
 
-    /* Make icons centered and slightly larger for touch */
+    /* Normal icon size */
     .menu-button img,
     .logout-button img {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
     }
 
-    /* Adjust active state sizing */
-    .active,
-    .menu-button:hover,
-    .logout-button:hover {
-        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-        transform: translateY(-1px);
-    }
-
+    /* Remove margin when sidebar is hidden */
     main {
-        margin-left: 70px;
-        padding: 12px;
+        margin-left: 0;
+        padding: 80px 12px 12px 12px;
+        transition: margin-left 0.3s ease;
+    }
+
+    /* Add overlay when sidebar is active */
+    .navigation-side-bar.active::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: -1;
     }
 }
 
 /* Very small phones: ensure comfortable hit targets */
 @media (max-width: 420px) {
-    .menu-button,
-    .logout-button {
-        width: 60px;
-        height: 60px;
+    .hamburger-menu {
+        top: 15px;
+        left: 15px;
+        width: 48px;
+        height: 48px;
     }
 
-    .menu-button img,
-    .logout-button img {
-        width: 32px;
-        height: 32px;
+    .navigation-container {
+        width: 100%;
+        max-width: 280px;
     }
 
     main {
-        padding: 10px;
+        padding: 80px 10px 10px 10px;
     }
 }
 

@@ -22,8 +22,8 @@ Access OSA staff portal to manage forms, documents, and organizations.
 
 | Email | Password | Dashboard |
 |-------|----------|-----------|
-| staff@slu.edu.ph | staff123 | /osa-staff/osa-dashboard.html |
-| osa@slu.edu.ph | osa123 | /osa-staff/osa-dashboard.html |
+| staff@slu.edu.ph | staff123 | /osa-staff/osa-forms.html |
+| osa@slu.edu.ph | osa123 | /osa-staff/osa-forms.html |
 
 ### Student Organization Accounts
 Access student organization portal to submit requirements and manage organization data.

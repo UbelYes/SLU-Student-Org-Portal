@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Accounts - OSA Portal</title>
+    <link rel="icon" href="../resources/images/Saint-Louis-University-PH-Logo.png">
+    <link rel="stylesheet" href="../styles/osa-styles/osa-navbar.css">
+    <link rel="stylesheet" href="../styles/osa-styles/osa-accounts.css">
+    <script src="../scripts/osa-scripts/osa-login.js" defer></script>
+    <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
+    <script src="../scripts/osa-scripts/osa-accounts.js" defer></script>
+</head>
+<body>
+    <div class="accounts-page">
+        <!-- Hamburger Menu Button (Mobile Only) -->
+        <button class="hamburger-menu" id="hamburger-toggle" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Navigation Sidebar -->
+        <nav class="navigation-side-bar" id="navigation-sidebar">
+            <div class="navigation-container">
+                <div class="banner">
+                    <div class="image-SLU-logo">
+                        <img src="../resources/images/Saint-Louis-University-PH-Logo.png" alt="SLU Logo">
+                    </div>
+                    <div class="banner-heading">
+                        <div class="banner-text-wrapper">
+                            <h1>OSA Student Organization Portal</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-container">
+                    <button class="menu-button" id="forms-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img" src="../resources/icons/document-icon.svg" alt="Forms">
+                        </div>
+                        <div class="menu-text">Forms</div>
+                    </button>
+
+                    <button class="menu-button" id="documents-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img" src="../resources/icons/folder-icon.svg" alt="Documents">
+                        </div>
+                        <div class="menu-text">Documents</div>
+                    </button>
+
+                    <button class="menu-button" id="accounts-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img" src="../resources/icons/accounts-icon.svg" alt="Accounts">
+                        </div>
+                        <div class="menu-text">Accounts</div>
+                    </button>
+
+                    <button class="menu-button" id="settings-button">
+                        <div class="menu-icon">
+                            <img class="menu-icon-img" src="../resources/icons/account-settings-icon.svg" alt="Settings">
+                        </div>
+                        <div class="menu-text">Settings</div>
+                    </button>
+                </div>
+
+                <button class="logout-button" onclick="handleLogout()">
+                    <div class="logout-icon">
+                        <img src="../resources/icons/logout-icon.svg" alt="Logout">
+                    </div>
+                    <div class="logout-text">Logout</div>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="accounts-container">
+                <div class="accounts-header">
+                    <h1>Student Activity Monitoring</h1>
+                    <p class="subtitle">Track student organization access and form submissions</p>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <button class="tab-button active" data-tab="recent-access">
+                        <span>Recent Access</span>
+                        <span class="tab-badge" id="access-count">0</span>
+                    </button>
+                    <button class="tab-button" data-tab="form-submissions">
+                        <span>Form Submissions</span>
+                        <span class="tab-badge" id="submission-count">0</span>
+                    </button>
+                </div>
+
+                <!-- Recent Access Tab -->
+                <div class="tab-content active" id="recent-access-tab">
+                    <div class="section-header">
+                        <h2>Recently Accessed Students</h2>
+                        <div class="filter-controls">
+                            <input type="text" id="access-search" placeholder="Search by name or organization..." class="search-input">
+                            <select id="access-time-filter" class="filter-select">
+                                <option value="all">All Time</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                            <button class="btn-refresh" onclick="refreshAccessData()">
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Organization Name</th>
+                                    <th>Student Name</th>
+                                    <th>Email</th>
+                                    <th>Last Access</th>
+                                    <th>Total Sessions</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="access-table-body">
+                                <tr>
+                                    <td colspan="6" class="text-center loading">Loading data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination for Recent Access -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="access-pagination-info">Showing 0 of 0 records</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn-page" id="access-first-page" onclick="accessGoToPage(1)" disabled>
+                                <span>⏮</span> First
+                            </button>
+                            <button class="btn-page" id="access-prev-page" onclick="accessPreviousPage()" disabled>
+                                <span>◀</span> Previous
+                            </button>
+                            <div class="page-numbers" id="access-page-numbers">
+                                <button class="btn-page-num active">1</button>
+                            </div>
+                            <button class="btn-page" id="access-next-page" onclick="accessNextPage()">
+                                Next <span>▶</span>
+                            </button>
+                            <button class="btn-page" id="access-last-page" onclick="accessGoToLastPage()">
+                                Last <span>⏭</span>
+                            </button>
+                        </div>
+                        <div class="items-per-page">
+                            <label for="access-items-per-page">Items per page:</label>
+                            <select id="access-items-per-page" onchange="accessChangeItemsPerPage()">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Submissions Tab -->
+                <div class="tab-content" id="form-submissions-tab">
+                    <div class="section-header">
+                        <h2>Recent Form Submissions</h2>
+                        <div class="filter-controls">
+                            <input type="text" id="submission-search" placeholder="Search by organization or form type..." class="search-input">
+                            <select id="submission-status-filter" class="filter-select">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                            <select id="submission-time-filter" class="filter-select">
+                                <option value="all">All Time</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                            <button class="btn-refresh" onclick="refreshSubmissionData()">
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Organization</th>
+                                    <th>Form Type</th>
+                                    <th>Submitted By</th>
+                                    <th>Submission Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="submission-table-body">
+                                <tr>
+                                    <td colspan="6" class="text-center loading">Loading data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination for Form Submissions -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="submission-pagination-info">Showing 0 of 0 records</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn-page" id="submission-first-page" onclick="submissionGoToPage(1)" disabled>
+                                <span>⏮</span> First
+                            </button>
+                            <button class="btn-page" id="submission-prev-page" onclick="submissionPreviousPage()" disabled>
+                                <span>◀</span> Previous
+                            </button>
+                            <div class="page-numbers" id="submission-page-numbers">
+                                <button class="btn-page-num active">1</button>
+                            </div>
+                            <button class="btn-page" id="submission-next-page" onclick="submissionNextPage()">
+                                Next <span>▶</span>
+                            </button>
+                            <button class="btn-page" id="submission-last-page" onclick="submissionGoToLastPage()">
+                                Last <span>⏭</span>
+                            </button>
+                        </div>
+                        <div class="items-per-page">
+                            <label for="submission-items-per-page">Items per page:</label>
+                            <select id="submission-items-per-page" onchange="submissionChangeItemsPerPage()">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

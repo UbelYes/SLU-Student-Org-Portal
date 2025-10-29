@@ -36,6 +36,11 @@ function handleLogin(event) {
             localStorage.setItem('userOrg', userInfo.org);
         }
         
+        // Track student access for OSA monitoring
+        if (userInfo.role === 'student' && userInfo.org) {
+            trackStudentAccess(email, userInfo.name, userInfo.org);
+        }
+        
         // Redirect based on role
         if (userInfo.role === 'admin') {
             window.location.href = './admin/admin-dashboard.html';
@@ -109,6 +114,27 @@ function handleLogout() {
     } else {
         window.location.href = 'index.html';
     }
+}
+
+// Function to track student access (for OSA accounts monitoring)
+function trackStudentAccess(email, name, org) {
+    const accessLog = JSON.parse(localStorage.getItem('studentAccessLog') || '[]');
+    const existingEntry = accessLog.find(entry => entry.email === email);
+    
+    if (existingEntry) {
+        existingEntry.lastAccess = new Date().toISOString();
+        existingEntry.sessionCount++;
+    } else {
+        accessLog.push({
+            email: email,
+            studentName: name,
+            orgName: org,
+            lastAccess: new Date().toISOString(),
+            sessionCount: 1
+        });
+    }
+    
+    localStorage.setItem('studentAccessLog', JSON.stringify(accessLog));
 }
 
 // Check login status when page loads

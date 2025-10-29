@@ -82,7 +82,7 @@ student@slu.edu.ph / student123 (Student Council)
 
 3. **Verify redirection**:
    - Admin → `/admin/admin-dashboard.html`
-   - OSA Staff → `/osa-staff/osa-dashboard.html`
+   - OSA Staff → `/osa-staff/osa-forms.html`
    - Student Org → `/org/org-dashboard.html`
 
 4. **Test protection**:
