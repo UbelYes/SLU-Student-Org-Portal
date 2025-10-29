@@ -11,7 +11,7 @@ menuButtons.forEach((btn) => {
 });
 
 document.getElementById("dashboard-button").addEventListener("click", () => {
-    window.location.href = "osa-dashboard.html";
+    window.location.href = "osa-forms.html";
 });
 
 document.getElementById("forms-button").addEventListener("click", () => {

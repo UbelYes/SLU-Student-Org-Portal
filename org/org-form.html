@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Organization Portal</title>
     <link rel="stylesheet" href="/styles//org-styles/org-forms.css">
-    <script src="/scripts/main_page.js"></script>
-    <script src="/scripts/auth.js"></script>
+    <script src="/scripts/osa-scripts/osa-login.js" defer></script>
+    <script src="/scripts/main_page.js" defer></script>
 </head>
 <body>
     <aside class="sidebar">
@@ -29,7 +29,7 @@
         <div class="nav-item inactive-btn">Form</div>
     </nav>
 
-        <button class="logout-btn">Logout</button>
+        <button class="logout-btn" onclick="handleLogout()">Logout</button>
     </aside>
 
     <main class="main-content">
