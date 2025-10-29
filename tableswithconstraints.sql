@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: slu_org_portal_db
+-- Host: 127.0.0.1    Database: slu_org_db
 -- ------------------------------------------------------
 -- Server version	9.1.0
 
@@ -14,6 +14,12 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Create and select database
+--
+CREATE DATABASE IF NOT EXISTS `slu_org_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `slu_org_db`;
 
 --
 -- Table structure for table `admin`
@@ -43,6 +49,11 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` (`username`, `password`, `email`, `role`, `last_login`, `status`) VALUES
+('admin', 'admin123', 'admin@slu.edu.ph', 'super_admin', NULL, 'active'),
+('admin2', 'admin123', 'admin2@slu.edu.ph', 'super_admin', NULL, 'active'),
+('staff', 'staff123', 'staff@slu.edu.ph', 'osa_admin', NULL, 'active'),
+('osa', 'osa123', 'osa@slu.edu.ph', 'osa_admin', NULL, 'active');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,6 +87,10 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
+INSERT INTO `client` (`org_name`, `username`, `password`, `email`, `branch`, `status`, `last_login`) VALUES
+('SAMCIS', 'samcis', 'samcis123', 'samcis@slu.edu.ph', NULL, 'active', NULL),
+('ICON', 'icon', 'icon123', 'icon@slu.edu.ph', NULL, 'active', NULL),
+('Student Council', 'student', 'student123', 'student@slu.edu.ph', NULL, 'active', NULL);
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,7 +343,7 @@ LOCK TABLES `notifications` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'slu_org_portal_db'
+-- Dumping routines for database 'slu_org_db'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -340,4 +355,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-29 21:55:12
+-- Dump completed on 2025-10-30 00:00:00
