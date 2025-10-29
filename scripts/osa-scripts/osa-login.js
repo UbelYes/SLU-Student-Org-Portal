@@ -54,51 +54,6 @@ function handleLogin(event) {
     }
 }
 
-// Function to check login status
-function checkLoginStatus() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    const userRole = localStorage.getItem('userRole');
-    const currentPage = window.location.pathname;
-    
-    // If on login page and already logged in, redirect to appropriate dashboard
-    if (currentPage.includes('index.html') && isLoggedIn === 'true') {
-        if (userRole === 'admin') {
-            window.location.href = './admin/admin-dashboard.html';
-        } else if (userRole === 'osa') {
-            window.location.href = './osa-staff/osa-forms.html';
-        } else if (userRole === 'student') {
-            window.location.href = './org/org-dashboard.html';
-        }
-        return;
-    }
-    
-    // If on any protected page and not logged in, redirect to login
-    if (!currentPage.includes('index.html') && isLoggedIn !== 'true') {
-        // Determine the correct path back to index.html based on current location
-        if (currentPage.includes('/admin/')) {
-            window.location.href = '../index.html';
-        } else if (currentPage.includes('/osa-staff/')) {
-            window.location.href = '../index.html';
-        } else if (currentPage.includes('/org/')) {
-            window.location.href = '../index.html';
-        } else {
-            window.location.href = 'index.html';
-        }
-        return;
-    }
-    
-    // Check if user is accessing the correct area for their role
-    if (isLoggedIn === 'true' && userRole) {
-        if (userRole === 'admin' && !currentPage.includes('/admin/') && !currentPage.includes('index.html')) {
-            window.location.href = '../admin/admin-dashboard.html';
-        } else if (userRole === 'osa' && !currentPage.includes('/osa-staff/') && !currentPage.includes('index.html')) {
-            window.location.href = '../osa-staff/osa-forms.html';
-        } else if (userRole === 'student' && !currentPage.includes('/org/') && !currentPage.includes('index.html')) {
-            window.location.href = '../org/org-dashboard.html';
-        }
-    }
-}
-
 // Function to handle logout
 function handleLogout() {
     localStorage.removeItem('isLoggedIn');
@@ -136,6 +91,3 @@ function trackStudentAccess(email, name, org) {
     
     localStorage.setItem('studentAccessLog', JSON.stringify(accessLog));
 }
-
-// Check login status when page loads
-document.addEventListener('DOMContentLoaded', checkLoginStatus);
