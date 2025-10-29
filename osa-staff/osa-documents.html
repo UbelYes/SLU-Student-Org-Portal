@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../styles/osa-styles/osa-documents.css">
     <script src="../scripts/osa-scripts/osa-login.js" defer></script>
     <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
+    <script src="../scripts/osa-scripts/osa-documents.js" defer></script>
 </head>
 <body>
     <div class="document-page">
@@ -90,6 +91,9 @@
                             <option value="org">Organization</option>
                         </select>
                     </div>
+                    <button class="btn-refresh" onclick="refreshDocuments()">
+                        Refresh
+                    </button>
                 </div>
 
                 <!-- Documents Table -->
@@ -103,36 +107,45 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="documents-table-body">
                             <tr>
-                                <td>Activity Proposal.pdf</td>
-                                <td>Computer Science Society</td>
-                                <td>2025-10-15</td>
-                                <td class="action-buttons">
-                                    <button class="btn-view">View</button>
-                                    <button class="btn-download">Download</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Financial Report Q3.xlsx</td>
-                                <td>Engineering Society</td>
-                                <td>2025-10-14</td>
-                                <td class="action-buttons">
-                                    <button class="btn-view">View</button>
-                                    <button class="btn-download">Download</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Event Documentation.docx</td>
-                                <td>Business Club</td>
-                                <td>2025-10-12</td>
-                                <td class="action-buttons">
-                                    <button class="btn-view">View</button>
-                                    <button class="btn-download">Download</button>
-                                </td>
+                                <td colspan="4" class="text-center loading">Loading documents...</td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Pagination Controls -->
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span id="pagination-info-text">Showing 0 of 0 documents</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="btn-page" id="first-page" onclick="goToPage(1)" disabled>
+                            <span>⏮</span> First
+                        </button>
+                        <button class="btn-page" id="prev-page" onclick="previousPage()" disabled>
+                            <span>◀</span> Previous
+                        </button>
+                        <div class="page-numbers" id="page-numbers">
+                            <button class="btn-page-num active">1</button>
+                        </div>
+                        <button class="btn-page" id="next-page" onclick="nextPage()">
+                            Next <span>▶</span>
+                        </button>
+                        <button class="btn-page" id="last-page" onclick="goToLastPage()">
+                            Last <span>⏭</span>
+                        </button>
+                    </div>
+                    <div class="items-per-page">
+                        <label for="items-per-page">Items per page:</label>
+                        <select id="items-per-page" onchange="changeItemsPerPage()">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </main>

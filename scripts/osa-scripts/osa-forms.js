@@ -149,3 +149,92 @@ function updateTableDisplay(data) {
         });
     }
 }
+
+// Function to refresh the forms data
+function refreshForms() {
+    // Store current state
+    const currentSearch = searchInput.value;
+    const currentSortValue = sortSelect.value;
+    const currentSortState = { ...currentSort };
+    
+    // Reload the table data (re-query the DOM)
+    const rows = Array.from(tableBody.querySelectorAll('tr'));
+    tableData = rows.map(row => {
+        const cells = row.querySelectorAll('td');
+        return {
+            element: row,
+            title: cells[0]?.textContent || '',
+            organization: cells[1]?.textContent || '',
+            submittedBy: cells[2]?.textContent || '',
+            date: cells[3]?.textContent || '',
+            school: cells[4]?.textContent || '',
+            status: cells[5]?.querySelector('.status-badge')?.textContent || ''
+        };
+    });
+    
+    // Restore state
+    currentSort = currentSortState;
+    
+    // Reapply filters and sorting
+    filterAndSortTable();
+    
+    // Show success notification
+    showNotification('Forms data refreshed successfully', 'success');
+}
+
+// Function to show notification
+function showNotification(message, type = 'success') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification-toast');
+    existingNotifications.forEach(notification => notification.remove());
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification-toast ${type}`;
+    notification.textContent = message;
+    
+    // Add styles
+    Object.assign(notification.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        padding: '12px 20px',
+        backgroundColor: type === 'success' ? '#10B981' : '#EF4444',
+        color: 'white',
+        borderRadius: '8px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        zIndex: '1000',
+        fontFamily: '"Arimo", sans-serif',
+        fontSize: '14px',
+        fontWeight: '500',
+        animation: 'slideIn 0.3s ease'
+    });
+    
+    // Add animation keyframes
+    if (!document.getElementById('notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'notification-styles';
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideIn 0.3s ease reverse';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}

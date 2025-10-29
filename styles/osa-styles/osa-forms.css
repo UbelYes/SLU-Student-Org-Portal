@@ -147,6 +147,33 @@ body {
     box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.1);
 }
 
+.btn-refresh {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 40px;
+    padding: 0 16px;
+    background: #036;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: "Arimo", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-refresh:hover {
+    background: #036;
+    transform: translateY(-1px);
+}
+
+.btn-refresh:active {
+    transform: translateY(0);
+}
+
 .forms {
     display: flex;
     width: 100%;
