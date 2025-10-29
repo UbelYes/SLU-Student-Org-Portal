@@ -87,7 +87,7 @@ window.addEventListener('DOMContentLoaded', () => {
 const logoutButton = document.querySelector('.logout-button');
 if (logoutButton) {
     logoutButton.addEventListener('click', (e) => {
-        // Only show confirm if not using handleLogout() from osa-login.js
+        // Only show confirm if not using handleLogout() from login.js
         if (!logoutButton.getAttribute('onclick')) {
             e.preventDefault();
             const confirmLogout = confirm("Are you sure you want to log out?");
