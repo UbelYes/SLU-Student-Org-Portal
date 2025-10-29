@@ -5,7 +5,7 @@ const AUTH_CONFIG = {
     // Replace with your actual Google Client ID
     CLIENT_ID: '55329817491-uun6n75sib64uhkqobr93qcrmkhm4bca.apps.googleusercontent.com',
     // The redirect URI should be your dashboard page
-   REDIRECT_URI: window.location.origin + '/org/org-dashboard.html',
+    REDIRECT_URI: window.location.origin + '/org/org-dashboard.html',
     // Google OAuth endpoints
     AUTH_ENDPOINT: 'https://accounts.google.com/o/oauth2/v2/auth',
     TOKEN_ENDPOINT: 'https://oauth2.googleapis.com/token',
@@ -22,28 +22,28 @@ const AuthStorage = {
     setToken(token) {
         localStorage.setItem('authToken', token);
     },
-    
+
     getToken() {
         return localStorage.getItem('authToken');
     },
-    
+
     clearToken() {
         localStorage.removeItem('authToken');
     },
-    
+
     isAuthenticated() {
         return !!this.getToken();
     },
-    
+
     setUserInfo(userInfo) {
         localStorage.setItem('userInfo', JSON.stringify(userInfo));
     },
-    
+
     getUserInfo() {
         const userInfo = localStorage.getItem('userInfo');
         return userInfo ? JSON.parse(userInfo) : null;
     },
-    
+
     clearAll() {
         this.clearToken();
         localStorage.removeItem('userInfo');
@@ -61,7 +61,7 @@ function getGoogleOAuthURL() {
         scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
         hd: AUTH_CONFIG.HOSTED_DOMAIN // Restrict to SLU domain
     };
-    
+
     const urlParams = new URLSearchParams(options);
     return `${AUTH_CONFIG.AUTH_ENDPOINT}?${urlParams.toString()}`;
 }
@@ -85,17 +85,17 @@ async function processAuthCode(code) {
             method: 'GET',
             credentials: 'include'
         });
-        
+
         if (!response.ok) throw new Error('Failed to exchange code for token');
-        
+
         const data = await response.json();
-        
+
         // Store the token
         AuthStorage.setToken(data.token);
-        
+
         // Clean URL to remove the code
         window.history.replaceState({}, document.title, window.location.pathname);
-        
+
         // Return success
         return true;
     } catch (error) {
@@ -109,29 +109,29 @@ async function fetchUserData() {
     try {
         // Try to get cached user data first
         let userData = AuthStorage.getUserInfo();
-        
+
         if (userData) {
             // Return cached user data
             return userData;
         }
-        
+
         // Fetch fresh user data from backend
         const token = AuthStorage.getToken();
         if (!token) throw new Error('No auth token found');
-        
+
         const response = await fetch(AUTH_CONFIG.BACKEND_USER_URL, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         });
-        
+
         if (!response.ok) throw new Error('Failed to fetch user data');
-        
+
         userData = await response.json();
-        
+
         // Cache the user data
         AuthStorage.setUserInfo(userData);
-        
+
         // Return the user data
         return userData;
     } catch (error) {
