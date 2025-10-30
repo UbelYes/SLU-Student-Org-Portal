@@ -219,5 +219,154 @@
             </div>
         </main>
     </div>
+
+    <!-- View Submission Modal -->
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalFormTitle">Form Submission Details</h2>
+                <button class="modal-close" onclick="closeViewModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="submission-metadata">
+                    <div class="meta-item">
+                        <strong>Organization:</strong> <span id="modalOrgName">-</span>
+                    </div>
+                    <div class="meta-item">
+                        <strong>Submitted By:</strong> <span id="modalSubmittedBy">-</span>
+                    </div>
+                    <div class="meta-item">
+                        <strong>Date Submitted:</strong> <span id="modalSubmittedDate">-</span>
+                    </div>
+                    <div class="meta-item">
+                        <strong>School:</strong> <span id="modalSchool">-</span>
+                    </div>
+                    <div class="meta-item">
+                        <strong>Status:</strong> <span id="modalStatus" class="status-badge">-</span>
+                    </div>
+                </div>
+
+                <!-- Form Content (Read-only) -->
+                <div class="form-view-container">
+                    <h3>Submission Information</h3>
+                    
+                    <div class="view-section">
+                        <h4>Organization Information</h4>
+                        <div class="view-field">
+                            <label>Complete Name of Organization:</label>
+                            <div class="field-value">Student Alliance for Music and Creative Industry Studies</div>
+                        </div>
+                        <div class="view-field">
+                            <label>Acronym:</label>
+                            <div class="field-value">SAMCIS</div>
+                        </div>
+                        <div class="view-field">
+                            <label>Official SLU Institutional Email:</label>
+                            <div class="field-value">samcis@slu.edu.ph</div>
+                        </div>
+                        <div class="view-field">
+                            <label>Social Media Pages:</label>
+                            <div class="field-value">https://facebook.com/samcis, https://instagram.com/samcis</div>
+                        </div>
+                    </div>
+
+                    <div class="view-section">
+                        <h4>Applicant Information</h4>
+                        <div class="view-field">
+                            <label>Name of Applicant:</label>
+                            <div class="field-value">Juan Dela Cruz</div>
+                        </div>
+                        <div class="view-field">
+                            <label>Position:</label>
+                            <div class="field-value">President</div>
+                        </div>
+                        <div class="view-field">
+                            <label>Applicant's Email:</label>
+                            <div class="field-value">jdelacruz@slu.edu.ph</div>
+                        </div>
+                    </div>
+
+                    <div class="view-section">
+                        <h4>Adviser Information</h4>
+                        <div class="view-field">
+                            <label>Name of Adviser/s:</label>
+                            <div class="field-value">Prof. Maria Santos</div>
+                        </div>
+                        <div class="view-field">
+                            <label>Adviser Email/s:</label>
+                            <div class="field-value">msantos@slu.edu.ph</div>
+                        </div>
+                    </div>
+
+                    <div class="view-section">
+                        <h4>Category & Type</h4>
+                        <div class="view-field">
+                            <label>Category:</label>
+                            <div class="field-value">SAMCIS</div>
+                        </div>
+                        <div class="view-field">
+                            <label>Type of Organization:</label>
+                            <div class="field-value">Co-Curricular</div>
+                        </div>
+                    </div>
+
+                    <div class="view-section">
+                        <h4>Submitted Documents</h4>
+                        <div class="document-list">
+                            <div class="document-item">
+                                <span class="doc-icon">📄</span>
+                                <span class="doc-name">Strategic_Plans_2025-2026.pdf</span>
+                                <button class="doc-download-btn">Download</button>
+                            </div>
+                            <div class="document-item">
+                                <span class="doc-icon">📄</span>
+                                <span class="doc-name">Annual_Report_2024-2025.pdf</span>
+                                <button class="doc-download-btn">Download</button>
+                            </div>
+                            <div class="document-item">
+                                <span class="doc-icon">📄</span>
+                                <span class="doc-name">Constitution_and_ByLaws.pdf</span>
+                                <button class="doc-download-btn">Download</button>
+                            </div>
+                            <div class="document-item">
+                                <span class="doc-icon">📊</span>
+                                <span class="doc-name">List_of_Officers.xlsx</span>
+                                <button class="doc-download-btn">Download</button>
+                            </div>
+                            <div class="document-item">
+                                <span class="doc-icon">📄</span>
+                                <span class="doc-name">Financial_Statement_2023-2024.pdf</span>
+                                <button class="doc-download-btn">Download</button>
+                            </div>
+                            <div class="document-item">
+                                <span class="doc-icon">🖼️</span>
+                                <span class="doc-name">Updated_Infographics.png</span>
+                                <button class="doc-download-btn">Download</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="view-section">
+                        <h4>Additional Information</h4>
+                        <div class="view-field">
+                            <label>CBL Status:</label>
+                            <div class="field-value">Without Revisions</div>
+                        </div>
+                        <div class="view-field">
+                            <label>Video Link:</label>
+                            <div class="field-value"><a href="https://youtube.com/watch?v=example" target="_blank">https://youtube.com/watch?v=example</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeViewModal()">Close</button>
+                <button class="btn-approve">Approve</button>
+                <button class="btn-return">Return for Revision</button>
+                <button class="btn-print" onclick="window.print()">Print</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
