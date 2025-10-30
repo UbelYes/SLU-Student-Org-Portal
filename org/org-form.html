@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="/styles//org-styles/org-forms.css">
         <script src="/scripts/login.js" defer></script>
         <script src="/scripts/main_page.js" defer></script>
+        <script src="/scripts/org-scripts/org-form.js" defer></script>
     </head>
     <body>
         <aside class="sidebar">
@@ -52,13 +53,13 @@
                         required fields and upload necessary documents</p>
                 </div>
 
-                <form class="form-body">
+                <form class="form-body" id="orgSubmissionForm">
                     <!-- Submission Title -->
                     <div class="form-group">
                         <label
                             class="form-label form-label--required">Submission
                             Title</label>
-                        <input type="text" class="form-input"
+                        <input type="text" class="form-input" id="submission_title" name="submission_title" required
                             placeholder="e.g. End-Term Requirements 2024-2025, Mid-Year Report 2025">
                         <div class="form-hint">Give this submission a
                             descriptive title to help you identify it
@@ -74,28 +75,28 @@
                             <label
                                 class="form-label form-label--required">Complete
                                 Name of Organization or Publication</label>
-                            <input type="text" class="form-input">
+                            <input type="text" class="form-input" id="org_full_name" name="org_full_name" required>
                         </div>
 
                         <div class="form-group">
                             <label
                                 class="form-label form-label--required">Acronym
                                 or Short Name</label>
-                            <input type="text" class="form-input">
+                            <input type="text" class="form-input" id="org_acronym" name="org_acronym" required>
                         </div>
 
                         <div class="form-group">
                             <label
                                 class="form-label form-label--required">Official
                                 SLU Institutional Email</label>
-                            <input type="email" class="form-input"
+                            <input type="email" class="form-input" id="org_email" name="org_email" required
                                 placeholder="organization@slu.edu.ph">
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">URL Link/s to Official
                                 Social Media Pages</label>
-                            <input type="text" class="form-input"
+                            <input type="text" class="form-input" id="social_media_links" name="social_media_links"
                                 placeholder="https://facebook.com/yourorg, https://instagram.com/yourorg">
                         </div>
                     </section>
@@ -109,14 +110,14 @@
                             <label class="form-label form-label--required">Name
                                 of Applicant Representing the
                                 Organization</label>
-                            <input type="text" class="form-input">
+                            <input type="text" class="form-input" id="applicant_name" name="applicant_name" required>
                         </div>
 
                         <div class="form-group">
                             <label
                                 class="form-label form-label--required">Position
                                 of Applicant</label>
-                            <input type="text" class="form-input"
+                            <input type="text" class="form-input" id="applicant_position" name="applicant_position" required
                                 placeholder="e.g. President, Vice President">
                         </div>
 
@@ -124,7 +125,7 @@
                             <label
                                 class="form-label form-label--required">Applicant's
                                 SLU Institutional Email</label>
-                            <input type="email" class="form-input"
+                            <input type="email" class="form-input" id="applicant_email" name="applicant_email" required
                                 placeholder="applicant@slu.edu.ph">
                         </div>
                     </section>
@@ -136,7 +137,7 @@
                         <div class="form-group">
                             <label class="form-label form-label--required">Name
                                 of Adviser/s</label>
-                            <input type="text" class="form-input"
+                            <input type="text" class="form-input" id="adviser_names" name="adviser_names" required
                                 placeholder="Separate multiple names with commas">
                         </div>
 
@@ -144,7 +145,7 @@
                             <label
                                 class="form-label form-label--required">Adviser
                                 Email/s</label>
-                            <input type="text" class="form-input"
+                            <input type="text" class="form-input" id="adviser_emails" name="adviser_emails" required
                                 placeholder="adviser@slu.edu.ph (separate multiple with commas)">
                         </div>
                     </section>
@@ -154,43 +155,43 @@
                         <h3 class="form-section__title">Category</h3>
                         <div class="form-checkbox-group">
                             <div class="form-checkbox">
-                                <input type="checkbox" id="samcis"
+                                <input type="checkbox" id="samcis" name="category" value="SAMCIS"
                                     class="form-checkbox__input">
                                 <label for="samcis"
                                     class="form-checkbox__label">SAMCIS</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="sea"
+                                <input type="checkbox" id="sea" name="category" value="SEA"
                                     class="form-checkbox__input">
                                 <label for="sea"
                                     class="form-checkbox__label">SEA</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="som"
+                                <input type="checkbox" id="som" name="category" value="SOM"
                                     class="form-checkbox__input">
                                 <label for="som"
                                     class="form-checkbox__label">SOM</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="sonahbs"
+                                <input type="checkbox" id="sonahbs" name="category" value="SONAHBS"
                                     class="form-checkbox__input">
                                 <label for="sonahbs"
                                     class="form-checkbox__label">SONAHBS</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="sol"
+                                <input type="checkbox" id="sol" name="category" value="SOL"
                                     class="form-checkbox__input">
                                 <label for="sol"
                                     class="form-checkbox__label">SOL</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="stela"
+                                <input type="checkbox" id="stela" name="category" value="STELA"
                                     class="form-checkbox__input">
                                 <label for="stela"
                                     class="form-checkbox__label">STELA</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="university-wide"
+                                <input type="checkbox" id="university-wide" name="category" value="University-Wide"
                                     class="form-checkbox__input">
                                 <label for="university-wide"
                                     class="form-checkbox__label">University-Wide</label>
@@ -204,19 +205,19 @@
                             Organization</h3>
                         <div class="form-radio-group">
                             <div class="form-radio">
-                                <input type="radio" id="co-curricular"
+                                <input type="radio" id="co-curricular" name="org_type" value="co-curricular" required
                                     name="org-type" class="form-radio__input">
                                 <label for="co-curricular"
                                     class="form-radio__label">Co-Curricular</label>
                             </div>
                             <div class="form-radio">
-                                <input type="radio" id="extra-curricular"
+                                <input type="radio" id="extra-curricular" name="org_type" value="extra-curricular" required
                                     name="org-type" class="form-radio__input">
                                 <label for="extra-curricular"
                                     class="form-radio__label">Extra-Curricular</label>
                             </div>
                             <div class="form-radio">
-                                <input type="radio" id="publication"
+                                <input type="radio" id="publication" name="org_type" value="publication" required
                                     name="org-type" class="form-radio__input">
                                 <label for="publication"
                                     class="form-radio__label">Publication</label>
@@ -226,54 +227,53 @@
 
                     <!-- Required Documents -->
                     <section class="form-section">
-                        <h3 class="form-section__title">Required Documents (PDF,
-                            max 1GB each)</h3>
+                        <h3 class="form-section__title">Required Documents (Note: Document upload is not yet implemented)</h3>
 
                         <div class="form-group">
                             <label
-                                class="form-label form-label--required">Strategic
+                                class="form-label">Strategic
                                 Plans 2025-2026</label>
                             <div class="form-file-upload">Click to upload or
-                                drag and drop</div>
+                                drag and drop (Feature not implemented)</div>
                         </div>
 
                         <div class="form-group">
                             <label
-                                class="form-label form-label--required">Annual
+                                class="form-label">Annual
                                 Report 2024-2025</label>
                             <div class="form-file-upload">Click to upload or
-                                drag and drop</div>
+                                drag and drop (Feature not implemented)</div>
                         </div>
 
                         <div class="form-group">
                             <label
-                                class="form-label form-label--required">Constitution
+                                class="form-label">Constitution
                                 & By-Laws</label>
                             <div class="form-file-upload">Click to upload or
-                                drag and drop</div>
+                                drag and drop (Feature not implemented)</div>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label form-label--required">List
+                            <label class="form-label">List
                                 of Officers (Spreadsheet)</label>
                             <div class="form-file-upload">Click to upload or
-                                drag and drop</div>
+                                drag and drop (Feature not implemented)</div>
                         </div>
 
                         <div class="form-group">
                             <label
-                                class="form-label form-label--required">Financial
+                                class="form-label">Financial
                                 Statement 2023-2024</label>
                             <div class="form-file-upload">Click to upload or
-                                drag and drop</div>
+                                drag and drop (Feature not implemented)</div>
                         </div>
 
                         <div class="form-group">
                             <label
-                                class="form-label form-label--required">Updated
+                                class="form-label">Updated
                                 Infographics</label>
                             <div class="form-file-upload">Click to upload or
-                                drag and drop</div>
+                                drag and drop (Feature not implemented)</div>
                         </div>
                     </section>
 
@@ -282,14 +282,14 @@
                         <h3 class="form-section__title">CBL Status</h3>
                         <div class="form-radio-group">
                             <div class="form-radio">
-                                <input type="radio" id="with-revisions"
+                                <input type="radio" id="with-revisions" name="cbl_status" value="with-revisions" required
                                     name="cbl-status" class="form-radio__input">
                                 <label for="with-revisions"
                                     class="form-radio__label">With
                                     Revisions</label>
                             </div>
                             <div class="form-radio">
-                                <input type="radio" id="without-revisions"
+                                <input type="radio" id="without-revisions" name="cbl_status" value="without-revisions" required
                                     name="cbl-status" class="form-radio__input">
                                 <label for="without-revisions"
                                     class="form-radio__label">Without
@@ -302,7 +302,7 @@
                     <div class="form-group">
                         <label class="form-label form-label--required">Link to
                             2-minute Video</label>
-                        <input type="url" class="form-input"
+                        <input type="url" class="form-input" id="video_link" name="video_link" required
                             placeholder="https://youtube.com/watch?v=...">
                     </div>
 
@@ -319,9 +319,9 @@
                 </form>
 
                 <div class="form-actions">
-                    <button type="submit" class="btn btn--primary">Submit
+                    <button type="submit" class="btn btn--primary" onclick="submitForm(event)">Submit
                         Form</button>
-                    <button type="button" class="btn btn--secondary">Clear
+                    <button type="button" class="btn btn--secondary" onclick="clearForm()">Clear
                         Form</button>
                 </div>
             </div>
