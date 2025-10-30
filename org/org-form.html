@@ -1,245 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Organization Portal</title>
-    <link rel="stylesheet" href="/styles//org-styles/org-forms.css">
-    <script src="/scripts/login.js" defer></script>
-    <script src="/scripts/main_page.js" defer></script>
-</head>
-<body>
-    <aside class="sidebar">
-        <div class="logo-section">
-            <div class="logo-icon"></div>
-            <h3>Student<br>Organisation Portal</h3>
-        </div>
-
-        <div class="user-profile">
-            <div class="user-avatar"></div>
-            <div class="user-info">
-                <h4>SAMGS</h4>
-                <p>GOV</p>
-            </div>
-        </div>
-
-    <nav class="nav-menu">
-        <div class="nav-item active-btn">Dashboard</div>
-        <div class="nav-item inactive-btn">Submission History</div>
-        <div class="nav-item inactive-btn">Form</div>
-    </nav>
-
-        <button class="logout-btn" onclick="handleLogout()">Logout</button>
-    </aside>
-
-    <main class="main-content">
-        <header class="header">
-            <div class="search-bar">
-                <input type="text" placeholder="Search forms...">
-            </div>
-            <div class="notifications">
-                <span class="notification-icon">🔔</span>
-                <span class="notification-badge"></span>
-            </div>
-        </header>
-
-        <div class="form-container">
-            <div class="form-header">
-                <h2 class="form-header__title">End-Term Submission Form</h2>
-                <p class="form-header__subtitle">Please fill out all required fields and upload necessary documents</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Student Organization Portal</title>
+        <link rel="stylesheet" href="/styles//org-styles/org-forms.css">
+        <script src="/scripts/login.js" defer></script>
+        <script src="/scripts/main_page.js" defer></script>
+    </head>
+    <body>
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo-icon"></div>
+                <h3>Student<br>Organisation Portal</h3>
             </div>
 
-            <form class="form-body">
-                <!-- Submission Title -->
-                <div class="form-group">
-                    <label class="form-label form-label--required">Submission Title</label>
-                    <input type="text" class="form-input" placeholder="e.g. End-Term Requirements 2024-2025, Mid-Year Report 2025">
-                    <div class="form-hint">Give this submission a descriptive title to help you identify it later</div>
+            <div class="user-profile">
+                <div class="user-avatar"></div>
+                <div class="user-info">
+                    <h4>SAMGS</h4>
+                    <p>GOV</p>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="/org/org-dashboard.html"
+                    class="nav-item inactive-btn">Dashboard</a>
+                <a href="#" class="nav-item inactive-btn">Submission History</a>
+                <a href="/org/org-form.html"
+                    class="nav-item active-btn">Form</a>
+            </nav>
+
+            <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search forms...">
+                </div>
+                <div class="notifications">
+                    <span class="notification-icon">🔔</span>
+                    <span class="notification-badge"></span>
+                </div>
+            </header>
+
+            <div class="form-container">
+                <div class="form-header">
+                    <h2 class="form-header__title">End-Term Submission Form</h2>
+                    <p class="form-header__subtitle">Please fill out all
+                        required fields and upload necessary documents</p>
                 </div>
 
-                <!-- Organization Information -->
-                <section class="form-section">
-                    <h3 class="form-section__title">Organization Information</h3>
-                    
+                <form class="form-body">
+                    <!-- Submission Title -->
                     <div class="form-group">
-                        <label class="form-label form-label--required">Complete Name of Organization or Publication</label>
-                        <input type="text" class="form-input">
+                        <label
+                            class="form-label form-label--required">Submission
+                            Title</label>
+                        <input type="text" class="form-input"
+                            placeholder="e.g. End-Term Requirements 2024-2025, Mid-Year Report 2025">
+                        <div class="form-hint">Give this submission a
+                            descriptive title to help you identify it
+                            later</div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label form-label--required">Acronym or Short Name</label>
-                        <input type="text" class="form-input">
-                    </div>
+                    <!-- Organization Information -->
+                    <section class="form-section">
+                        <h3 class="form-section__title">Organization
+                            Information</h3>
 
-                    <div class="form-group">
-                        <label class="form-label form-label--required">Official SLU Institutional Email</label>
-                        <input type="email" class="form-input" placeholder="organization@slu.edu.ph">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">URL Link/s to Official Social Media Pages</label>
-                        <input type="text" class="form-input" placeholder="https://facebook.com/yourorg, https://instagram.com/yourorg">
-                    </div>
-                </section>
-
-                <!-- Applicant Information -->
-                <section class="form-section">
-                    <h3 class="form-section__title">Applicant Information</h3>
-                    
-                    <div class="form-group">
-                        <label class="form-label form-label--required">Name of Applicant Representing the Organization</label>
-                        <input type="text" class="form-input">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label form-label--required">Position of Applicant</label>
-                        <input type="text" class="form-input" placeholder="e.g. President, Vice President">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label form-label--required">Applicant's SLU Institutional Email</label>
-                        <input type="email" class="form-input" placeholder="applicant@slu.edu.ph">
-                    </div>
-                </section>
-
-                <!-- Adviser Information -->
-                <section class="form-section">
-                    <h3 class="form-section__title">Adviser Information</h3>
-                    
-                    <div class="form-group">
-                        <label class="form-label form-label--required">Name of Adviser/s</label>
-                        <input type="text" class="form-input" placeholder="Separate multiple names with commas">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label form-label--required">Adviser Email/s</label>
-                        <input type="text" class="form-input" placeholder="adviser@slu.edu.ph (separate multiple with commas)">
-                    </div>
-                </section>
-
-                <!-- Category -->
-                <section class="form-section">
-                    <h3 class="form-section__title">Category</h3>
-                    <div class="form-checkbox-group">
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="samcis" class="form-checkbox__input">
-                            <label for="samcis" class="form-checkbox__label">SAMCIS</label>
+                        <div class="form-group">
+                            <label
+                                class="form-label form-label--required">Complete
+                                Name of Organization or Publication</label>
+                            <input type="text" class="form-input">
                         </div>
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="sea" class="form-checkbox__input">
-                            <label for="sea" class="form-checkbox__label">SEA</label>
-                        </div>
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="som" class="form-checkbox__input">
-                            <label for="som" class="form-checkbox__label">SOM</label>
-                        </div>
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="sonahbs" class="form-checkbox__input">
-                            <label for="sonahbs" class="form-checkbox__label">SONAHBS</label>
-                        </div>
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="sol" class="form-checkbox__input">
-                            <label for="sol" class="form-checkbox__label">SOL</label>
-                        </div>
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="stela" class="form-checkbox__input">
-                            <label for="stela" class="form-checkbox__label">STELA</label>
-                        </div>
-                        <div class="form-checkbox">
-                            <input type="checkbox" id="university-wide" class="form-checkbox__input">
-                            <label for="university-wide" class="form-checkbox__label">University-Wide</label>
-                        </div>
-                    </div>
-                </section>
 
-                <!-- Type of Organization -->
-                <section class="form-section">
-                    <h3 class="form-section__title">Type of Organization</h3>
-                    <div class="form-radio-group">
-                        <div class="form-radio">
-                            <input type="radio" id="co-curricular" name="org-type" class="form-radio__input">
-                            <label for="co-curricular" class="form-radio__label">Co-Curricular</label>
+                        <div class="form-group">
+                            <label
+                                class="form-label form-label--required">Acronym
+                                or Short Name</label>
+                            <input type="text" class="form-input">
                         </div>
-                        <div class="form-radio">
-                            <input type="radio" id="extra-curricular" name="org-type" class="form-radio__input">
-                            <label for="extra-curricular" class="form-radio__label">Extra-Curricular</label>
-                        </div>
-                        <div class="form-radio">
-                            <input type="radio" id="publication" name="org-type" class="form-radio__input">
-                            <label for="publication" class="form-radio__label">Publication</label>
-                        </div>
-                    </div>
-                </section>
 
-                <!-- Required Documents -->
-                <section class="form-section">
-                    <h3 class="form-section__title">Required Documents (PDF, max 1GB each)</h3>
-                    
+                        <div class="form-group">
+                            <label
+                                class="form-label form-label--required">Official
+                                SLU Institutional Email</label>
+                            <input type="email" class="form-input"
+                                placeholder="organization@slu.edu.ph">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">URL Link/s to Official
+                                Social Media Pages</label>
+                            <input type="text" class="form-input"
+                                placeholder="https://facebook.com/yourorg, https://instagram.com/yourorg">
+                        </div>
+                    </section>
+
+                    <!-- Applicant Information -->
+                    <section class="form-section">
+                        <h3 class="form-section__title">Applicant
+                            Information</h3>
+
+                        <div class="form-group">
+                            <label class="form-label form-label--required">Name
+                                of Applicant Representing the
+                                Organization</label>
+                            <input type="text" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label
+                                class="form-label form-label--required">Position
+                                of Applicant</label>
+                            <input type="text" class="form-input"
+                                placeholder="e.g. President, Vice President">
+                        </div>
+
+                        <div class="form-group">
+                            <label
+                                class="form-label form-label--required">Applicant's
+                                SLU Institutional Email</label>
+                            <input type="email" class="form-input"
+                                placeholder="applicant@slu.edu.ph">
+                        </div>
+                    </section>
+
+                    <!-- Adviser Information -->
+                    <section class="form-section">
+                        <h3 class="form-section__title">Adviser Information</h3>
+
+                        <div class="form-group">
+                            <label class="form-label form-label--required">Name
+                                of Adviser/s</label>
+                            <input type="text" class="form-input"
+                                placeholder="Separate multiple names with commas">
+                        </div>
+
+                        <div class="form-group">
+                            <label
+                                class="form-label form-label--required">Adviser
+                                Email/s</label>
+                            <input type="text" class="form-input"
+                                placeholder="adviser@slu.edu.ph (separate multiple with commas)">
+                        </div>
+                    </section>
+
+                    <!-- Category -->
+                    <section class="form-section">
+                        <h3 class="form-section__title">Category</h3>
+                        <div class="form-checkbox-group">
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="samcis"
+                                    class="form-checkbox__input">
+                                <label for="samcis"
+                                    class="form-checkbox__label">SAMCIS</label>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="sea"
+                                    class="form-checkbox__input">
+                                <label for="sea"
+                                    class="form-checkbox__label">SEA</label>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="som"
+                                    class="form-checkbox__input">
+                                <label for="som"
+                                    class="form-checkbox__label">SOM</label>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="sonahbs"
+                                    class="form-checkbox__input">
+                                <label for="sonahbs"
+                                    class="form-checkbox__label">SONAHBS</label>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="sol"
+                                    class="form-checkbox__input">
+                                <label for="sol"
+                                    class="form-checkbox__label">SOL</label>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="stela"
+                                    class="form-checkbox__input">
+                                <label for="stela"
+                                    class="form-checkbox__label">STELA</label>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="university-wide"
+                                    class="form-checkbox__input">
+                                <label for="university-wide"
+                                    class="form-checkbox__label">University-Wide</label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Type of Organization -->
+                    <section class="form-section">
+                        <h3 class="form-section__title">Type of
+                            Organization</h3>
+                        <div class="form-radio-group">
+                            <div class="form-radio">
+                                <input type="radio" id="co-curricular"
+                                    name="org-type" class="form-radio__input">
+                                <label for="co-curricular"
+                                    class="form-radio__label">Co-Curricular</label>
+                            </div>
+                            <div class="form-radio">
+                                <input type="radio" id="extra-curricular"
+                                    name="org-type" class="form-radio__input">
+                                <label for="extra-curricular"
+                                    class="form-radio__label">Extra-Curricular</label>
+                            </div>
+                            <div class="form-radio">
+                                <input type="radio" id="publication"
+                                    name="org-type" class="form-radio__input">
+                                <label for="publication"
+                                    class="form-radio__label">Publication</label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Required Documents -->
+                    <section class="form-section">
+                        <h3 class="form-section__title">Required Documents (PDF,
+                            max 1GB each)</h3>
+
+                        <div class="form-group">
+                            <label
+                                class="form-label form-label--required">Strategic
+                                Plans 2025-2026</label>
+                            <div class="form-file-upload">Click to upload or
+                                drag and drop</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label
+                                class="form-label form-label--required">Annual
+                                Report 2024-2025</label>
+                            <div class="form-file-upload">Click to upload or
+                                drag and drop</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label
+                                class="form-label form-label--required">Constitution
+                                & By-Laws</label>
+                            <div class="form-file-upload">Click to upload or
+                                drag and drop</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label form-label--required">List
+                                of Officers (Spreadsheet)</label>
+                            <div class="form-file-upload">Click to upload or
+                                drag and drop</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label
+                                class="form-label form-label--required">Financial
+                                Statement 2023-2024</label>
+                            <div class="form-file-upload">Click to upload or
+                                drag and drop</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label
+                                class="form-label form-label--required">Updated
+                                Infographics</label>
+                            <div class="form-file-upload">Click to upload or
+                                drag and drop</div>
+                        </div>
+                    </section>
+
+                    <!-- CBL Status -->
+                    <section class="form-section">
+                        <h3 class="form-section__title">CBL Status</h3>
+                        <div class="form-radio-group">
+                            <div class="form-radio">
+                                <input type="radio" id="with-revisions"
+                                    name="cbl-status" class="form-radio__input">
+                                <label for="with-revisions"
+                                    class="form-radio__label">With
+                                    Revisions</label>
+                            </div>
+                            <div class="form-radio">
+                                <input type="radio" id="without-revisions"
+                                    name="cbl-status" class="form-radio__input">
+                                <label for="without-revisions"
+                                    class="form-radio__label">Without
+                                    Revisions</label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Video Link -->
                     <div class="form-group">
-                        <label class="form-label form-label--required">Strategic Plans 2025-2026</label>
-                        <div class="form-file-upload">Click to upload or drag and drop</div>
+                        <label class="form-label form-label--required">Link to
+                            2-minute Video</label>
+                        <input type="url" class="form-input"
+                            placeholder="https://youtube.com/watch?v=...">
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label form-label--required">Annual Report 2024-2025</label>
-                        <div class="form-file-upload">Click to upload or drag and drop</div>
+                    <!-- Important Reminder -->
+                    <div class="form-alert">
+                        <div class="form-alert__title">⓵ Important
+                            Reminder:</div>
+                        <div class="form-alert__text">All information submitted
+                            will be treated with confidentiality and used solely
+                            for organizational accreditation purposes. Please
+                            ensure all documents are complete and accurate
+                            before submission.</div>
                     </div>
+                </form>
 
-                    <div class="form-group">
-                        <label class="form-label form-label--required">Constitution & By-Laws</label>
-                        <div class="form-file-upload">Click to upload or drag and drop</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label form-label--required">List of Officers (Spreadsheet)</label>
-                        <div class="form-file-upload">Click to upload or drag and drop</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label form-label--required">Financial Statement 2023-2024</label>
-                        <div class="form-file-upload">Click to upload or drag and drop</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label form-label--required">Updated Infographics</label>
-                        <div class="form-file-upload">Click to upload or drag and drop</div>
-                    </div>
-                </section>
-
-                <!-- CBL Status -->
-                <section class="form-section">
-                    <h3 class="form-section__title">CBL Status</h3>
-                    <div class="form-radio-group">
-                        <div class="form-radio">
-                            <input type="radio" id="with-revisions" name="cbl-status" class="form-radio__input">
-                            <label for="with-revisions" class="form-radio__label">With Revisions</label>
-                        </div>
-                        <div class="form-radio">
-                            <input type="radio" id="without-revisions" name="cbl-status" class="form-radio__input">
-                            <label for="without-revisions" class="form-radio__label">Without Revisions</label>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Video Link -->
-                <div class="form-group">
-                    <label class="form-label form-label--required">Link to 2-minute Video</label>
-                    <input type="url" class="form-input" placeholder="https://youtube.com/watch?v=...">
+                <div class="form-actions">
+                    <button type="submit" class="btn btn--primary">Submit
+                        Form</button>
+                    <button type="button" class="btn btn--secondary">Clear
+                        Form</button>
                 </div>
-
-                <!-- Important Reminder -->
-                <div class="form-alert">
-                    <div class="form-alert__title">⓵ Important Reminder:</div>
-                    <div class="form-alert__text">All information submitted will be treated with confidentiality and used solely for organizational accreditation purposes. Please ensure all documents are complete and accurate before submission.</div>
-                </div>
-            </form>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn--primary">Submit Form</button>
-                <button type="button" class="btn btn--secondary">Clear Form</button>
             </div>
-        </div>
 
-    </main>
-</body>
+        </main>
+    </body>
 </html>
