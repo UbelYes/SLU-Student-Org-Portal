@@ -1,3 +1,5 @@
+@import url('/styles/fonts.css');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +7,7 @@
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Arimo', sans-serif;
   display: flex;
   height: 100vh;
   overflow: hidden;

@@ -1,3 +1,5 @@
+@import url('/styles/fonts.css');
+
 html {
     background-color: #ffffff;
     opacity: 1;
@@ -10,6 +12,7 @@ html {
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Arimo', sans-serif;
 }
 
 .login-page {
