@@ -1,3 +1,5 @@
+@import url('/styles/fonts.css');
+
 /* Variables for easy color changes */
 :root {
     --primary-blue: #09375C; /* Darker blue for sidebar */
@@ -14,7 +16,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A font similar to the image */
+    font-family: 'Arimo', sans-serif;
 }
 
 body {

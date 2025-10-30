@@ -48,16 +48,56 @@ document.addEventListener('DOMContentLoaded', () => {
         header.addEventListener('click', () => handleHeaderClick(index));
     });
 
-    // Delegate click events on the table body for dynamic rows (handles cloned rows)
+    // Handle view button clicks using event delegation (works with dynamically added rows)
     tableBody.addEventListener('click', (e) => {
         const viewBtn = e.target.closest('.view-button');
         if (viewBtn) {
-            // Navigate to the OSA view page
-            // Use a relative path because this script runs from pages under /osa-staff/
-            window.location.href = 'osa-view.html';
+            e.preventDefault();
+            openViewModal(viewBtn);
+        }
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('viewModal');
+        if (event.target === modal) {
+            closeViewModal();
         }
     });
 });
+
+// Function to open view modal
+function openViewModal(button) {
+    const modal = document.getElementById('viewModal');
+    
+    // Get the row data
+    const row = button.closest('tr');
+    const cells = row.querySelectorAll('td');
+    const title = cells[0].textContent;
+    const orgName = cells[1].textContent;
+    const submittedBy = cells[2].textContent;
+    const date = cells[3].textContent;
+    const school = cells[4].textContent;
+    const status = cells[5].querySelector('.status-badge').textContent;
+    const statusClass = cells[5].querySelector('.status-badge').className;
+    
+    // Update modal with data
+    document.getElementById('modalFormTitle').textContent = title;
+    document.getElementById('modalOrgName').textContent = orgName;
+    document.getElementById('modalSubmittedBy').textContent = submittedBy;
+    document.getElementById('modalSubmittedDate').textContent = date;
+    document.getElementById('modalSchool').textContent = school;
+    document.getElementById('modalStatus').textContent = status;
+    document.getElementById('modalStatus').className = statusClass;
+    
+    // Show modal
+    modal.style.display = 'block';
+}
+
+// Function to close view modal
+function closeViewModal() {
+    document.getElementById('viewModal').style.display = 'none';
+}
 
 // Function to handle header clicks
 function handleHeaderClick(columnIndex) {

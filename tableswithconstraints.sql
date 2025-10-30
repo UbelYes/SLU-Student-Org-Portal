@@ -203,8 +203,9 @@ CREATE TABLE `form_responses` (
   `responseid` int NOT NULL AUTO_INCREMENT,
   `formid` int NOT NULL,
   `clientid` int NOT NULL,
+  `submission_title` varchar(255) NOT NULL,
   `submitted_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` enum('submitted','returned','approved') NOT NULL DEFAULT 'submitted',
+  `status` enum('submitted','pending','returned','approved') NOT NULL DEFAULT 'submitted',
   `feedback` text,
   `version` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`responseid`),
@@ -223,6 +224,100 @@ CREATE TABLE `form_responses` (
 LOCK TABLES `form_responses` WRITE;
 /*!40000 ALTER TABLE `form_responses` DISABLE KEYS */;
 /*!40000 ALTER TABLE `form_responses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `organization_submissions`
+--
+
+DROP TABLE IF EXISTS `organization_submissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `organization_submissions` (
+  `submission_id` int NOT NULL AUTO_INCREMENT,
+  `responseid` int NOT NULL,
+  `clientid` int NOT NULL,
+  -- Organization Information
+  `org_full_name` varchar(255) NOT NULL,
+  `org_acronym` varchar(50) NOT NULL,
+  `org_email` varchar(100) NOT NULL,
+  `social_media_links` text,
+  -- Applicant Information
+  `applicant_name` varchar(150) NOT NULL,
+  `applicant_position` varchar(100) NOT NULL,
+  `applicant_email` varchar(100) NOT NULL,
+  -- Adviser Information
+  `adviser_names` text NOT NULL,
+  `adviser_emails` text NOT NULL,
+  -- Category (stored as comma-separated values)
+  `category` varchar(255) NOT NULL,
+  -- Type of Organization
+  `org_type` enum('co-curricular','extra-curricular','publication') NOT NULL,
+  -- CBL Status
+  `cbl_status` enum('with-revisions','without-revisions') NOT NULL,
+  -- Video Link
+  `video_link` varchar(500) NOT NULL,
+  -- Metadata
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`submission_id`),
+  KEY `fk_submission_response` (`responseid`),
+  KEY `fk_submission_client` (`clientid`),
+  CONSTRAINT `fk_submission_response` FOREIGN KEY (`responseid`) REFERENCES `form_responses` (`responseid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_submission_client` FOREIGN KEY (`clientid`) REFERENCES `client` (`clientid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `organization_submissions_chk_1` CHECK ((`org_email` like _utf8mb4'%@slu.edu.ph')),
+  CONSTRAINT `organization_submissions_chk_2` CHECK ((`applicant_email` like _utf8mb4'%@slu.edu.ph'))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `organization_submissions`
+--
+
+LOCK TABLES `organization_submissions` WRITE;
+/*!40000 ALTER TABLE `organization_submissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `organization_submissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `submission_documents`
+--
+
+DROP TABLE IF EXISTS `submission_documents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `submission_documents` (
+  `document_id` int NOT NULL AUTO_INCREMENT,
+  `submission_id` int NOT NULL,
+  `document_type` enum(
+    'strategic_plans',
+    'annual_report',
+    'constitution_bylaws',
+    'list_of_officers',
+    'financial_statement',
+    'infographics',
+    'other'
+  ) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `original_filename` varchar(255) NOT NULL,
+  `filepath` varchar(500) NOT NULL,
+  `filesize` bigint NOT NULL,
+  `filetype` varchar(50) NOT NULL,
+  `upload_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`document_id`),
+  KEY `fk_document_submission` (`submission_id`),
+  CONSTRAINT `fk_document_submission` FOREIGN KEY (`submission_id`) REFERENCES `organization_submissions` (`submission_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `submission_documents_chk_1` CHECK ((`filesize` <= 1073741824))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `submission_documents`
+--
+
+LOCK TABLES `submission_documents` WRITE;
+/*!40000 ALTER TABLE `submission_documents` DISABLE KEYS */;
+/*!40000 ALTER TABLE `submission_documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
