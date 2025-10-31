@@ -59,6 +59,7 @@ try {
             echo json_encode([
                 'success' => true,
                 'role' => $role,
+                'userId' => (int)$row['adminid'],
                 'name' => $row['username'],
                 'redirectPath' => $redirect
             ]);
@@ -84,6 +85,7 @@ try {
             echo json_encode([
                 'success' => true,
                 'role' => 'student',
+                'userId' => (int)$row2['clientid'],
                 'name' => $row2['org_name'],
                 'org' => $row2['org_name'],
                 'redirectPath' => './org/org-dashboard.html'

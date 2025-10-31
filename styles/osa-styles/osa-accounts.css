@@ -732,4 +732,83 @@ body {
         padding: 8px 12px;
         font-size: 13px;
     }
+
+    /* Additional responsive styles for tables */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+    }
+
+    .data-table {
+        font-size: 13px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 10px 8px;
+        white-space: nowrap;
+    }
+
+    /* Filter controls responsive */
+    .filter-controls {
+        flex-wrap: wrap;
+    }
+
+    .search-input {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .filter-select {
+        min-width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .accounts-container {
+        gap: 20px;
+    }
+
+    .tab-navigation {
+        gap: 8px;
+    }
+
+    .section-header {
+        gap: 12px;
+    }
+
+    .filter-controls {
+        gap: 8px;
+    }
+
+    .search-input,
+    .filter-select {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .btn-refresh {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .status-badge,
+    .type-badge {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+
+    .btn-view {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .pagination-info {
+        font-size: 12px;
+    }
+
+    .items-per-page {
+        font-size: 13px;
+    }
 }

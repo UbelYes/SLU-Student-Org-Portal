@@ -36,6 +36,20 @@ async function handleLogin(event) {
             localStorage.removeItem('userOrg');
         }
 
+        // Track user activity for admin dashboard
+        if (typeof ActivityTracker !== 'undefined') {
+            const userType = data.role === 'client' ? 'organization' : 
+                            (data.role === 'admin' || data.role === 'osa_admin') ? 'osa_staff' : null;
+            
+            if (userType && data.userId) {
+                ActivityTracker.setCurrentUser(data.userId, userType, {
+                    name: data.name,
+                    email: email,
+                    org: data.org
+                });
+            }
+        }
+
         // Redirect to dashboard returned by backend
         window.location.href = data.redirectPath || './index.html';
     } catch (err) {
@@ -47,6 +61,11 @@ async function handleLogin(event) {
 
 // Handle logout
 function handleLogout() {
+    // Clear activity tracking
+    if (typeof ActivityTracker !== 'undefined') {
+        ActivityTracker.clearCurrentUser();
+    }
+
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userRole');
