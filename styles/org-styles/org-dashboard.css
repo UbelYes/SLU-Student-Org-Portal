@@ -180,10 +180,6 @@ body {
   background: #c82333;
 }
 
-.logout-btn::before {
-  content: "🚪";
-}
-
 .main-content {
   flex: 1;
   background: #f5f7fa;

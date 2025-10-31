@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Submission History - Student Organization Portal</title>
         <link rel="stylesheet" href="/styles//org-styles/org-submissions.css">
+        <script src="/scripts/login.js" defer></script>
         <script src="/scripts/main_page.js" defer></script>
         <script src="/scripts/org-scripts/org-submissions.js" defer></script>
     </head>
@@ -29,7 +30,10 @@
                 <a href="/org/org-form.html" class="nav-item inactive-btn">Form</a>
             </nav>
 
-            <button class="logout-btn" onclick="handleLogout()">Logout</button>
+            <button class="logout-btn" onclick="handleLogout()">
+                <img src="../resources/icons/logout-icon.svg" alt="Logout">
+                Logout
+            </button>
         </aside>
 
         <main class="main-content">

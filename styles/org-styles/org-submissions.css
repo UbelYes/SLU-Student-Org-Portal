@@ -151,10 +151,6 @@ body {
   background: #c82333;
 }
 
-.logout-btn::before {
-  content: "🚪";
-}
-
 /* Main Content Styles */
 .main-content {
   flex: 1;
