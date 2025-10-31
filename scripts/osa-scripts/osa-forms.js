@@ -18,26 +18,8 @@ let formsFilteredData = [];
 
 // Initialize the table data when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    // Get all table rows and convert them to array of objects
-    const rows = Array.from(tableBody.querySelectorAll('tr'));
-    tableData = rows.map(row => {
-        const cells = row.querySelectorAll('td');
-        return {
-            element: row,
-            title: cells[0]?.textContent || '',
-            organization: cells[1]?.textContent || '',
-            submittedBy: cells[2]?.textContent || '',
-            date: cells[3]?.textContent || '',
-            school: cells[4]?.textContent || '',
-            status: cells[5]?.querySelector('.status-badge')?.textContent || ''
-        };
-    });
-
-    // Initialize filtered data
-    formsFilteredData = [...tableData];
-    
-    // Display initial page
-    displayFormsData();
+    // Load submissions from API
+    loadSubmissions();
 
     // Add event listeners
     searchInput.addEventListener('input', filterAndSortTable);
@@ -53,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const viewBtn = e.target.closest('.view-button');
         if (viewBtn) {
             e.preventDefault();
-            openViewModal(viewBtn);
+            const submissionId = viewBtn.getAttribute('data-id');
+            openViewModal(submissionId);
         }
     });
 
@@ -66,29 +49,103 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Load submissions from API
+function loadSubmissions() {
+    fetch('/api/get-submissions.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                tableData = data.submissions.map(submission => {
+                    return {
+                        id: submission.id,
+                        title: submission.submission_title,
+                        organization: submission.org_acronym || submission.org_full_name,
+                        submittedBy: submission.applicant_name,
+                        date: formatDate(submission.submitted_date),
+                        school: submission.category,
+                        status: submission.status || 'Pending',
+                        rawData: submission // Store the full submission data
+                    };
+                });
+
+                // Initialize filtered data
+                formsFilteredData = [...tableData];
+                
+                // Display initial page
+                displayFormsData();
+            } else {
+                showNotification('Error loading submissions: ' + data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('Failed to load submissions', 'error');
+        });
+}
+
+// Format date to readable format
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+        month: '2-digit', 
+        day: '2-digit', 
+        year: '2-digit' 
+    });
+}
+
 // Function to open view modal
-function openViewModal(button) {
+function openViewModal(submissionId) {
     const modal = document.getElementById('viewModal');
     
-    // Get the row data
-    const row = button.closest('tr');
-    const cells = row.querySelectorAll('td');
-    const title = cells[0].textContent;
-    const orgName = cells[1].textContent;
-    const submittedBy = cells[2].textContent;
-    const date = cells[3].textContent;
-    const school = cells[4].textContent;
-    const status = cells[5].querySelector('.status-badge').textContent;
-    const statusClass = cells[5].querySelector('.status-badge').className;
+    // Find the submission data by ID
+    const submissionData = tableData.find(item => item.id == submissionId);
+    
+    if (!submissionData || !submissionData.rawData) {
+        showNotification('Error loading submission details', 'error');
+        return;
+    }
+    
+    const submission = submissionData.rawData;
     
     // Update modal with data
-    document.getElementById('modalFormTitle').textContent = title;
-    document.getElementById('modalOrgName').textContent = orgName;
-    document.getElementById('modalSubmittedBy').textContent = submittedBy;
-    document.getElementById('modalSubmittedDate').textContent = date;
-    document.getElementById('modalSchool').textContent = school;
-    document.getElementById('modalStatus').textContent = status;
-    document.getElementById('modalStatus').className = statusClass;
+    document.getElementById('modalFormTitle').textContent = submission.submission_title;
+    document.getElementById('modalOrgName').textContent = submission.org_full_name;
+    document.getElementById('modalSubmittedBy').textContent = submission.applicant_name;
+    document.getElementById('modalSubmittedDate').textContent = formatDate(submission.submitted_date);
+    document.getElementById('modalSchool').textContent = submission.category;
+    
+    const statusElement = document.getElementById('modalStatus');
+    statusElement.textContent = submission.status || 'Pending';
+    statusElement.className = 'status-badge ' + (submission.status || 'pending').toLowerCase();
+    
+    // Update organization information
+    document.getElementById('modalOrgFullName').textContent = submission.org_full_name;
+    document.getElementById('modalOrgAcronym').textContent = submission.org_acronym;
+    document.getElementById('modalOrgEmail').textContent = submission.org_email;
+    document.getElementById('modalSocialMedia').textContent = submission.social_media_links || 'N/A';
+    
+    // Update applicant information
+    document.getElementById('modalApplicantName').textContent = submission.applicant_name;
+    document.getElementById('modalApplicantPosition').textContent = submission.applicant_position;
+    document.getElementById('modalApplicantEmail').textContent = submission.applicant_email;
+    
+    // Update adviser information
+    document.getElementById('modalAdviserNames').textContent = submission.adviser_names;
+    document.getElementById('modalAdviserEmails').textContent = submission.adviser_emails;
+    
+    // Update category and type
+    document.getElementById('modalCategory').textContent = submission.category;
+    document.getElementById('modalOrgType').textContent = submission.org_type;
+    
+    // Update additional information
+    document.getElementById('modalCblStatus').textContent = submission.cbl_status;
+    
+    const videoLinkElement = document.getElementById('modalVideoLink');
+    if (submission.video_link) {
+        videoLinkElement.innerHTML = `<a href="${submission.video_link}" target="_blank">${submission.video_link}</a>`;
+    } else {
+        videoLinkElement.textContent = 'N/A';
+    }
     
     // Show modal
     modal.style.display = 'block';
@@ -198,7 +255,33 @@ function updateTableDisplay(data) {
     } else {
         // Add filtered and sorted rows
         data.forEach(row => {
-            tableBody.appendChild(row.element.cloneNode(true));
+            const tr = document.createElement('tr');
+            tr.className = 'table-data';
+            
+            // Determine status class
+            const statusClass = (row.status || 'pending').toLowerCase();
+            
+            tr.innerHTML = `
+                <td>${row.title}</td>
+                <td>${row.organization}</td>
+                <td>${row.submittedBy}</td>
+                <td>${row.date}</td>
+                <td>${row.school}</td>
+                <td><span class="status-badge ${statusClass}">${row.status}</span></td>
+                <td>
+                    <div class="action-container">
+                        <button class="view-button" data-id="${row.id}">
+                            <img src="../resources/icons/view-icon.svg" alt="View">
+                            View
+                        </button>
+                        <button class="download-button">
+                            <img src="../resources/icons/download-icon-white.svg" alt="Download">
+                        </button>
+                    </div>
+                </td>
+            `;
+            
+            tableBody.appendChild(tr);
         });
     }
 }
@@ -227,34 +310,11 @@ function displayFormsData() {
 
 // Function to refresh the forms data
 function refreshForms() {
-    // Store current state
-    const currentSearch = searchInput.value;
-    const currentSortValue = sortSelect.value;
-    const currentSortState = { ...currentSort };
+    // Show loading notification
+    showNotification('Refreshing forms data...', 'info');
     
-    // Reload the table data (re-query the DOM)
-    const rows = Array.from(tableBody.querySelectorAll('tr'));
-    tableData = rows.map(row => {
-        const cells = row.querySelectorAll('td');
-        return {
-            element: row,
-            title: cells[0]?.textContent || '',
-            organization: cells[1]?.textContent || '',
-            submittedBy: cells[2]?.textContent || '',
-            date: cells[3]?.textContent || '',
-            school: cells[4]?.textContent || '',
-            status: cells[5]?.querySelector('.status-badge')?.textContent || ''
-        };
-    });
-    
-    // Restore state
-    currentSort = currentSortState;
-    
-    // Reapply filters and sorting
-    filterAndSortTable();
-    
-    // Show success notification
-    showNotification('Forms data refreshed successfully', 'success');
+    // Reload submissions from API
+    loadSubmissions();
 }
 
 // Function to show notification
@@ -268,13 +328,29 @@ function showNotification(message, type = 'success') {
     notification.className = `notification-toast ${type}`;
     notification.textContent = message;
     
+    // Determine background color based on type
+    let backgroundColor;
+    switch(type) {
+        case 'success':
+            backgroundColor = '#10B981';
+            break;
+        case 'error':
+            backgroundColor = '#EF4444';
+            break;
+        case 'info':
+            backgroundColor = '#3B82F6';
+            break;
+        default:
+            backgroundColor = '#10B981';
+    }
+    
     // Add styles
     Object.assign(notification.style, {
         position: 'fixed',
         top: '20px',
         right: '20px',
         padding: '12px 20px',
-        backgroundColor: type === 'success' ? '#10B981' : '#EF4444',
+        backgroundColor: backgroundColor,
         color: 'white',
         borderRadius: '8px',
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',

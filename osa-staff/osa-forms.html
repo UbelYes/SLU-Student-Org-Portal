@@ -117,66 +117,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="table-data">
-                                            <td>End Term Requirement 2024</td>
-                                            <td>ICON</td>
-                                            <td>Amogus 69</td>
-                                            <td>10/3/25</td>
-                                            <td>SAMCIS</td>
-                                            <td><span class="status-badge pending">Pending</span></td>
-                                            <td>
-                                                <div class="action-container">
-                                                    <button class="view-button">
-                                                        <img src="../resources/icons/view-icon.svg" alt="View">
-                                                        View
-                                                    </button>
-                                                    <button class="download-button">
-                                                        <img src="../resources/icons/download-icon-white.svg" alt="Download">
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="table-data">
-                                            <td>Mid Term Requirement 2024</td>
-                                            <td>ICON</td>
-                                            <td>Amogus 420</td>
-                                            <td>10/3/25</td>
-                                            <td>SAMCIS</td>
-                                            <td><span class="status-badge approved">Approved</span></td>
-                                            <td>
-                                                <div class="action-container">
-                                                    <button class="view-button">
-                                                        <img src="../resources/icons/view-icon.svg" alt="View">
-                                                        View
-                                                    </button>
-                                                    <button class="download-button">
-                                                        <img src="../resources/icons/download-icon-white.svg" alt="Download">
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="table-data">
-                                            <td>Mid Term Requirement 2024</td>
-                                            <td>ICON</td>
-                                            <td>Amogus 420</td>
-                                            <td>10/3/25</td>
-                                            <td>SAMCIS</td>
-                                            <td><span class="status-badge returned">Returned</span></td>
-                                            <td>
-                                                <div class="action-container">
-                                                    <button class="view-button">
-                                                        <img src="../resources/icons/view-icon.svg" alt="View">
-                                                        View
-                                                    </button>
-                                                    <button class="download-button">
-                                                        <img src="../resources/icons/download-icon-white.svg" alt="Download">
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                            <!-- Data will be loaded dynamically -->
+                                        </tbody>
                                 </table>
                                 </div>
                             </div>
@@ -254,19 +196,19 @@
                         <h4>Organization Information</h4>
                         <div class="view-field">
                             <label>Complete Name of Organization:</label>
-                            <div class="field-value">Student Alliance for Music and Creative Industry Studies</div>
+                            <div class="field-value" id="modalOrgFullName">-</div>
                         </div>
                         <div class="view-field">
                             <label>Acronym:</label>
-                            <div class="field-value">SAMCIS</div>
+                            <div class="field-value" id="modalOrgAcronym">-</div>
                         </div>
                         <div class="view-field">
                             <label>Official SLU Institutional Email:</label>
-                            <div class="field-value">samcis@slu.edu.ph</div>
+                            <div class="field-value" id="modalOrgEmail">-</div>
                         </div>
                         <div class="view-field">
                             <label>Social Media Pages:</label>
-                            <div class="field-value">https://facebook.com/samcis, https://instagram.com/samcis</div>
+                            <div class="field-value" id="modalSocialMedia">-</div>
                         </div>
                     </div>
 
@@ -274,15 +216,15 @@
                         <h4>Applicant Information</h4>
                         <div class="view-field">
                             <label>Name of Applicant:</label>
-                            <div class="field-value">Juan Dela Cruz</div>
+                            <div class="field-value" id="modalApplicantName">-</div>
                         </div>
                         <div class="view-field">
                             <label>Position:</label>
-                            <div class="field-value">President</div>
+                            <div class="field-value" id="modalApplicantPosition">-</div>
                         </div>
                         <div class="view-field">
                             <label>Applicant's Email:</label>
-                            <div class="field-value">jdelacruz@slu.edu.ph</div>
+                            <div class="field-value" id="modalApplicantEmail">-</div>
                         </div>
                     </div>
 
@@ -290,11 +232,11 @@
                         <h4>Adviser Information</h4>
                         <div class="view-field">
                             <label>Name of Adviser/s:</label>
-                            <div class="field-value">Prof. Maria Santos</div>
+                            <div class="field-value" id="modalAdviserNames">-</div>
                         </div>
                         <div class="view-field">
                             <label>Adviser Email/s:</label>
-                            <div class="field-value">msantos@slu.edu.ph</div>
+                            <div class="field-value" id="modalAdviserEmails">-</div>
                         </div>
                     </div>
 
@@ -302,47 +244,11 @@
                         <h4>Category & Type</h4>
                         <div class="view-field">
                             <label>Category:</label>
-                            <div class="field-value">SAMCIS</div>
+                            <div class="field-value" id="modalCategory">-</div>
                         </div>
                         <div class="view-field">
                             <label>Type of Organization:</label>
-                            <div class="field-value">Co-Curricular</div>
-                        </div>
-                    </div>
-
-                    <div class="view-section">
-                        <h4>Submitted Documents</h4>
-                        <div class="document-list">
-                            <div class="document-item">
-                                <span class="doc-icon">📄</span>
-                                <span class="doc-name">Strategic_Plans_2025-2026.pdf</span>
-                                <button class="doc-download-btn">Download</button>
-                            </div>
-                            <div class="document-item">
-                                <span class="doc-icon">📄</span>
-                                <span class="doc-name">Annual_Report_2024-2025.pdf</span>
-                                <button class="doc-download-btn">Download</button>
-                            </div>
-                            <div class="document-item">
-                                <span class="doc-icon">📄</span>
-                                <span class="doc-name">Constitution_and_ByLaws.pdf</span>
-                                <button class="doc-download-btn">Download</button>
-                            </div>
-                            <div class="document-item">
-                                <span class="doc-icon">📊</span>
-                                <span class="doc-name">List_of_Officers.xlsx</span>
-                                <button class="doc-download-btn">Download</button>
-                            </div>
-                            <div class="document-item">
-                                <span class="doc-icon">📄</span>
-                                <span class="doc-name">Financial_Statement_2023-2024.pdf</span>
-                                <button class="doc-download-btn">Download</button>
-                            </div>
-                            <div class="document-item">
-                                <span class="doc-icon">🖼️</span>
-                                <span class="doc-name">Updated_Infographics.png</span>
-                                <button class="doc-download-btn">Download</button>
-                            </div>
+                            <div class="field-value" id="modalOrgType">-</div>
                         </div>
                     </div>
 
@@ -350,11 +256,11 @@
                         <h4>Additional Information</h4>
                         <div class="view-field">
                             <label>CBL Status:</label>
-                            <div class="field-value">Without Revisions</div>
+                            <div class="field-value" id="modalCblStatus">-</div>
                         </div>
                         <div class="view-field">
                             <label>Video Link:</label>
-                            <div class="field-value"><a href="https://youtube.com/watch?v=example" target="_blank">https://youtube.com/watch?v=example</a></div>
+                            <div class="field-value" id="modalVideoLink">-</div>
                         </div>
                     </div>
                 </div>

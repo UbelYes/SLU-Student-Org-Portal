@@ -1,56 +1,78 @@
-# SLU OSA Portal - Login integration
+# SLU Student Organization Portal
 
-This project now uses a simple PHP + MySQL backend for login instead of hardcoded credentials.
+A web portal for Saint Louis University's Office of Student Affairs (OSA) to manage student organizations, forms, and submissions.
 
-## What was added
-- `api/db.php`: minimal database connection helper (WAMP defaults: user `root`, empty password).
-- `api/login.php`: POST endpoint that authenticates Admin/OSA in `admin` table and Student Orgs in `client` table.
-- `scripts/login.js`: updated to call the backend and set the same localStorage keys as before.
-- `tableswithconstraints.sql`: now creates/uses database `slu_org_db` and seeds sample admin/osa/client users.
+## Prerequisites
 
-## Database setup
-1. Open phpMyAdmin (http://localhost/phpmyadmin/) or use the MySQL client.
-2. Import `tableswithconstraints.sql` into your MySQL server. It will:
-   - Create database `slu_org_db` if it does not exist
-   - Create the required tables
-   - Insert sample users
+- **WAMP Server** (Windows, Apache, MySQL, PHP)
+- A modern web browser (Chrome, Firefox, Edge, etc.)
 
-Seeded accounts:
-- Admin (redirects to Admin Dashboard):
-  - admin@slu.edu.ph / admin123
-  - admin2@slu.edu.ph / admin123
-- OSA Staff (redirects to OSA Forms):
-  - staff@slu.edu.ph / staff123
-  - osa@slu.edu.ph / osa123
-- Student Orgs (redirects to Org Dashboard):
-  - samcis@slu.edu.ph / samcis123 (org: SAMCIS)
-  - icon@slu.edu.ph / icon123 (org: ICON)
-  - student@slu.edu.ph / student123 (org: Student Council)
+## Installation Steps
 
-Note: Passwords are stored in plaintext in the seed for simplicity. The backend supports hashed passwords via `password_verify()` automatically, so you can update a user's password to a bcrypt hash later without code changes.
+### 1. Install WAMP Server
+- Download and install [WAMP Server](https://www.wampserver.com/en/)
+- Make sure WAMP is running (the icon should be green)
 
-## How to run (WAMP)
-- Place this project under `c:\\wamp64\\www` (already done).
-- Start WAMP and ensure Apache + MySQL services are running (green icon).
-- Visit `http://localhost/` and open the portal login page (index.html).
-- Log in using one of the seeded accounts.
+### 2. Set Up the Project
+- Place this project folder in `c:\wamp64\www\`
+- The path should look like: `c:\wamp64\www\[project-folder]\`
 
-## Endpoint contract
-- POST `api/login.php`
-  - Body: JSON `{ "email": string, "password": string }` (also supports form-encoded)
-  - Response on success:
-    ```json
-    {
-      "success": true,
-      "role": "admin" | "osa" | "student",
-      "name": "Display Name",
-      "org": "Org Name (for students only)",
-      "redirectPath": "../admin/admin-dashboard.html" | "../osa-staff/osa-forms.html" | "../org/org-dashboard.html"
-    }
-    ```
-  - Response on error: HTTP 400/401/500 with `{ "success": false, "message": "..." }`
+### 3. Set Up the Database
+1. Open your browser and go to: `http://localhost/phpmyadmin`
+2. Click on "Import" tab
+3. Choose the file: `tableswithconstraints.sql`
+4. Click "Go" to import the database
+   - This will create the database `slu_org_db` with all required tables
 
-## Notes
-- Frontend still uses `localStorage` keys: `isLoggedIn`, `userEmail`, `userRole`, `userName`, `userOrg` (when applicable) for compatibility with existing pages.
-- If your MySQL credentials differ, update `api/db.php` accordingly.
-- Everything is kept intentionally small and non-redundant: one connection helper and one login endpoint.
+### 4. Configure Database Connection (Optional)
+- If you changed your MySQL credentials, edit `api\db.php`:
+  ```php
+  $DB_HOST = 'localhost';
+  $DB_USER = 'root';        // Your MySQL username
+  $DB_PASS = '';            // Your MySQL password
+  $DB_NAME = 'slu_org_db';
+  ```
+
+## Running the Website
+
+1. Make sure WAMP is running (green icon in system tray)
+2. Open your browser
+3. Navigate to: `http://localhost/[project-folder]/index.html`
+
+## User Access
+
+The portal has three types of users:
+
+- **Admin** - Access admin dashboard at `/admin/admin-dashboard.html`
+- **OSA Staff** - Manage accounts, forms, and documents
+- **Organizations** - Submit forms and view submissions at `/org/org-dashboard.html`
+
+## Project Structure
+
+- `index.html` - Login page
+- `admin/` - Admin dashboard and pages
+- `org/` - Organization pages and forms
+- `osa-staff/` - OSA staff management pages
+- `api/` - Backend PHP scripts for database operations
+- `scripts/` - JavaScript files
+- `styles/` - CSS stylesheets
+- `sql/` - Database schema and setup files
+
+## Troubleshooting
+
+**Database Connection Error:**
+- Make sure WAMP is running (green icon)
+- Check if MySQL service is started
+- Verify database name is `slu_org_db` in phpMyAdmin
+
+**Page Not Found:**
+- Verify the project is in `c:\wamp64\www\`
+- Check that you're using the correct URL path
+
+**WAMP Icon is Orange/Yellow:**
+- Port 80 might be in use by another application
+- Try changing Apache port or close conflicting applications
+
+## Support
+
+For questions or issues, contact the development team.
