@@ -50,6 +50,12 @@ try {
             $role = ($dbRole === 'osa_admin') ? 'osa' : 'admin';
             $redirect = ($role === 'osa') ? './osa-staff/osa-forms.html' : './admin/admin-dashboard.html';
 
+            // Update last_login timestamp
+            $updateStmt = $conn->prepare("UPDATE admin SET last_login = NOW() WHERE adminid = ?");
+            $updateStmt->bind_param('i', $row['adminid']);
+            $updateStmt->execute();
+            $updateStmt->close();
+
             $_SESSION['user_type'] = 'admin';
             $_SESSION['adminid'] = (int)$row['adminid'];
             $_SESSION['role'] = $role;
@@ -75,6 +81,12 @@ try {
     $res2 = $stmt2->get_result();
     if ($row2 = $res2->fetch_assoc()) {
         if (verify_password_flexible($password, $row2['password'])) {
+            // Update last_login timestamp
+            $updateStmt = $conn->prepare("UPDATE client SET last_login = NOW() WHERE clientid = ?");
+            $updateStmt->bind_param('i', $row2['clientid']);
+            $updateStmt->execute();
+            $updateStmt->close();
+
             $_SESSION['user_type'] = 'client';
             $_SESSION['clientid'] = (int)$row2['clientid'];
             $_SESSION['role'] = 'student';

@@ -1,17 +1,13 @@
-// Admin Dashboard - User Activity Monitoring
-
-const STORAGE_KEYS = {
-    ORGANIZATIONS: 'organizations',
-    OSA_STAFF: 'osaStaff',
-    ONLINE_USERS: 'onlineUsers',
-    LAST_ACTIVITY: 'lastActivity'
-};
-
-const ONLINE_THRESHOLD = 5 * 60 * 1000; // 5 minutes in milliseconds
+// Admin Dashboard - User Activity Monitoring (SQL-based)
 
 let organizations = [];
 let osaStaff = [];
 let onlineUsers = [];
+let stats = {
+    online_orgs: 0,
+    online_staff: 0,
+    total_users: 0
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeDashboard();
@@ -19,80 +15,47 @@ document.addEventListener('DOMContentLoaded', () => {
     startAutoRefresh();
 });
 
-function initializeDashboard() {
-    loadSampleData();
-    loadData();
+async function initializeDashboard() {
+    await loadDataFromServer();
     displayAllData();
     updateQuickStats();
 }
 
-function loadSampleData() {
-    // Initialize sample data if not exists
-    if (!localStorage.getItem(STORAGE_KEYS.ORGANIZATIONS)) {
-        const sampleOrgs = [
-            { id: 1, org_name: 'SAMCIS', username: 'samcis', email: 'samcis@slu.edu.ph', status: 'active', last_login: new Date(Date.now() - 2 * 60 * 1000).toISOString() },
-            { id: 2, org_name: 'ICON', username: 'icon', email: 'icon@slu.edu.ph', status: 'active', last_login: new Date(Date.now() - 10 * 60 * 1000).toISOString() },
-            { id: 3, org_name: 'Student Council', username: 'student', email: 'student@slu.edu.ph', status: 'active', last_login: new Date(Date.now() - 30 * 60 * 1000).toISOString() },
-            { id: 4, org_name: 'ENGSO', username: 'engso', email: 'engso@slu.edu.ph', status: 'active', last_login: new Date(Date.now() - 3 * 60 * 1000).toISOString() },
-            { id: 5, org_name: 'NSTP', username: 'nstp', email: 'nstp@slu.edu.ph', status: 'active', last_login: new Date(Date.now() - 60 * 60 * 1000).toISOString() }
-        ];
-        localStorage.setItem(STORAGE_KEYS.ORGANIZATIONS, JSON.stringify(sampleOrgs));
-    }
-
-    if (!localStorage.getItem(STORAGE_KEYS.OSA_STAFF)) {
-        const sampleStaff = [
-            { id: 1, username: 'osa_admin', email: 'osa@slu.edu.ph', role: 'osa_admin', status: 'active', last_login: new Date(Date.now() - 1 * 60 * 1000).toISOString() },
-            { id: 2, username: 'staff1', email: 'staff1@slu.edu.ph', role: 'osa_admin', status: 'active', last_login: new Date(Date.now() - 4 * 60 * 1000).toISOString() },
-            { id: 3, username: 'staff2', email: 'staff2@slu.edu.ph', role: 'osa_admin', status: 'active', last_login: new Date(Date.now() - 15 * 60 * 1000).toISOString() }
-        ];
-        localStorage.setItem(STORAGE_KEYS.OSA_STAFF, JSON.stringify(sampleStaff));
-    }
-}
-
-function loadData() {
-    organizations = JSON.parse(localStorage.getItem(STORAGE_KEYS.ORGANIZATIONS) || '[]');
-    osaStaff = JSON.parse(localStorage.getItem(STORAGE_KEYS.OSA_STAFF) || '[]');
-    updateOnlineUsers();
-}
-
-function updateOnlineUsers() {
-    const now = Date.now();
-    onlineUsers = [];
-
-    // Check online organizations
-    organizations.forEach(org => {
-        if (org.last_login) {
-            const lastActivity = new Date(org.last_login).getTime();
-            if (now - lastActivity < ONLINE_THRESHOLD) {
-                onlineUsers.push({
-                    type: 'Organization',
-                    name: org.org_name,
-                    email: org.email,
-                    last_activity: org.last_login,
-                    status: 'online'
-                });
+async function loadDataFromServer() {
+    try {
+        const response = await fetch('../api/get-online-users.php', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Cache-Control': 'no-cache'
             }
-        }
-    });
+        });
 
-    // Check online OSA staff
-    osaStaff.forEach(staff => {
-        if (staff.last_login) {
-            const lastActivity = new Date(staff.last_login).getTime();
-            if (now - lastActivity < ONLINE_THRESHOLD) {
-                onlineUsers.push({
-                    type: 'OSA Staff',
-                    name: staff.username,
-                    email: staff.email,
-                    last_activity: staff.last_login,
-                    status: 'online'
-                });
-            }
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    });
 
-    // Sort by most recent activity
-    onlineUsers.sort((a, b) => new Date(b.last_activity) - new Date(a.last_activity));
+        const data = await response.json();
+
+        if (data.success) {
+            organizations = data.organizations || [];
+            osaStaff = data.osa_staff || [];
+            onlineUsers = data.online_users || [];
+            stats = data.stats || { online_orgs: 0, online_staff: 0, total_users: 0 };
+            
+            console.log('Data loaded from server:', {
+                organizations: organizations.length,
+                staff: osaStaff.length,
+                online: onlineUsers.length
+            });
+        } else {
+            console.error('Failed to load data:', data.message);
+            showError('Failed to load user data');
+        }
+    } catch (error) {
+        console.error('Error loading data from server:', error);
+        showError('Unable to connect to server. Please check your connection.');
+    }
 }
 
 function setupEventListeners() {
@@ -170,11 +133,6 @@ function displayOrgData() {
             org.email.toLowerCase().includes(searchTerm);
         const matchesStatus = statusFilter === 'all' || org.status === statusFilter;
         return matchesSearch && matchesStatus;
-    }).sort((a, b) => {
-        // Sort by last login, most recent first
-        if (!a.last_login) return 1;
-        if (!b.last_login) return -1;
-        return new Date(b.last_login) - new Date(a.last_login);
     });
 
     if (filtered.length === 0) {
@@ -183,7 +141,7 @@ function displayOrgData() {
     }
 
     tbody.innerHTML = filtered.map(org => {
-        const isOnline = org.last_login && (Date.now() - new Date(org.last_login).getTime() < ONLINE_THRESHOLD);
+        const isOnline = org.online_status === 'online';
         return `
             <tr>
                 <td><strong>${org.org_name}</strong></td>
@@ -211,11 +169,6 @@ function displayStaffData() {
             staff.role.toLowerCase().includes(searchTerm);
         const matchesStatus = statusFilter === 'all' || staff.status === statusFilter;
         return matchesSearch && matchesStatus;
-    }).sort((a, b) => {
-        // Sort by last login, most recent first
-        if (!a.last_login) return 1;
-        if (!b.last_login) return -1;
-        return new Date(b.last_login) - new Date(a.last_login);
     });
 
     if (filtered.length === 0) {
@@ -224,7 +177,7 @@ function displayStaffData() {
     }
 
     tbody.innerHTML = filtered.map(staff => {
-        const isOnline = staff.last_login && (Date.now() - new Date(staff.last_login).getTime() < ONLINE_THRESHOLD);
+        const isOnline = staff.online_status === 'online';
         return `
             <tr>
                 <td><strong>${staff.username}</strong></td>
@@ -240,19 +193,9 @@ function displayStaffData() {
 }
 
 function updateQuickStats() {
-    const onlineOrgs = organizations.filter(org => 
-        org.last_login && (Date.now() - new Date(org.last_login).getTime() < ONLINE_THRESHOLD)
-    ).length;
-
-    const onlineStaff = osaStaff.filter(staff => 
-        staff.last_login && (Date.now() - new Date(staff.last_login).getTime() < ONLINE_THRESHOLD)
-    ).length;
-
-    const totalUsers = organizations.length + osaStaff.length;
-
-    document.getElementById('online-orgs').textContent = onlineOrgs;
-    document.getElementById('online-osa').textContent = onlineStaff;
-    document.getElementById('total-users').textContent = totalUsers;
+    document.getElementById('online-orgs').textContent = stats.online_orgs || 0;
+    document.getElementById('online-osa').textContent = stats.online_staff || 0;
+    document.getElementById('total-users').textContent = stats.total_users || 0;
 }
 
 function formatDateTime(dateString) {
@@ -277,8 +220,8 @@ function formatDateTime(dateString) {
     });
 }
 
-function refreshData() {
-    loadData();
+async function refreshData() {
+    await loadDataFromServer();
     displayAllData();
     updateQuickStats();
     
@@ -295,57 +238,35 @@ function refreshData() {
     }
 }
 
+function showError(message) {
+    // Create error notification
+    const errorDiv = document.createElement('div');
+    errorDiv.style.cssText = `
+        position: fixed;
+        top: 90px;
+        right: 20px;
+        background: #fee2e2;
+        color: #991b1b;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1001;
+        font-family: "Arimo", sans-serif;
+        font-size: 14px;
+    `;
+    errorDiv.textContent = message;
+    document.body.appendChild(errorDiv);
+    
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 5000);
+}
+
 function startAutoRefresh() {
     // Auto-refresh every 30 seconds
-    setInterval(() => {
-        loadData();
+    setInterval(async () => {
+        await loadDataFromServer();
         displayAllData();
         updateQuickStats();
     }, 30000);
-}
-
-// Simulate user activity for demo purposes
-function simulateUserActivity() {
-    if (organizations.length > 0) {
-        const randomOrg = organizations[Math.floor(Math.random() * organizations.length)];
-        randomOrg.last_login = new Date().toISOString();
-        localStorage.setItem(STORAGE_KEYS.ORGANIZATIONS, JSON.stringify(organizations));
-    }
-
-    if (osaStaff.length > 0) {
-        const randomStaff = osaStaff[Math.floor(Math.random() * osaStaff.length)];
-        randomStaff.last_login = new Date().toISOString();
-        localStorage.setItem(STORAGE_KEYS.OSA_STAFF, JSON.stringify(osaStaff));
-    }
-
-    refreshData();
-}
-
-// Track current user activity
-function trackUserActivity() {
-    const userType = localStorage.getItem('userType');
-    const userId = localStorage.getItem('userId');
-
-    if (userType && userId) {
-        const activityData = {
-            userId: userId,
-            userType: userType,
-            timestamp: new Date().toISOString()
-        };
-
-        // Update last_login in appropriate storage
-        if (userType === 'organization') {
-            const org = organizations.find(o => o.id === parseInt(userId));
-            if (org) {
-                org.last_login = activityData.timestamp;
-                localStorage.setItem(STORAGE_KEYS.ORGANIZATIONS, JSON.stringify(organizations));
-            }
-        } else if (userType === 'osa_staff') {
-            const staff = osaStaff.find(s => s.id === parseInt(userId));
-            if (staff) {
-                staff.last_login = activityData.timestamp;
-                localStorage.setItem(STORAGE_KEYS.OSA_STAFF, JSON.stringify(osaStaff));
-            }
-        }
-    }
 }
