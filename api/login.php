@@ -100,7 +100,7 @@ try {
                 'userId' => (int)$row2['clientid'],
                 'name' => $row2['org_name'],
                 'org' => $row2['org_name'],
-                'redirectPath' => './org/org-dashboard.html'
+                'redirectPath' => './org/org-form.html'
             ]);
             exit;
         }
