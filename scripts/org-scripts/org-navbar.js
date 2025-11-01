@@ -1,15 +1,18 @@
-// Org Navbar - Populate user information from localStorage
+/**
+ * Organization Navbar User Information Manager
+ *
+ * Populates sidebar navigation with logged-in user information from localStorage.
+ * Displays organization name, type, and generates user initials for avatar display.
+ * Automatically runs on DOM load to ensure user info is displayed correctly.
+ */
 
 function populateUserInfo() {
-  // Get user information from localStorage
   const userName = localStorage.getItem("userName");
   const userOrg = localStorage.getItem("userOrg");
 
-  // Get the user info elements
   const userNameElement = document.querySelector(".user-info h4");
   const userOrgElement = document.querySelector(".user-info p");
 
-  // Update the elements with logged-in user information
   if (userNameElement && userName) {
     userNameElement.textContent = userName;
   }
@@ -18,7 +21,6 @@ function populateUserInfo() {
     userOrgElement.textContent = userOrg;
   }
 
-  // Optional: Add user initials to avatar
   updateUserAvatar(userName);
 }
 
@@ -26,14 +28,12 @@ function updateUserAvatar(userName) {
   const avatarElement = document.querySelector(".user-avatar");
 
   if (avatarElement && userName) {
-    // Get initials from the name (first letter of each word)
     const initials = userName
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase())
       .join("")
-      .substring(0, 2); // Limit to 2 characters
+      .substring(0, 2);
 
-    // Add initials to avatar if it doesn't have an image
     if (!avatarElement.querySelector("img")) {
       avatarElement.textContent = initials;
       avatarElement.style.display = "flex";
@@ -45,5 +45,4 @@ function updateUserAvatar(userName) {
   }
 }
 
-// Call the function when the DOM is loaded
 document.addEventListener("DOMContentLoaded", populateUserInfo);

@@ -1,24 +1,23 @@
-// /scripts/auth.js - External authentication logic for both pages
+/**
+ * External Authentication Logic
+ *
+ * Handles Google OAuth authentication for SLU Student Organization Portal.
+ * Manages OAuth flow, token storage, user info retrieval, and session management.
+ * Includes domain restriction for SLU students and backend API integration.
+ */
 
-// Configuration
 const AUTH_CONFIG = {
-  // Replace with your actual Google Client ID
   CLIENT_ID:
     "55329817491-uun6n75sib64uhkqobr93qcrmkhm4bca.apps.googleusercontent.com",
-  // The redirect URI should be your dashboard page
   REDIRECT_URI: window.location.origin + "/org/org-form.html",
-  // Google OAuth endpoints
   AUTH_ENDPOINT: "https://accounts.google.com/o/oauth2/v2/auth",
   TOKEN_ENDPOINT: "https://oauth2.googleapis.com/token",
   USER_INFO_ENDPOINT: "https://www.googleapis.com/oauth2/v3/userinfo",
-  // Your backend API endpoints
   BACKEND_TOKEN_URL: "https://your-backend-api.com/api/auth/google/callback",
   BACKEND_USER_URL: "https://your-backend-api.com/api/user",
-  // Domain restriction - for SLU students only
   HOSTED_DOMAIN: "",
 };
 
-// Authentication storage utilities
 const AuthStorage = {
   setToken(token) {
     localStorage.setItem("authToken", token);
@@ -51,7 +50,6 @@ const AuthStorage = {
   },
 };
 
-// Get Google OAuth URL
 function getGoogleOAuthURL() {
   const options = {
     redirect_uri: AUTH_CONFIG.REDIRECT_URI,
@@ -61,28 +59,24 @@ function getGoogleOAuthURL() {
     prompt: "consent",
     scope:
       "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
-    hd: AUTH_CONFIG.HOSTED_DOMAIN, // Restrict to SLU domain
+    hd: AUTH_CONFIG.HOSTED_DOMAIN,
   };
 
   const urlParams = new URLSearchParams(options);
   return `${AUTH_CONFIG.AUTH_ENDPOINT}?${urlParams.toString()}`;
 }
 
-// Handle Google login
 function handleGoogleLogin() {
   window.location.href = getGoogleOAuthURL();
 }
 
-// Handle logout
 function logout() {
   AuthStorage.clearAll();
   window.location.href = "/index.html";
 }
 
-// Process the authorization code from Google OAuth
 async function processAuthCode(code) {
   try {
-    // Exchange code for token via your backend
     const response = await fetch(
       `${AUTH_CONFIG.BACKEND_TOKEN_URL}?code=${code}`,
       {
@@ -95,7 +89,6 @@ async function processAuthCode(code) {
 
     const data = await response.json();
 
-    // Store the token
     AuthStorage.setToken(data.token);
 
     // Clean URL to remove the code
