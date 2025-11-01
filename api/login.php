@@ -1,7 +1,12 @@
 <?php
-// Minimal login endpoint: checks Admin (incl. OSA) and Client accounts
-// Input: POST { email, password } (form-encoded or JSON)
-// Output: JSON { success, role, name, org?, redirectPath, message? }
+/**
+ * Login Authentication API
+ * 
+ * Handles user authentication for Admin, OSA staff, and Student Organization accounts.
+ * Accepts POST requests with email and password (JSON or form-encoded).
+ * Verifies credentials against database, supports both hashed and plaintext passwords.
+ * Updates last_login timestamp, stores session data, and returns user info with redirect path.
+ */
 
 session_start();
 header('Content-Type: application/json');
@@ -9,7 +14,6 @@ header('Cache-Control: no-store');
 
 require_once __DIR__ . '/db.php';
 
-// Read input (supports JSON or form-encoded)
 $raw = file_get_contents('php://input');
 $data = [];
 if (!empty($raw)) {
@@ -28,16 +32,13 @@ if ($email === '' || $password === '') {
     exit;
 }
 
-// Helper: verify hashed or plaintext (supports transition)
 function verify_password_flexible(string $input, string $stored): bool {
-    // Try password_verify first (bcrypt/argon2), then fallback to direct compare
     if (strlen($stored) >= 4 && substr($stored, 0, 1) === '$') {
         return password_verify($input, $stored);
     }
     return hash_equals($stored, $input);
 }
 
-// Try Admin/OSA first
 try {
     $stmt = $conn->prepare("SELECT adminid, username, password, email, role FROM admin WHERE email = ? AND status = 'active' LIMIT 1");
     $stmt->bind_param('s', $email);
@@ -45,12 +46,10 @@ try {
     $res = $stmt->get_result();
     if ($row = $res->fetch_assoc()) {
         if (verify_password_flexible($password, $row['password'])) {
-            // Map DB role to frontend roles and redirect
             $dbRole = $row['role'];
             $role = ($dbRole === 'osa_admin') ? 'osa' : 'admin';
             $redirect = ($role === 'osa') ? './osa-staff/osa-forms.html' : './admin/admin-dashboard.html';
 
-            // Update last_login timestamp
             $updateStmt = $conn->prepare("UPDATE admin SET last_login = NOW() WHERE adminid = ?");
             $updateStmt->bind_param('i', $row['adminid']);
             $updateStmt->execute();
@@ -74,14 +73,12 @@ try {
     }
     $stmt->close();
 
-    // Try Client (student organizations)
     $stmt2 = $conn->prepare("SELECT clientid, org_name, username, password, email FROM client WHERE email = ? AND status = 'active' LIMIT 1");
     $stmt2->bind_param('s', $email);
     $stmt2->execute();
     $res2 = $stmt2->get_result();
     if ($row2 = $res2->fetch_assoc()) {
         if (verify_password_flexible($password, $row2['password'])) {
-            // Update last_login timestamp
             $updateStmt = $conn->prepare("UPDATE client SET last_login = NOW() WHERE clientid = ?");
             $updateStmt->bind_param('i', $row2['clientid']);
             $updateStmt->execute();

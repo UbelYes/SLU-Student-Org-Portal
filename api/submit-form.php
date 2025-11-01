@@ -1,18 +1,23 @@
 <?php
+/**
+ * Organization Form Submission API
+ * 
+ * Handles organization form submissions from authenticated client users.
+ * Validates session authentication, accepts POST JSON data, validates required fields,
+ * and inserts submission into org_form_submissions table. Returns submission ID on success.
+ */
+
 header('Content-Type: application/json');
 session_start();
 
-// Include database connection
 require_once 'db.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['clientid'])) {
     http_response_code(401);
     echo json_encode(['success' => false, 'message' => 'Unauthorized. Please login first.']);
     exit;
 }
 
-// Only accept POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Method not allowed']);
@@ -20,10 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 try {
-    // Get POST data
     $data = json_decode(file_get_contents('php://input'), true);
     
-    // Validate required fields
     $required_fields = [
         'submission_title', 'org_full_name', 'org_acronym', 'org_email',
         'applicant_name', 'applicant_position', 'applicant_email',
@@ -39,7 +42,6 @@ try {
         }
     }
     
-    // Prepare SQL statement
     $sql = "INSERT INTO org_form_submissions (
         clientid, submission_title, org_full_name, org_acronym, org_email, 
         social_media_links, applicant_name, applicant_position, applicant_email,
@@ -48,7 +50,6 @@ try {
     
     $stmt = $conn->prepare($sql);
     
-    // Bind parameters
     $stmt->bind_param(
         "issssssssssssss",
         $_SESSION['clientid'],
@@ -68,7 +69,6 @@ try {
         $data['video_link']
     );
     
-    // Execute the statement
     if ($stmt->execute()) {
         $submission_id = $conn->insert_id;
         
