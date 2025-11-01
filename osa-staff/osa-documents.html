@@ -1,156 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Management - OSA Portal</title>
-    <link rel="icon" href="../resources/images/Saint-Louis-University-PH-Logo.png">
-    <link rel="stylesheet" href="../styles/osa-styles/osa-navbar.css">
-    <link rel="stylesheet" href="../styles/osa-styles/osa-documents.css">
-    <script src="../scripts/login.js" defer></script>
-    <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
-    <script src="../scripts/osa-scripts/osa-documents.js" defer></script>
-</head>
-<body>
-    <div class="document-page">
-        <!-- Hamburger Menu Button (Mobile Only) -->
-        <button class="hamburger-menu" id="hamburger-toggle" aria-label="Toggle Navigation">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document Management - OSA Portal</title>
+        <link rel="icon"
+            href="../resources/images/Saint-Louis-University-PH-Logo.png">
+        <link rel="stylesheet" href="../styles/osa-styles/osa-navbar.css">
+        <link rel="stylesheet" href="../styles/osa-styles/osa-documents.css">
+        <script src="../scripts/login.js" defer></script>
+        <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
+        <script src="../scripts/osa-scripts/osa-documents.js" defer></script>
+    </head>
+    <body>
+        <div class="document-page">
+            <!-- Hamburger Menu Button (Mobile Only) -->
+            <button class="hamburger-menu" id="hamburger-toggle"
+                aria-label="Toggle Navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-        <!-- Navigation Sidebar -->
-        <nav class="navigation-side-bar" id="navigation-sidebar">
-            <div class="navigation-container">
-                <div class="banner">
-                    <div class="image-SLU-logo">
-                        <img src="../resources/images/Saint-Louis-University-PH-Logo.png" alt="SLU Logo">
-                    </div>
-                    <div class="banner-heading">
-                        <div class="banner-text-wrapper">
-                            <h1>OSA Student Organization Portal</h1>
+            <!-- Navigation Sidebar -->
+            <nav class="navigation-side-bar" id="navigation-sidebar">
+                <div class="navigation-container">
+                    <div class="banner">
+                        <div class="image-SLU-logo">
+                            <img
+                                src="../resources/images/Saint-Louis-University-PH-Logo.png"
+                                alt="SLU Logo">
+                        </div>
+                        <div class="banner-heading">
+                            <div class="banner-text-wrapper">
+                                <h2>OSA Student Organization Portal</h2>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="menu-container">
-                    <button class="menu-button" id="forms-button">
-                        <div class="menu-icon">
-                            <img class="menu-icon-img" src="../resources/icons/document-icon.svg" alt="Forms">
-                        </div>
-                        <div class="menu-text">Forms</div>
-                    </button>
-
-                    <button class="menu-button" id="documents-button">
-                        <div class="menu-icon">
-                            <img class="menu-icon-img" src="../resources/icons/folder-icon.svg" alt="Documents">
-                        </div>
-                        <div class="menu-text">Documents</div>
-                    </button>
-
-                    <button class="menu-button" id="accounts-button">
-                        <div class="menu-icon">
-                            <img class="menu-icon-img" src="../resources/icons/accounts-icon.svg" alt="Accounts">
-                        </div>
-                        <div class="menu-text">Accounts</div>
-                    </button>
-                </div>
-
-                <button class="logout-button" onclick="handleLogout()">
-                    <div class="logout-icon">
-                        <img src="../resources/icons/logout-icon.svg" alt="Logout">
-                    </div>
-                    <div class="logout-text">Logout</div>
-                </button>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="documents-container">
-                <div class="documents-title">
-                    <h1>Document Management</h1>
-                </div>
-                <div class="placeholder-text">
-                    <p>View and manage uploaded documents from Student Organizations</p>
-                </div>
-
-                <!-- Search and Sort Controls -->
-                <div class="search-and-sort-container">
-                    <div class="search-box">
-                        <input type="text" id="document-search" placeholder="Search documents..." class="search-input">
-                    </div>
-                    <div class="sort-dropdown">
-                        <label for="sort-by">Sort by:</label>
-                        <select id="sort-by" class="sort-select">
-                            <option value="date-newest">Date (Newest)</option>
-                            <option value="date-oldest">Date (Oldest)</option>
-                            <option value="name-az">Name (A-Z)</option>
-                            <option value="name-za">Name (Z-A)</option>
-                            <option value="org">Organization</option>
-                        </select>
-                    </div>
-                    <button class="btn-refresh" onclick="refreshDocuments()">
-                        Refresh
-                    </button>
-                </div>
-
-                <!-- Documents Table -->
-                <div class="documents-table-container">
-                    <div class="documents-table-wrapper">
-                        <table class="documents-table">
-                            <thead>
-                                <tr>
-                                    <th>File Name</th>
-                                    <th>Uploaded By</th>
-                                    <th>Date</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="documents-table-body">
-                                <tr>
-                                    <td colspan="4" class="text-center loading">Loading documents...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Pagination Controls -->
-                <div class="pagination-container">
-                    <div class="pagination-info">
-                        <span id="pagination-info-text">Showing 0 of 0 documents</span>
-                    </div>
-                    <div class="pagination-controls">
-                        <button class="btn-page" id="first-page" onclick="goToPage(1)" disabled>
-                            <span>⏮</span> First
+                    <div class="menu-container">
+                        <button class="menu-button" id="forms-button">
+                            <img class="menu-icon-img"
+                                src="../resources/icons/document-icon.svg"
+                                alt="Forms">
+                            Forms
                         </button>
-                        <button class="btn-page" id="prev-page" onclick="previousPage()" disabled>
-                            <span>◀</span> Previous
+
+                        <button class="menu-button" id="documents-button">
+                            <img class="menu-icon-img"
+                                src="../resources/icons/folder-icon.svg"
+                                alt="Documents">
+                            Documents
                         </button>
-                        <div class="page-numbers" id="page-numbers">
-                            <button class="btn-page-num active">1</button>
-                        </div>
-                        <button class="btn-page" id="next-page" onclick="nextPage()">
-                            Next <span>▶</span>
-                        </button>
-                        <button class="btn-page" id="last-page" onclick="goToLastPage()">
-                            Last <span>⏭</span>
+
+                        <button class="menu-button" id="accounts-button">
+                            <img class="menu-icon-img"
+                                src="../resources/icons/accounts-icon.svg"
+                                alt="Accounts">
+                            Accounts
                         </button>
                     </div>
-                    <div class="items-per-page">
-                        <label for="items-per-page">Items per page:</label>
-                        <select id="items-per-page" onchange="changeItemsPerPage()">
-                            <option value="5">5</option>
-                            <option value="10" selected>10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                        </select>
+
+                    <button class="logout-button" onclick="handleLogout()">
+                        <img src="../resources/icons/logout-icon.svg"
+                            alt="Logout">
+                        Logout
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="documents-container">
+                    <div class="documents-title">
+                        <h1>Document Management</h1>
+                    </div>
+                    <div class="placeholder-text">
+                        <p>View and manage uploaded documents from Student
+                            Organizations</p>
+                    </div>
+
+                    <!-- Search and Sort Controls -->
+                    <div class="search-and-sort-container">
+                        <div class="search-box">
+                            <input type="text" id="document-search"
+                                placeholder="Search documents..."
+                                class="search-input">
+                        </div>
+                        <div class="sort-dropdown">
+                            <label for="sort-by">Sort by:</label>
+                            <select id="sort-by" class="sort-select">
+                                <option value="date-newest">Date
+                                    (Newest)</option>
+                                <option value="date-oldest">Date
+                                    (Oldest)</option>
+                                <option value="name-az">Name (A-Z)</option>
+                                <option value="name-za">Name (Z-A)</option>
+                                <option value="org">Organization</option>
+                            </select>
+                        </div>
+                        <button class="btn-refresh"
+                            onclick="refreshDocuments()">
+                            Refresh
+                        </button>
+                    </div>
+
+                    <!-- Documents Table -->
+                    <div class="documents-table-container">
+                        <div class="documents-table-wrapper">
+                            <table class="documents-table">
+                                <thead>
+                                    <tr>
+                                        <th>File Name</th>
+                                        <th>Uploaded By</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="documents-table-body">
+                                    <tr>
+                                        <td colspan="4"
+                                            class="text-center loading">Loading
+                                            documents...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span id="pagination-info-text">Showing 0 of 0
+                                documents</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn-page" id="first-page"
+                                onclick="goToPage(1)" disabled>
+                                <span>⏮</span> First
+                            </button>
+                            <button class="btn-page" id="prev-page"
+                                onclick="previousPage()" disabled>
+                                <span>◀</span> Previous
+                            </button>
+                            <div class="page-numbers" id="page-numbers">
+                                <button class="btn-page-num active">1</button>
+                            </div>
+                            <button class="btn-page" id="next-page"
+                                onclick="nextPage()">
+                                Next <span>▶</span>
+                            </button>
+                            <button class="btn-page" id="last-page"
+                                onclick="goToLastPage()">
+                                Last <span>⏭</span>
+                            </button>
+                        </div>
+                        <div class="items-per-page">
+                            <label for="items-per-page">Items per page:</label>
+                            <select id="items-per-page"
+                                onchange="changeItemsPerPage()">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
-    </div>
-</body>
-</html></html>
+            </main>
+        </div>
+    </body>
+</html>
