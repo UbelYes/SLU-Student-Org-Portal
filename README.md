@@ -10,14 +10,17 @@ A web portal for Saint Louis University's Office of Student Affairs (OSA) to man
 ## Installation Steps
 
 ### 1. Install WAMP Server
+
 - Download and install [WAMP Server](https://www.wampserver.com/en/)
 - Make sure WAMP is running (the icon should be green)
 
 ### 2. Set Up the Project
+
 - Place this project folder in `c:\wamp64\www\`
 - The path should look like: `c:\wamp64\www\[project-folder]\`
 
 ### 3. Set Up the Database
+
 1. Open your browser and go to: `http://localhost/phpmyadmin`
 2. Click on "Import" tab
 3. Choose the file: `tableswithconstraints.sql`
@@ -25,6 +28,7 @@ A web portal for Saint Louis University's Office of Student Affairs (OSA) to man
    - This will create the database `slu_org_db` with all required tables
 
 ### 4. Configure Database Connection (Optional)
+
 - If you changed your MySQL credentials, edit `api\db.php`:
   ```php
   $DB_HOST = 'localhost';
@@ -45,7 +49,7 @@ The portal has three types of users:
 
 - **Admin** - Access admin dashboard at `/admin/admin-dashboard.html`
 - **OSA Staff** - Manage accounts, forms, and documents
-- **Organizations** - Submit forms and view submissions at `/org/org-dashboard.html`
+- **Organizations** - Submit forms and view submissions at `/org/org-form.html`
 
 ## Project Structure
 
@@ -61,15 +65,18 @@ The portal has three types of users:
 ## Troubleshooting
 
 **Database Connection Error:**
+
 - Make sure WAMP is running (green icon)
 - Check if MySQL service is started
 - Verify database name is `slu_org_db` in phpMyAdmin
 
 **Page Not Found:**
+
 - Verify the project is in `c:\wamp64\www\`
 - Check that you're using the correct URL path
 
 **WAMP Icon is Orange/Yellow:**
+
 - Port 80 might be in use by another application
 - Try changing Apache port or close conflicting applications
 

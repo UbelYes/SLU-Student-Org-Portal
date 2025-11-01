@@ -5,29 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Submission History - Student Organization Portal</title>
         <link rel="stylesheet" href="/styles//org-styles/org-submissions.css">
+        <link rel="icon"
+            href="../resources/images/Saint-Louis-University-PH-Logo.png">
         <script src="/scripts/login.js" defer></script>
         <script src="/scripts/main_page.js" defer></script>
+        <script src="/scripts/org-scripts/org-navbar.js" defer></script>
         <script src="/scripts/org-scripts/org-submissions.js" defer></script>
     </head>
     <body>
         <aside class="sidebar">
             <div class="logo-section">
-                <div class="logo-icon"><img src="../resources/images/Saint-Louis-University-PH-Logo.png" alt="SLU-logo"></div>
+                <div class="logo-icon"><img
+                        src="../resources/images/Saint-Louis-University-PH-Logo.png"
+                        alt="SLU-logo"></div>
                 <h3>Student<br>Organisation Portal</h3>
             </div>
 
             <div class="user-profile">
                 <div class="user-avatar"></div>
                 <div class="user-info">
-                    <h4>SAMGS</h4>
-                    <p>GOV</p>
+                    <h4>User</h4>
+                    <p>Org</p>
                 </div>
             </div>
 
             <nav class="nav-menu">
-                <a href="/org/org-dashboard.html" class="nav-item inactive-btn">Dashboard</a>
-                <a href="/org/org-submissions.html" class="nav-item active-btn">Submission History</a>
-                <a href="/org/org-form.html" class="nav-item inactive-btn">Form</a>
+                <a href="/org/org-submissions.html"
+                    class="nav-item active-btn">Submission History</a>
+                <a href="/org/org-form.html"
+                    class="nav-item inactive-btn">Form</a>
             </nav>
 
             <button class="logout-btn" onclick="handleLogout()">
@@ -39,11 +45,12 @@
         <main class="main-content">
             <header class="header">
                 <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="Search submissions...">
+                    <input type="text" id="searchInput"
+                        placeholder="Search submissions...">
                 </div>
                 <div class="filter-controls">
                     <select id="statusFilter" class="status-filter">
-                        <option value="">All Status</option>
+                        <option value>All Status</option>
                         <option value="submitted">Submitted</option>
                         <option value="approved">Approved</option>
                         <option value="returned">Returned</option>
@@ -54,7 +61,8 @@
             <div class="content-area">
                 <div class="content-header">
                     <h1>Submission History</h1>
-                    <p class="subtitle">View all your submitted forms and their current status</p>
+                    <p class="subtitle">View all your submitted forms and their
+                        current status</p>
                 </div>
 
                 <div class="submissions-container">
@@ -70,97 +78,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Sample Data Row 1 -->
-                            <tr>
-                                <td class="title-cell">
-                                    <div class="form-title">End-Term Submission Form</div>
-                                    <div class="form-subtitle">Academic Year 2024-2025</div>
-                                </td>
-                                <td>October 25, 2025</td>
-                                <td><span class="status-badge submitted">Submitted</span></td>
-                                <td>v1</td>
-                                <td class="feedback-cell">Pending review</td>
-                                <td>
-                                    <button class="action-btn view-btn">View</button>
-                                </td>
-                            </tr>
 
-                            <!-- Sample Data Row 2 -->
-                            <tr>
-                                <td class="title-cell">
-                                    <div class="form-title">Mid-Year Report</div>
-                                    <div class="form-subtitle">Academic Year 2024-2025</div>
-                                </td>
-                                <td>October 15, 2025</td>
-                                <td><span class="status-badge approved">Approved</span></td>
-                                <td>v2</td>
-                                <td class="feedback-cell">All documents verified. Great work!</td>
-                                <td>
-                                    <button class="action-btn view-btn">View</button>
-                                </td>
-                            </tr>
-
-                            <!-- Sample Data Row 3 -->
-                            <tr>
-                                <td class="title-cell">
-                                    <div class="form-title">Constitution & By-Laws Update</div>
-                                    <div class="form-subtitle">Revision 2025</div>
-                                </td>
-                                <td>October 10, 2025</td>
-                                <td><span class="status-badge returned">Returned</span></td>
-                                <td>v1</td>
-                                <td class="feedback-cell">Please revise Section 3 and resubmit with updated signatures.</td>
-                                <td>
-                                    <button class="action-btn view-btn">View</button>
-                                    <button class="action-btn resubmit-btn">Resubmit</button>
-                                </td>
-                            </tr>
-
-                            <!-- Sample Data Row 4 -->
-                            <tr>
-                                <td class="title-cell">
-                                    <div class="form-title">Annual Activity Report</div>
-                                    <div class="form-subtitle">Academic Year 2023-2024</div>
-                                </td>
-                                <td>September 30, 2025</td>
-                                <td><span class="status-badge approved">Approved</span></td>
-                                <td>v1</td>
-                                <td class="feedback-cell">Excellent documentation. Approved.</td>
-                                <td>
-                                    <button class="action-btn view-btn">View</button>
-                                </td>
-                            </tr>
-
-                            <!-- Sample Data Row 5 -->
-                            <tr>
-                                <td class="title-cell">
-                                    <div class="form-title">Financial Statement Q3</div>
-                                    <div class="form-subtitle">2024-2025</div>
-                                </td>
-                                <td>September 20, 2025</td>
-                                <td><span class="status-badge submitted">Submitted</span></td>
-                                <td>v1</td>
-                                <td class="feedback-cell">Under review</td>
-                                <td>
-                                    <button class="action-btn view-btn">View</button>
-                                </td>
-                            </tr>
-
-                            <!-- Sample Data Row 6 -->
-                            <tr>
-                                <td class="title-cell">
-                                    <div class="form-title">Strategic Plan 2025-2026</div>
-                                    <div class="form-subtitle">Planning Period</div>
-                                </td>
-                                <td>September 10, 2025</td>
-                                <td><span class="status-badge returned">Returned</span></td>
-                                <td>v2</td>
-                                <td class="feedback-cell">Budget details need clarification. Please update the financial projections.</td>
-                                <td>
-                                    <button class="action-btn view-btn">View</button>
-                                    <button class="action-btn resubmit-btn">Resubmit</button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
 
@@ -185,8 +103,10 @@
                     <div class="empty-state" style="display: none;">
                         <div class="empty-icon">📋</div>
                         <h3>No Submissions Yet</h3>
-                        <p>You haven't submitted any forms yet. Start by filling out a form from the dashboard.</p>
-                        <a href="/org/org-dashboard.html" class="btn-primary">Go to Dashboard</a>
+                        <p>You haven't submitted any forms yet. Start by filling
+                            out a form.</p>
+                        <a href="/org/org-form.html" class="btn-primary">Go to
+                            Form</a>
                     </div>
                 </div>
             </div>
@@ -197,18 +117,22 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 id="modalFormTitle">Form Submission Details</h2>
-                    <button class="modal-close" onclick="closeModal()">&times;</button>
+                    <button class="modal-close"
+                        onclick="closeModal()">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="submission-metadata">
                         <div class="meta-item">
-                            <strong>Submitted:</strong> <span id="modalSubmittedDate">-</span>
+                            <strong>Submitted:</strong> <span
+                                id="modalSubmittedDate">-</span>
                         </div>
                         <div class="meta-item">
-                            <strong>Status:</strong> <span id="modalStatus" class="status-badge">-</span>
+                            <strong>Status:</strong> <span id="modalStatus"
+                                class="status-badge">-</span>
                         </div>
                         <div class="meta-item">
-                            <strong>Version:</strong> <span id="modalVersion">-</span>
+                            <strong>Version:</strong> <span
+                                id="modalVersion">-</span>
                         </div>
                         <div class="meta-item feedback-section">
                             <strong>Feedback:</strong>
@@ -219,12 +143,13 @@
                     <!-- Form Content (Read-only) -->
                     <div class="form-view-container">
                         <h3>Submission Information</h3>
-                        
+
                         <div class="view-section">
                             <h4>Organization Information</h4>
                             <div class="view-field">
                                 <label>Complete Name of Organization:</label>
-                                <div class="field-value">Student Alliance for Music and Creative Industry Studies</div>
+                                <div class="field-value">Student Alliance for
+                                    Music and Creative Industry Studies</div>
                             </div>
                             <div class="view-field">
                                 <label>Acronym:</label>
@@ -236,7 +161,9 @@
                             </div>
                             <div class="view-field">
                                 <label>Social Media Pages:</label>
-                                <div class="field-value">https://facebook.com/samcis, https://instagram.com/samcis</div>
+                                <div
+                                    class="field-value">https://facebook.com/samcis,
+                                    https://instagram.com/samcis</div>
                             </div>
                         </div>
 
@@ -252,7 +179,8 @@
                             </div>
                             <div class="view-field">
                                 <label>Applicant's Email:</label>
-                                <div class="field-value">jdelacruz@slu.edu.ph</div>
+                                <div
+                                    class="field-value">jdelacruz@slu.edu.ph</div>
                             </div>
                         </div>
 
@@ -260,11 +188,13 @@
                             <h4>Adviser Information</h4>
                             <div class="view-field">
                                 <label>Name of Adviser/s:</label>
-                                <div class="field-value">Prof. Maria Santos</div>
+                                <div class="field-value">Prof. Maria
+                                    Santos</div>
                             </div>
                             <div class="view-field">
                                 <label>Adviser Email/s:</label>
-                                <div class="field-value">msantos@slu.edu.ph</div>
+                                <div
+                                    class="field-value">msantos@slu.edu.ph</div>
                             </div>
                         </div>
 
@@ -285,33 +215,45 @@
                             <div class="document-list">
                                 <div class="document-item">
                                     <span class="doc-icon">📄</span>
-                                    <span class="doc-name">Strategic_Plans_2025-2026.pdf</span>
-                                    <button class="doc-download-btn">Download</button>
+                                    <span
+                                        class="doc-name">Strategic_Plans_2025-2026.pdf</span>
+                                    <button
+                                        class="doc-download-btn">Download</button>
                                 </div>
                                 <div class="document-item">
                                     <span class="doc-icon">📄</span>
-                                    <span class="doc-name">Annual_Report_2024-2025.pdf</span>
-                                    <button class="doc-download-btn">Download</button>
+                                    <span
+                                        class="doc-name">Annual_Report_2024-2025.pdf</span>
+                                    <button
+                                        class="doc-download-btn">Download</button>
                                 </div>
                                 <div class="document-item">
                                     <span class="doc-icon">📄</span>
-                                    <span class="doc-name">Constitution_and_ByLaws.pdf</span>
-                                    <button class="doc-download-btn">Download</button>
+                                    <span
+                                        class="doc-name">Constitution_and_ByLaws.pdf</span>
+                                    <button
+                                        class="doc-download-btn">Download</button>
                                 </div>
                                 <div class="document-item">
                                     <span class="doc-icon">📊</span>
-                                    <span class="doc-name">List_of_Officers.xlsx</span>
-                                    <button class="doc-download-btn">Download</button>
+                                    <span
+                                        class="doc-name">List_of_Officers.xlsx</span>
+                                    <button
+                                        class="doc-download-btn">Download</button>
                                 </div>
                                 <div class="document-item">
                                     <span class="doc-icon">📄</span>
-                                    <span class="doc-name">Financial_Statement_2023-2024.pdf</span>
-                                    <button class="doc-download-btn">Download</button>
+                                    <span
+                                        class="doc-name">Financial_Statement_2023-2024.pdf</span>
+                                    <button
+                                        class="doc-download-btn">Download</button>
                                 </div>
                                 <div class="document-item">
                                     <span class="doc-icon">🖼️</span>
-                                    <span class="doc-name">Updated_Infographics.png</span>
-                                    <button class="doc-download-btn">Download</button>
+                                    <span
+                                        class="doc-name">Updated_Infographics.png</span>
+                                    <button
+                                        class="doc-download-btn">Download</button>
                                 </div>
                             </div>
                         </div>
@@ -324,14 +266,18 @@
                             </div>
                             <div class="view-field">
                                 <label>Video Link:</label>
-                                <div class="field-value"><a href="https://youtube.com/watch?v=example" target="_blank">https://youtube.com/watch?v=example</a></div>
+                                <div class="field-value"><a
+                                        href="https://youtube.com/watch?v=example"
+                                        target="_blank">https://youtube.com/watch?v=example</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn-secondary" onclick="closeModal()">Close</button>
-                    <button class="btn-primary" onclick="window.print()">Print</button>
+                    <button class="btn-secondary"
+                        onclick="closeModal()">Close</button>
+                    <button class="btn-primary"
+                        onclick="window.print()">Print</button>
                 </div>
             </div>
         </div>

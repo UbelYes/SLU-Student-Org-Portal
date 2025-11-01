@@ -5,29 +5,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Student Organization Portal</title>
         <link rel="stylesheet" href="/styles//org-styles/org-forms.css">
+        <link rel="icon"
+            href="../resources/images/Saint-Louis-University-PH-Logo.png">
         <script src="/scripts/login.js" defer></script>
         <script src="/scripts/main_page.js" defer></script>
+        <script src="/scripts/org-scripts/org-navbar.js" defer></script>
         <script src="/scripts/org-scripts/org-form.js" defer></script>
     </head>
     <body>
         <aside class="sidebar">
             <div class="logo-section">
-                <div class="logo-icon"><img src="../resources/images/Saint-Louis-University-PH-Logo.png" alt="SLU-logo"></div>
+                <div class="logo-icon"><img
+                        src="../resources/images/Saint-Louis-University-PH-Logo.png"
+                        alt="SLU-logo"></div>
                 <h3>Student<br>Organisation Portal</h3>
             </div>
 
             <div class="user-profile">
                 <div class="user-avatar"></div>
                 <div class="user-info">
-                    <h4>SAMGS</h4>
-                    <p>GOV</p>
+                    <h4>User</h4>
+                    <p>Org</p>
                 </div>
             </div>
 
             <nav class="nav-menu">
-                <a href="/org/org-dashboard.html"
-                    class="nav-item inactive-btn">Dashboard</a>
-                <a href="/org/org-submissions.html" class="nav-item inactive-btn">Submission History</a>
+                <a href="/org/org-submissions.html"
+                    class="nav-item inactive-btn">Submission History</a>
                 <a href="/org/org-form.html"
                     class="nav-item active-btn">Form</a>
             </nav>
@@ -39,7 +43,7 @@
         </aside>
 
         <main class="main-content">
-            
+
             <div class="form-container">
                 <div class="form-header">
                     <h2 class="form-header__title">End-Term Submission Form</h2>
@@ -53,7 +57,9 @@
                         <label
                             class="form-label form-label--required">Submission
                             Title</label>
-                        <input type="text" class="form-input" id="submission_title" name="submission_title" required
+                        <input type="text" class="form-input"
+                            id="submission_title" name="submission_title"
+                            required
                             placeholder="e.g. End-Term Requirements 2024-2025, Mid-Year Report 2025">
                         <div class="form-hint">Give this submission a
                             descriptive title to help you identify it
@@ -69,28 +75,34 @@
                             <label
                                 class="form-label form-label--required">Complete
                                 Name of Organization or Publication</label>
-                            <input type="text" class="form-input" id="org_full_name" name="org_full_name" required>
+                            <input type="text" class="form-input"
+                                id="org_full_name" name="org_full_name"
+                                required>
                         </div>
 
                         <div class="form-group">
                             <label
                                 class="form-label form-label--required">Acronym
                                 or Short Name</label>
-                            <input type="text" class="form-input" id="org_acronym" name="org_acronym" required>
+                            <input type="text" class="form-input"
+                                id="org_acronym" name="org_acronym" required>
                         </div>
 
                         <div class="form-group">
                             <label
                                 class="form-label form-label--required">Official
                                 SLU Institutional Email</label>
-                            <input type="email" class="form-input" id="org_email" name="org_email" required
+                            <input type="email" class="form-input"
+                                id="org_email" name="org_email" required
                                 placeholder="organization@slu.edu.ph">
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">URL Link/s to Official
                                 Social Media Pages</label>
-                            <input type="text" class="form-input" id="social_media_links" name="social_media_links"
+                            <input type="text" class="form-input"
+                                id="social_media_links"
+                                name="social_media_links"
                                 placeholder="https://facebook.com/yourorg, https://instagram.com/yourorg">
                         </div>
                     </section>
@@ -104,14 +116,18 @@
                             <label class="form-label form-label--required">Name
                                 of Applicant Representing the
                                 Organization</label>
-                            <input type="text" class="form-input" id="applicant_name" name="applicant_name" required>
+                            <input type="text" class="form-input"
+                                id="applicant_name" name="applicant_name"
+                                required>
                         </div>
 
                         <div class="form-group">
                             <label
                                 class="form-label form-label--required">Position
                                 of Applicant</label>
-                            <input type="text" class="form-input" id="applicant_position" name="applicant_position" required
+                            <input type="text" class="form-input"
+                                id="applicant_position"
+                                name="applicant_position" required
                                 placeholder="e.g. President, Vice President">
                         </div>
 
@@ -119,7 +135,9 @@
                             <label
                                 class="form-label form-label--required">Applicant's
                                 SLU Institutional Email</label>
-                            <input type="email" class="form-input" id="applicant_email" name="applicant_email" required
+                            <input type="email" class="form-input"
+                                id="applicant_email" name="applicant_email"
+                                required
                                 placeholder="applicant@slu.edu.ph">
                         </div>
                     </section>
@@ -131,7 +149,8 @@
                         <div class="form-group">
                             <label class="form-label form-label--required">Name
                                 of Adviser/s</label>
-                            <input type="text" class="form-input" id="adviser_names" name="adviser_names" required
+                            <input type="text" class="form-input"
+                                id="adviser_names" name="adviser_names" required
                                 placeholder="Separate multiple names with commas">
                         </div>
 
@@ -139,7 +158,9 @@
                             <label
                                 class="form-label form-label--required">Adviser
                                 Email/s</label>
-                            <input type="text" class="form-input" id="adviser_emails" name="adviser_emails" required
+                            <input type="text" class="form-input"
+                                id="adviser_emails" name="adviser_emails"
+                                required
                                 placeholder="adviser@slu.edu.ph (separate multiple with commas)">
                         </div>
                     </section>
@@ -149,43 +170,50 @@
                         <h3 class="form-section__title">Category</h3>
                         <div class="form-checkbox-group">
                             <div class="form-checkbox">
-                                <input type="checkbox" id="samcis" name="category" value="SAMCIS"
+                                <input type="checkbox" id="samcis"
+                                    name="category" value="SAMCIS"
                                     class="form-checkbox__input">
                                 <label for="samcis"
                                     class="form-checkbox__label">SAMCIS</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="sea" name="category" value="SEA"
+                                <input type="checkbox" id="sea" name="category"
+                                    value="SEA"
                                     class="form-checkbox__input">
                                 <label for="sea"
                                     class="form-checkbox__label">SEA</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="som" name="category" value="SOM"
+                                <input type="checkbox" id="som" name="category"
+                                    value="SOM"
                                     class="form-checkbox__input">
                                 <label for="som"
                                     class="form-checkbox__label">SOM</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="sonahbs" name="category" value="SONAHBS"
+                                <input type="checkbox" id="sonahbs"
+                                    name="category" value="SONAHBS"
                                     class="form-checkbox__input">
                                 <label for="sonahbs"
                                     class="form-checkbox__label">SONAHBS</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="sol" name="category" value="SOL"
+                                <input type="checkbox" id="sol" name="category"
+                                    value="SOL"
                                     class="form-checkbox__input">
                                 <label for="sol"
                                     class="form-checkbox__label">SOL</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="stela" name="category" value="STELA"
+                                <input type="checkbox" id="stela"
+                                    name="category" value="STELA"
                                     class="form-checkbox__input">
                                 <label for="stela"
                                     class="form-checkbox__label">STELA</label>
                             </div>
                             <div class="form-checkbox">
-                                <input type="checkbox" id="university-wide" name="category" value="University-Wide"
+                                <input type="checkbox" id="university-wide"
+                                    name="category" value="University-Wide"
                                     class="form-checkbox__input">
                                 <label for="university-wide"
                                     class="form-checkbox__label">University-Wide</label>
@@ -199,20 +227,25 @@
                             Organization</h3>
                         <div class="form-radio-group">
                             <div class="form-radio">
-                                <input type="radio" id="co-curricular" name="org_type" value="co-curricular" required
-                                    name="org-type" class="form-radio__input">
+                                <input type="radio" id="co-curricular"
+                                    name="org_type" value="co-curricular"
+                                    required
+                                    class="form-radio__input">
                                 <label for="co-curricular"
                                     class="form-radio__label">Co-Curricular</label>
                             </div>
                             <div class="form-radio">
-                                <input type="radio" id="extra-curricular" name="org_type" value="extra-curricular" required
-                                    name="org-type" class="form-radio__input">
+                                <input type="radio" id="extra-curricular"
+                                    name="org_type" value="extra-curricular"
+                                    required
+                                    class="form-radio__input">
                                 <label for="extra-curricular"
                                     class="form-radio__label">Extra-Curricular</label>
                             </div>
                             <div class="form-radio">
-                                <input type="radio" id="publication" name="org_type" value="publication" required
-                                    name="org-type" class="form-radio__input">
+                                <input type="radio" id="publication"
+                                    name="org_type" value="publication" required
+                                    class="form-radio__input">
                                 <label for="publication"
                                     class="form-radio__label">Publication</label>
                             </div>
@@ -221,7 +254,8 @@
 
                     <!-- Required Documents -->
                     <section class="form-section">
-                        <h3 class="form-section__title">Required Documents (Note: Document upload is not yet implemented)</h3>
+                        <h3 class="form-section__title">Required Documents
+                            (Note: Document upload is not yet implemented)</h3>
 
                         <div class="form-group">
                             <label
@@ -276,15 +310,19 @@
                         <h3 class="form-section__title">CBL Status</h3>
                         <div class="form-radio-group">
                             <div class="form-radio">
-                                <input type="radio" id="with-revisions" name="cbl_status" value="with-revisions" required
-                                    name="cbl-status" class="form-radio__input">
+                                <input type="radio" id="with-revisions"
+                                    name="cbl_status" value="with-revisions"
+                                    required
+                                    class="form-radio__input">
                                 <label for="with-revisions"
                                     class="form-radio__label">With
                                     Revisions</label>
                             </div>
                             <div class="form-radio">
-                                <input type="radio" id="without-revisions" name="cbl_status" value="without-revisions" required
-                                    name="cbl-status" class="form-radio__input">
+                                <input type="radio" id="without-revisions"
+                                    name="cbl_status" value="without-revisions"
+                                    required
+                                    class="form-radio__input">
                                 <label for="without-revisions"
                                     class="form-radio__label">Without
                                     Revisions</label>
@@ -296,7 +334,8 @@
                     <div class="form-group">
                         <label class="form-label form-label--required">Link to
                             2-minute Video</label>
-                        <input type="url" class="form-input" id="video_link" name="video_link" required
+                        <input type="url" class="form-input" id="video_link"
+                            name="video_link" required
                             placeholder="https://youtube.com/watch?v=...">
                     </div>
 
@@ -313,9 +352,11 @@
                 </form>
 
                 <div class="form-actions">
-                    <button type="submit" class="btn btn--primary" onclick="submitForm(event)">Submit
+                    <button type="submit" class="btn btn--primary"
+                        onclick="submitForm(event)">Submit
                         Form</button>
-                    <button type="button" class="btn btn--secondary" onclick="clearForm()">Clear
+                    <button type="button" class="btn btn--secondary"
+                        onclick="clearForm()">Clear
                         Form</button>
                 </div>
             </div>

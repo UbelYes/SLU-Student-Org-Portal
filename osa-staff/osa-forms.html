@@ -1,70 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forms Management - OSA Portal</title>
-    <link rel="icon" href="../resources/images/Saint-Louis-University-PH-Logo.png">
-    <link rel="stylesheet" href="../styles/osa-styles/osa-navbar.css">
-    <link rel="stylesheet" href="../styles/osa-styles/osa-forms.css">
-    <script src="../scripts/login.js" defer></script>
-    <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
-    <script src="../scripts/osa-scripts/osa-forms.js" defer></script>
-</head>
-<body>
-    <div class="OSA-forms-page">
-        <!-- Hamburger Menu Button (Mobile Only) -->
-        <button class="hamburger-menu" id="hamburger-toggle" aria-label="Toggle Navigation">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Forms Management - OSA Portal</title>
+        <link rel="icon"
+            href="../resources/images/Saint-Louis-University-PH-Logo.png">
+        <link rel="stylesheet" href="../styles/osa-styles/osa-navbar.css">
+        <link rel="stylesheet" href="../styles/osa-styles/osa-forms.css">
+        <script src="../scripts/login.js" defer></script>
+        <script src="../scripts/osa-scripts/osa-navbar.js" defer></script>
+        <script src="../scripts/osa-scripts/osa-forms.js" defer></script>
+    </head>
+    <body>
+        <div class="OSA-forms-page">
+            <!-- Hamburger Menu Button (Mobile Only) -->
+            <button class="hamburger-menu" id="hamburger-toggle"
+                aria-label="Toggle Navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-        <!-- Navigation Sidebar -->
-        <nav class="navigation-side-bar" id="navigation-sidebar">
-            <div class="navigation-container">
-                <div class="banner">
-                    <div class="image-SLU-logo">
-                        <img src="../resources/images/Saint-Louis-University-PH-Logo.png" alt="SLU Logo">
-                    </div>
-                    <div class="banner-heading">
-                        <div class="banner-text-wrapper">
-                            <h1>OSA Student Organization Portal</h1>
+            <!-- Navigation Sidebar -->
+            <nav class="navigation-side-bar" id="navigation-sidebar">
+                <div class="navigation-container">
+                    <div class="banner">
+                        <div class="image-SLU-logo">
+                            <img
+                                src="../resources/images/Saint-Louis-University-PH-Logo.png"
+                                alt="SLU Logo">
+                        </div>
+                        <div class="banner-heading">
+                            <div class="banner-text-wrapper">
+                                <h2>OSA Student Organization Portal</h2>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="menu-container">
+                        <button class="menu-button" id="forms-button">
+                            <img class="menu-icon-img"
+                                src="../resources/icons/document-icon.svg"
+                                alt="Forms">
+                            Forms
+                        </button>
+
+                        <button class="menu-button" id="documents-button">
+                            <img class="menu-icon-img"
+                                src="../resources/icons/folder-icon.svg"
+                                alt="Documents">
+                            Documents
+                        </button>
+
+                        <button class="menu-button" id="accounts-button">
+                            <img class="menu-icon-img"
+                                src="../resources/icons/accounts-icon.svg"
+                                alt="Accounts">
+                            Accounts
+                        </button>
+                    </div>
+
+                    <button class="logout-button" onclick="handleLogout()">
+                        <img src="../resources/icons/logout-icon.svg"
+                            alt="Logout">
+                        Logout
+                    </button>
                 </div>
-
-                <div class="menu-container">
-                    <button class="menu-button" id="forms-button">
-                        <div class="menu-icon">
-                            <img class="menu-icon-img" src="../resources/icons/document-icon.svg" alt="Forms">
-                        </div>
-                        <div class="menu-text">Forms</div>
-                    </button>
-
-                    <button class="menu-button" id="documents-button">
-                        <div class="menu-icon">
-                            <img class="menu-icon-img" src="../resources/icons/folder-icon.svg" alt="Documents">
-                        </div>
-                        <div class="menu-text">Documents</div>
-                    </button>
-
-                    <button class="menu-button" id="accounts-button">
-                        <div class="menu-icon">
-                            <img class="menu-icon-img" src="../resources/icons/accounts-icon.svg" alt="Accounts">
-                        </div>
-                        <div class="menu-text">Accounts</div>
-                    </button>
-                </div>
-
-                <button class="logout-button" onclick="handleLogout()">
-                    <div class="logout-icon">
-                        <img src="../resources/icons/logout-icon.svg" alt="Logout">
-                    </div>
-                    <div class="logout-text">Logout</div>
-                </button>
-            </div>
-        </nav>
+            </nav>
 
             <main class="main-content">
                 <div class="forms-container">
@@ -76,27 +79,37 @@
                                     <div class="form-header-title">
                                         <h2>Submitted Forms</h2>
                                     </div>
-                                    <div class="form-text-description">Manage student forms</div>
+                                    <div class="form-text-description">Manage
+                                        student forms</div>
                                 </div>
                             </div>
 
                             <!-- Search and Sort Controls -->
                             <div class="sort-container">
-                                <img src="../resources/icons/magnify-icon.svg" alt="Search">
-                                <input type="text" id="search-input" placeholder="Search forms" class="search-bar">
+                                <img src="../resources/icons/magnify-icon.svg"
+                                    alt="Search">
+                                <input type="text" id="search-input"
+                                    placeholder="Search forms"
+                                    class="search-bar">
 
                                 <div class="sort-dropdown">
                                     <label for="sort-by">Sort by:</label>
                                     <select id="sort-by" class="sort-select">
-                                        <option value="date-newest">Date (Newest)</option>
-                                        <option value="date-oldest">Date (Oldest)</option>
-                                        <option value="name-az">Name (A-Z)</option>
-                                        <option value="name-za">Name (Z-A)</option>
-                                        <option value="org">Organization</option>
+                                        <option value="date-newest">Date
+                                            (Newest)</option>
+                                        <option value="date-oldest">Date
+                                            (Oldest)</option>
+                                        <option value="name-az">Name
+                                            (A-Z)</option>
+                                        <option value="name-za">Name
+                                            (Z-A)</option>
+                                        <option
+                                            value="org">Organization</option>
                                     </select>
                                 </div>
 
-                                <button class="btn-refresh" onclick="refreshForms()">
+                                <button class="btn-refresh"
+                                    onclick="refreshForms()">
                                     Refresh
                                 </button>
                             </div>
@@ -119,35 +132,48 @@
                                         <tbody>
                                             <!-- Data will be loaded dynamically -->
                                         </tbody>
-                                </table>
+                                    </table>
                                 </div>
                             </div>
 
                             <!-- Pagination Controls -->
                             <div class="pagination-container">
                                 <div class="pagination-info">
-                                    <span id="forms-pagination-info">Showing 0 of 0 forms</span>
+                                    <span id="forms-pagination-info">Showing 0
+                                        of 0 forms</span>
                                 </div>
                                 <div class="pagination-controls">
-                                    <button class="btn-page" id="forms-first-page" onclick="formsGoToPage(1)" disabled>
+                                    <button class="btn-page"
+                                        id="forms-first-page"
+                                        onclick="formsGoToPage(1)" disabled>
                                         <span>⏮</span> First
                                     </button>
-                                    <button class="btn-page" id="forms-prev-page" onclick="formsPreviousPage()" disabled>
+                                    <button class="btn-page"
+                                        id="forms-prev-page"
+                                        onclick="formsPreviousPage()" disabled>
                                         <span>◀</span> Previous
                                     </button>
-                                    <div class="page-numbers" id="forms-page-numbers">
-                                        <button class="btn-page-num active">1</button>
+                                    <div class="page-numbers"
+                                        id="forms-page-numbers">
+                                        <button
+                                            class="btn-page-num active">1</button>
                                     </div>
-                                    <button class="btn-page" id="forms-next-page" onclick="formsNextPage()">
+                                    <button class="btn-page"
+                                        id="forms-next-page"
+                                        onclick="formsNextPage()">
                                         Next <span>▶</span>
                                     </button>
-                                    <button class="btn-page" id="forms-last-page" onclick="formsGoToLastPage()">
+                                    <button class="btn-page"
+                                        id="forms-last-page"
+                                        onclick="formsGoToLastPage()">
                                         Last <span>⏭</span>
                                     </button>
                                 </div>
                                 <div class="items-per-page">
-                                    <label for="forms-items-per-page">Items per page:</label>
-                                    <select id="forms-items-per-page" onchange="formsChangeItemsPerPage()">
+                                    <label for="forms-items-per-page">Items per
+                                        page:</label>
+                                    <select id="forms-items-per-page"
+                                        onchange="formsChangeItemsPerPage()">
                                         <option value="5">5</option>
                                         <option value="10" selected>10</option>
                                         <option value="20">20</option>
@@ -158,121 +184,141 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
-    </div>
+            </main>
+        </div>
 
-    <!-- View Submission Modal -->
-    <div id="viewModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalFormTitle">Form Submission Details</h2>
-                <button class="modal-close" onclick="closeViewModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="submission-metadata">
-                    <div class="meta-item">
-                        <strong>Organization:</strong> <span id="modalOrgName">-</span>
+        <!-- View Submission Modal -->
+        <div id="viewModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalFormTitle">Form Submission Details</h2>
+                    <button class="modal-close"
+                        onclick="closeViewModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="submission-metadata">
+                        <div class="meta-item">
+                            <strong>Organization:</strong> <span
+                                id="modalOrgName">-</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Submitted By:</strong> <span
+                                id="modalSubmittedBy">-</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Date Submitted:</strong> <span
+                                id="modalSubmittedDate">-</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>School:</strong> <span
+                                id="modalSchool">-</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Status:</strong> <span id="modalStatus"
+                                class="status-badge">-</span>
+                        </div>
                     </div>
-                    <div class="meta-item">
-                        <strong>Submitted By:</strong> <span id="modalSubmittedBy">-</span>
-                    </div>
-                    <div class="meta-item">
-                        <strong>Date Submitted:</strong> <span id="modalSubmittedDate">-</span>
-                    </div>
-                    <div class="meta-item">
-                        <strong>School:</strong> <span id="modalSchool">-</span>
-                    </div>
-                    <div class="meta-item">
-                        <strong>Status:</strong> <span id="modalStatus" class="status-badge">-</span>
+
+                    <!-- Form Content (Read-only) -->
+                    <div class="form-view-container">
+                        <h3>Submission Information</h3>
+
+                        <div class="view-section">
+                            <h4>Organization Information</h4>
+                            <div class="view-field">
+                                <label>Complete Name of Organization:</label>
+                                <div class="field-value"
+                                    id="modalOrgFullName">-</div>
+                            </div>
+                            <div class="view-field">
+                                <label>Acronym:</label>
+                                <div class="field-value"
+                                    id="modalOrgAcronym">-</div>
+                            </div>
+                            <div class="view-field">
+                                <label>Official SLU Institutional Email:</label>
+                                <div class="field-value"
+                                    id="modalOrgEmail">-</div>
+                            </div>
+                            <div class="view-field">
+                                <label>Social Media Pages:</label>
+                                <div class="field-value"
+                                    id="modalSocialMedia">-</div>
+                            </div>
+                        </div>
+
+                        <div class="view-section">
+                            <h4>Applicant Information</h4>
+                            <div class="view-field">
+                                <label>Name of Applicant:</label>
+                                <div class="field-value"
+                                    id="modalApplicantName">-</div>
+                            </div>
+                            <div class="view-field">
+                                <label>Position:</label>
+                                <div class="field-value"
+                                    id="modalApplicantPosition">-</div>
+                            </div>
+                            <div class="view-field">
+                                <label>Applicant's Email:</label>
+                                <div class="field-value"
+                                    id="modalApplicantEmail">-</div>
+                            </div>
+                        </div>
+
+                        <div class="view-section">
+                            <h4>Adviser Information</h4>
+                            <div class="view-field">
+                                <label>Name of Adviser/s:</label>
+                                <div class="field-value"
+                                    id="modalAdviserNames">-</div>
+                            </div>
+                            <div class="view-field">
+                                <label>Adviser Email/s:</label>
+                                <div class="field-value"
+                                    id="modalAdviserEmails">-</div>
+                            </div>
+                        </div>
+
+                        <div class="view-section">
+                            <h4>Category & Type</h4>
+                            <div class="view-field">
+                                <label>Category:</label>
+                                <div class="field-value"
+                                    id="modalCategory">-</div>
+                            </div>
+                            <div class="view-field">
+                                <label>Type of Organization:</label>
+                                <div class="field-value"
+                                    id="modalOrgType">-</div>
+                            </div>
+                        </div>
+
+                        <div class="view-section">
+                            <h4>Additional Information</h4>
+                            <div class="view-field">
+                                <label>CBL Status:</label>
+                                <div class="field-value"
+                                    id="modalCblStatus">-</div>
+                            </div>
+                            <div class="view-field">
+                                <label>Video Link:</label>
+                                <div class="field-value"
+                                    id="modalVideoLink">-</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Form Content (Read-only) -->
-                <div class="form-view-container">
-                    <h3>Submission Information</h3>
-                    
-                    <div class="view-section">
-                        <h4>Organization Information</h4>
-                        <div class="view-field">
-                            <label>Complete Name of Organization:</label>
-                            <div class="field-value" id="modalOrgFullName">-</div>
-                        </div>
-                        <div class="view-field">
-                            <label>Acronym:</label>
-                            <div class="field-value" id="modalOrgAcronym">-</div>
-                        </div>
-                        <div class="view-field">
-                            <label>Official SLU Institutional Email:</label>
-                            <div class="field-value" id="modalOrgEmail">-</div>
-                        </div>
-                        <div class="view-field">
-                            <label>Social Media Pages:</label>
-                            <div class="field-value" id="modalSocialMedia">-</div>
-                        </div>
-                    </div>
-
-                    <div class="view-section">
-                        <h4>Applicant Information</h4>
-                        <div class="view-field">
-                            <label>Name of Applicant:</label>
-                            <div class="field-value" id="modalApplicantName">-</div>
-                        </div>
-                        <div class="view-field">
-                            <label>Position:</label>
-                            <div class="field-value" id="modalApplicantPosition">-</div>
-                        </div>
-                        <div class="view-field">
-                            <label>Applicant's Email:</label>
-                            <div class="field-value" id="modalApplicantEmail">-</div>
-                        </div>
-                    </div>
-
-                    <div class="view-section">
-                        <h4>Adviser Information</h4>
-                        <div class="view-field">
-                            <label>Name of Adviser/s:</label>
-                            <div class="field-value" id="modalAdviserNames">-</div>
-                        </div>
-                        <div class="view-field">
-                            <label>Adviser Email/s:</label>
-                            <div class="field-value" id="modalAdviserEmails">-</div>
-                        </div>
-                    </div>
-
-                    <div class="view-section">
-                        <h4>Category & Type</h4>
-                        <div class="view-field">
-                            <label>Category:</label>
-                            <div class="field-value" id="modalCategory">-</div>
-                        </div>
-                        <div class="view-field">
-                            <label>Type of Organization:</label>
-                            <div class="field-value" id="modalOrgType">-</div>
-                        </div>
-                    </div>
-
-                    <div class="view-section">
-                        <h4>Additional Information</h4>
-                        <div class="view-field">
-                            <label>CBL Status:</label>
-                            <div class="field-value" id="modalCblStatus">-</div>
-                        </div>
-                        <div class="view-field">
-                            <label>Video Link:</label>
-                            <div class="field-value" id="modalVideoLink">-</div>
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary"
+                        onclick="closeViewModal()">Close</button>
+                    <button class="btn-approve">Approve</button>
+                    <button class="btn-return">Return for Revision</button>
+                    <button class="btn-print"
+                        onclick="window.print()">Print</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeViewModal()">Close</button>
-                <button class="btn-approve">Approve</button>
-                <button class="btn-return">Return for Revision</button>
-                <button class="btn-print" onclick="window.print()">Print</button>
             </div>
         </div>
-    </div>
 
-</body>
+    </body>
 </html>
