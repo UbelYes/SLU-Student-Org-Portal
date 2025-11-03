@@ -363,6 +363,11 @@ function updateModalContent(submission) {
         </div>
 
         <div class="view-section">
+            <h4>Planned Events</h4>
+            ${generateEventsHTML(submission.events)}
+        </div>
+
+        <div class="view-section">
             <h4>Additional Information</h4>
             <div class="view-field">
                 <label>CBL Status:</label>
@@ -457,3 +462,48 @@ function escapeHtml(text) {
   };
   return text ? text.replace(/[&<>"']/g, (m) => map[m]) : "";
 }
+
+// Generate HTML for events list
+function generateEventsHTML(events) {
+  if (!events || events.length === 0) {
+    return '<p class="no-events">No events planned yet.</p>';
+  }
+
+  let html = '<div class="events-list">';
+  
+  events.forEach((event, index) => {
+    html += `
+      <div class="event-item">
+        <div class="event-header">
+          <strong>Event ${index + 1}: ${escapeHtml(event.event_name)}</strong>
+        </div>
+        <div class="event-details">
+          <div class="view-field">
+            <label>Date:</label>
+            <div class="field-value">${formatDate(event.event_date)}</div>
+          </div>
+          <div class="view-field">
+            <label>Venue:</label>
+            <div class="field-value">${escapeHtml(event.event_venue)}</div>
+          </div>
+          <div class="view-field">
+            <label>Description:</label>
+            <div class="field-value">${escapeHtml(event.event_description)}</div>
+          </div>
+          <div class="view-field">
+            <label>Expected Participants:</label>
+            <div class="field-value">${event.expected_participants}</div>
+          </div>
+          <div class="view-field">
+            <label>Budget Estimate:</label>
+            <div class="field-value">₱${parseFloat(event.budget_estimate).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  
+  html += '</div>';
+  return html;
+}
+

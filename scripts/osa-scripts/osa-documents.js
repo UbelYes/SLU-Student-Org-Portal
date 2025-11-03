@@ -95,7 +95,7 @@ function displayDocuments() {
   // Display documents
   if (pageDocuments.length === 0) {
     tbody.innerHTML =
-      '<tr><td colspan="4" class="text-center">No documents found</td></tr>';
+      '<tr><td colspan="6" class="text-center">No documents found</td></tr>';
   } else {
     tbody.innerHTML = pageDocuments
       .map(
@@ -104,27 +104,46 @@ function displayDocuments() {
                 <td>
                     <div class="file-info">
                         <span class="file-icon">${getFileIcon(
+                          doc.fileType
+                        )}</span>
+                        <span class="file-name">${escapeHtml(
                           doc.fileName
                         )}</span>
-                        <div style="display: flex; flex-direction: column;">
-                            <span class="file-name">${escapeHtml(
-                              doc.fileName
-                            )}</span>
-                            <small style="color: #666;">${escapeHtml(
-                              doc.documentType
-                            )} | ${escapeHtml(doc.orgAcronym)}</small>
-                        </div>
                     </div>
                 </td>
-                <td>${escapeHtml(doc.uploadedBy)}</td>
-                <td>${formatDate(doc.uploadedDate)}</td>
+                <td>
+                    <div style="display: flex; flex-direction: column;">
+                        <span style="font-weight: 500;">${escapeHtml(
+                          doc.eventName
+                        )}</span>
+                        <small style="color: #666;">${formatDate(
+                          doc.eventDate
+                        )}</small>
+                    </div>
+                </td>
+                <td>
+                    <div style="display: flex; flex-direction: column;">
+                        <span style="font-weight: 500;">${escapeHtml(
+                          doc.orgAcronym
+                        )}</span>
+                        <small style="color: #666;">${escapeHtml(
+                          doc.uploadedBy
+                        )}</small>
+                    </div>
+                </td>
+                <td>${formatDate(doc.uploadedAt)}</td>
+                <td>${formatFileSize(doc.fileSize)}</td>
                 <td class="action-buttons">
                     <button class="btn-view" onclick="viewDocument(${
                       startIndex + index
-                    })" title="View document details">View</button>
+                    })" title="View/Open document">
+                        <span>👁️</span> View
+                    </button>
                     <button class="btn-download" onclick="downloadDocument(${
                       startIndex + index
-                    })" title="Download document">Download</button>
+                    })" title="Download document">
+                        <span>⬇️</span> Download
+                    </button>
                 </td>
             </tr>
         `
@@ -296,23 +315,15 @@ function handleSort() {
 /**
  * View document
  */
+/**
+ * View document - opens in new tab
+ */
 function viewDocument(index) {
   const doc = filteredDocuments[index];
   if (!doc) return;
 
-  const details = `Document Details:
-    
-File: ${doc.fileName}
-Type: ${doc.documentType}
-Organization: ${doc.uploadedBy} (${doc.orgAcronym})
-Submission: ${doc.submissionTitle}
-Status: ${doc.submissionStatus}
-Uploaded: ${formatDate(doc.uploadedDate)}
-Size: ${formatFileSize(doc.fileSize)}
-
-File Path: ${doc.filePath}`;
-
-  alert(details);
+  // Open the file in a new tab
+  window.open(doc.filePath, '_blank');
 }
 
 /**
@@ -322,52 +333,39 @@ function downloadDocument(index) {
   const doc = filteredDocuments[index];
   if (!doc) return;
 
-  // In a real application, this would trigger a file download
-  alert(
-    `Downloading: ${doc.fileName}\n\nFile download functionality will be implemented when file upload is complete.`
-  );
-
-  // Future implementation:
-  // window.location.href = `/api/download-document.php?id=${doc.id}`;
-}
-
-/**
- * Format file size
- */
-function formatFileSize(bytes) {
-  if (bytes === 0) return "0 Bytes";
-  const k = 1024;
-  const sizes = ["Bytes", "KB", "MB", "GB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i];
+  // Create a temporary link element to trigger download
+  const link = document.createElement('a');
+  link.href = doc.filePath;
+  link.download = doc.fileName;
+  link.target = '_blank';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 /**
  * Utility functions
  */
-function getFileIcon(fileName) {
-  const ext = fileName.split(".").pop().toLowerCase();
-
-  switch (ext) {
-    case "pdf":
-      return "📄";
-    case "doc":
-    case "docx":
-      return "📝";
-    case "xls":
-    case "xlsx":
-      return "📊";
-    case "ppt":
-    case "pptx":
-      return "📽️";
-    case "jpg":
-    case "jpeg":
-    case "png":
-    case "gif":
-      return "🖼️";
-    default:
-      return "📎";
+function getFileIcon(fileType) {
+  if (fileType.includes('pdf')) {
+    return '📄';
+  } else if (fileType.includes('word') || fileType.includes('document')) {
+    return '📝';
+  } else if (fileType.includes('sheet') || fileType.includes('excel')) {
+    return '📊';
+  } else if (fileType.includes('presentation') || fileType.includes('powerpoint')) {
+    return '📽️';
+  } else if (fileType.includes('image') || fileType.includes('png') || fileType.includes('jpg') || fileType.includes('jpeg') || fileType.includes('gif')) {
+    return '🖼️';
+  } else {
+    return '�';
   }
+}
+
+function formatFileSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  else if (bytes < 1048576) return (bytes / 1024).toFixed(2) + ' KB';
+  else return (bytes / 1048576).toFixed(2) + ' MB';
 }
 
 function formatDate(dateString) {
