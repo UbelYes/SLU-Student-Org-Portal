@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 -- Database: `slu_org_db`
 --
 
+CREATE DATABASE IF NOT EXISTS `slu_org_db`;
+USE `slu_org_db`;
+
 -- --------------------------------------------------------
 
 --
@@ -39,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   PRIMARY KEY (`adminid`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `admin`
@@ -69,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   UNIQUE KEY `org_name` (`org_name`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `client`
@@ -116,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `files` (
   PRIMARY KEY (`fileid`),
   KEY `fk_file_response` (`responseid`),
   KEY `fk_file_client` (`clientid`)
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -136,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `file_history` (
   PRIMARY KEY (`historyid`),
   KEY `fk_history_file` (`fileid`),
   KEY `fk_history_admin` (`adminid`)
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -178,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `form_responses` (
   PRIMARY KEY (`responseid`),
   KEY `fk_response_form` (`formid`),
   KEY `fk_response_client` (`clientid`)
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -196,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `login_activity` (
   `duration` int DEFAULT NULL,
   `auto_logout_flag` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`activityid`)
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -262,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `organization_submissions` (
   PRIMARY KEY (`submission_id`),
   KEY `fk_submission_response` (`responseid`),
   KEY `fk_submission_client` (`clientid`)
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -339,7 +342,7 @@ CREATE TABLE IF NOT EXISTS `submission_documents` (
   `upload_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`document_id`),
   KEY `fk_document_submission` (`submission_id`)
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Constraints for dumped tables
