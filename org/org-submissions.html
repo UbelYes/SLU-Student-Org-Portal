@@ -49,6 +49,13 @@
                         placeholder="Search submissions...">
                 </div>
                 <div class="filter-controls">
+                    <select id="sortFilter" class="status-filter">
+                        <option value="">Sort By</option>
+                        <option value="date-desc">Date (Newest First)</option>
+                        <option value="date-asc">Date (Oldest First)</option>
+                        <option value="title-asc">Title (A-Z)</option>
+                        <option value="title-desc">Title (Z-A)</option>
+                    </select>
                     <select id="statusFilter" class="status-filter">
                         <option value>All Status</option>
                         <option value="submitted">Submitted</option>

@@ -11,6 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("statusFilter")
     ?.addEventListener("change", filterSubmissions);
+
+  // Add event listener for sort filter
+  document
+    .getElementById("sortFilter")
+    ?.addEventListener("change", sortSubmissions);
 });
 
 let allSubmissions = [];
@@ -203,6 +208,37 @@ function filterSubmissions() {
   });
 
   currentPage = 1; // Reset to first page when filtering
+  sortSubmissions(); // Apply sorting after filtering
+}
+
+// Sort submissions based on selected option
+function sortSubmissions() {
+  const sortFilter = document.getElementById("sortFilter").value;
+
+  if (!sortFilter) {
+    displaySubmissions(filteredSubmissions);
+    return;
+  }
+
+  const sorted = [...filteredSubmissions];
+
+  switch (sortFilter) {
+    case "date-desc":
+      sorted.sort((a, b) => new Date(b.submitted_date) - new Date(a.submitted_date));
+      break;
+    case "date-asc":
+      sorted.sort((a, b) => new Date(a.submitted_date) - new Date(b.submitted_date));
+      break;
+    case "title-asc":
+      sorted.sort((a, b) => a.submission_title.localeCompare(b.submission_title));
+      break;
+    case "title-desc":
+      sorted.sort((a, b) => b.submission_title.localeCompare(a.submission_title));
+      break;
+  }
+
+  filteredSubmissions = sorted;
+  currentPage = 1; // Reset to first page when sorting
   displaySubmissions(filteredSubmissions);
 }
 
