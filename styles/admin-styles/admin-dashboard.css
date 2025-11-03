@@ -84,7 +84,6 @@ body {
 .logout-button-top:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-1px);
 }
 
 .logout-button-top:active {
@@ -242,12 +241,6 @@ body {
 
 .stat-icon.online {
     color: #10b981;
-    animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
 }
 
 .stat-info {
@@ -290,6 +283,15 @@ body {
 }
 
 /* Status badges */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
 .status-badge.status-online {
     background: #d1fae5;
     color: #065f46;
@@ -298,6 +300,196 @@ body {
 .status-badge.status-offline {
     background: #fee2e2;
     color: #991b1b;
+}
+
+.status-badge.status-active {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-badge.status-inactive {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Accounts Header */
+.accounts-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.accounts-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0A0A0A;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #64748b;
+    font-weight: 400;
+    margin: 0;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #E9ECEF;
+    padding-bottom: 0;
+    flex-wrap: wrap;
+}
+
+.tab-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #64748b;
+    font-family: "Arimo", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: -2px;
+}
+
+.tab-button:hover {
+    color: #09375C;
+    background: rgba(68, 76, 247, 0.05);
+}
+
+.tab-button.active {
+    color: #09375C;
+    border-bottom-color: #444cf7;
+    font-weight: 600;
+}
+
+.tab-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 20px;
+    padding: 0 6px;
+    background: #E9ECEF;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.tab-button.active .tab-badge {
+    background: #444cf7;
+    color: white;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Section Header */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.section-header h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #0A0A0A;
+    margin: 0;
+}
+
+/* Filter Controls */
+.filter-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.search-input {
+    padding: 10px 16px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    font-family: "Arimo", sans-serif;
+    font-size: 14px;
+    width: 300px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #444cf7;
+    box-shadow: 0 0 0 3px rgba(68, 76, 247, 0.1);
+}
+
+.filter-select {
+    padding: 10px 16px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    font-family: "Arimo", sans-serif;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #444cf7;
+    box-shadow: 0 0 0 3px rgba(68, 76, 247, 0.1);
+}
+
+.btn-refresh {
+    padding: 10px 20px;
+    background: #444cf7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: "Arimo", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-refresh:hover {
+    background: #3a42d4;
+}
+
+.btn-refresh:active {
+    transform: translateY(0);
+}
+
+/* Table Utilities */
+.text-center {
+    text-align: center;
+    padding: 24px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.loading {
+    font-style: italic;
+}
+
+.no-data {
+    color: #94a3b8;
 }
 
 /* Responsive Design */

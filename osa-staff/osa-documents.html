@@ -52,13 +52,6 @@
                                 alt="Documents">
                             Documents
                         </button>
-
-                        <button class="menu-button" id="accounts-button">
-                            <img class="menu-icon-img"
-                                src="../resources/icons/accounts-icon.svg"
-                                alt="Accounts">
-                            Accounts
-                        </button>
                     </div>
 
                     <button class="logout-button" onclick="handleLogout()">
@@ -76,8 +69,8 @@
                         <h1>Document Management</h1>
                     </div>
                     <div class="placeholder-text">
-                        <p>View and manage uploaded documents from Student
-                            Organizations</p>
+                        <p>📎 View and manage uploaded documents from Student Organizations</p>
+                        <p class="coming-soon-notice">Note: File upload feature will be available in a future update</p>
                     </div>
 
                     <!-- Search and Sort Controls -->
@@ -112,14 +105,16 @@
                                 <thead>
                                     <tr>
                                         <th>File Name</th>
-                                        <th>Uploaded By</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
+                                        <th>Event</th>
+                                        <th>Organization</th>
+                                        <th>Upload Date</th>
+                                        <th>File Size</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="documents-table-body">
                                     <tr>
-                                        <td colspan="4"
+                                        <td colspan="6"
                                             class="text-center loading">Loading
                                             documents...</td>
                                     </tr>

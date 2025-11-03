@@ -4,7 +4,10 @@
  * 
  * Handles organization form submissions from authenticated client users.
  * Validates session authentication, accepts POST JSON data, validates required fields,
- * and inserts submission into org_form_submissions table. Returns submission ID on success.
+ * inserts submission into org_form_submissions table and related events into org_events table.
+ * Returns submission ID on success.
+ * 
+ * Note: File upload functionality is planned for future implementation.
  */
 
 header('Content-Type: application/json');
@@ -27,11 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 try {
     $data = json_decode(file_get_contents('php://input'), true);
     
+    // Validate required fields
     $required_fields = [
         'submission_title', 'org_full_name', 'org_acronym', 'org_email',
         'applicant_name', 'applicant_position', 'applicant_email',
         'adviser_names', 'adviser_emails', 'category', 'org_type',
-        'cbl_status', 'video_link'
+        'cbl_status', 'events'
     ];
     
     foreach ($required_fields as $field) {
@@ -42,16 +46,27 @@ try {
         }
     }
     
+    // Validate events array
+    if (!is_array($data['events']) || count($data['events']) === 0) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'At least one event is required']);
+        exit;
+    }
+    
+    // Start transaction
+    $conn->begin_transaction();
+    
+    // Insert organization submission
     $sql = "INSERT INTO org_form_submissions (
         clientid, submission_title, org_full_name, org_acronym, org_email, 
         social_media_links, applicant_name, applicant_position, applicant_email,
-        adviser_names, adviser_emails, category, org_type, cbl_status, video_link
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        adviser_names, adviser_emails, category, org_type, cbl_status
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     $stmt = $conn->prepare($sql);
     
     $stmt->bind_param(
-        "issssssssssssss",
+        "isssssssssssss",
         $_SESSION['clientid'],
         $data['submission_title'],
         $data['org_full_name'],
@@ -65,25 +80,59 @@ try {
         $data['adviser_emails'],
         $data['category'],
         $data['org_type'],
-        $data['cbl_status'],
-        $data['video_link']
+        $data['cbl_status']
     );
     
-    if ($stmt->execute()) {
-        $submission_id = $conn->insert_id;
-        
-        echo json_encode([
-            'success' => true,
-            'message' => 'Form submitted successfully',
-            'submission_id' => $submission_id
-        ]);
-    } else {
+    if (!$stmt->execute()) {
         throw new Exception('Failed to submit form');
     }
     
+    $submission_id = $conn->insert_id;
     $stmt->close();
     
+    // Insert events
+    $event_sql = "INSERT INTO org_events (
+        submission_id, event_name, event_date, event_venue, 
+        event_description, expected_participants, budget_estimate
+    ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    
+    $event_stmt = $conn->prepare($event_sql);
+    
+    foreach ($data['events'] as $event) {
+        $event_stmt->bind_param(
+            "issssid",
+            $submission_id,
+            $event['name'],
+            $event['date'],
+            $event['venue'],
+            $event['description'],
+            $event['participants'],
+            $event['budget']
+        );
+        
+        if (!$event_stmt->execute()) {
+            throw new Exception('Failed to add event: ' . $event['name']);
+        }
+    }
+    
+    $event_stmt->close();
+    
+    // Commit transaction
+    $conn->commit();
+    
+    echo json_encode([
+        'success' => true,
+        'message' => 'Form submitted successfully',
+        'submission_id' => $submission_id,
+        'events_added' => count($data['events'])
+    ]);
+    
 } catch (Exception $e) {
+    // Rollback transaction on error
+    if (isset($conn)) {
+        $conn->rollback();
+    }
+    
     http_response_code(500);
     echo json_encode([
         'success' => false,
@@ -91,5 +140,7 @@ try {
     ]);
 }
 
-$conn->close();
+if (isset($conn)) {
+    $conn->close();
+}
 ?>

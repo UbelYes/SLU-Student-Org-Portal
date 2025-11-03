@@ -937,6 +937,24 @@ body {
   text-decoration: underline;
 }
 
+.feedback-textarea {
+  width: 100%;
+  padding: 12px;
+  font-family: "Arimo", sans-serif;
+  font-size: 14px;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  resize: vertical;
+  min-height: 100px;
+  box-sizing: border-box;
+}
+
+.feedback-textarea:focus {
+  outline: none;
+  border-color: #444cf7;
+  box-shadow: 0 0 0 3px rgba(68, 76, 247, 0.1);
+}
+
 .document-list {
   margin-top: 12px;
 }
@@ -1045,6 +1063,55 @@ body {
   background: #001f3f;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(3, 102, 0, 0.3);
+}
+
+/* Events List Styles */
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-item {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.event-header {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #007bff;
+  color: #004080;
+  font-size: 15px;
+}
+
+.event-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.event-details .view-field {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.event-details .view-field:last-child {
+  border-bottom: none;
+}
+
+.no-events {
+  color: #6c757d;
+  font-style: italic;
+  padding: 15px;
+  text-align: center;
+  background: #f8f9fa;
+  border-radius: 4px;
 }
 
 /* Mobile Responsive Modal Styles */
@@ -1267,13 +1334,55 @@ body {
   }
 }
 
+/* Notification Styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: "Arimo", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 10000;
+  opacity: 0;
+  transform: translateX(400px);
+  transition: all 0.3s ease-in-out;
+  max-width: 400px;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.notification-success {
+  background: #10b981;
+  color: white;
+  border-left: 4px solid #059669;
+}
+
+.notification-error {
+  background: #ef4444;
+  color: white;
+  border-left: 4px solid #dc2626;
+}
+
+.notification-info {
+  background: #3b82f6;
+  color: white;
+  border-left: 4px solid #2563eb;
+}
+
 /* Print styles */
 @media print {
   .navigation-side-bar,
   .modal-header,
   .modal-footer,
   .doc-download-btn,
-  .hamburger-menu {
+  .hamburger-menu,
+  .notification {
     display: none !important;
   }
 

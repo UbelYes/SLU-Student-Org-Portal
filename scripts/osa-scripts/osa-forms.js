@@ -107,6 +107,11 @@ function openViewModal(submissionId) {
     
     const submission = submissionData.rawData;
     
+    // Debug: Log submission data to console
+    console.log('Submission data:', submission);
+    console.log('Events:', submission.events);
+    console.log('Events length:', submission.events ? submission.events.length : 'undefined');
+    
     // Update modal with data
     document.getElementById('modalFormTitle').textContent = submission.submission_title;
     document.getElementById('modalOrgName').textContent = submission.org_full_name;
@@ -140,11 +145,22 @@ function openViewModal(submissionId) {
     // Update additional information
     document.getElementById('modalCblStatus').textContent = submission.cbl_status;
     
-    const videoLinkElement = document.getElementById('modalVideoLink');
-    if (submission.video_link) {
-        videoLinkElement.innerHTML = `<a href="${submission.video_link}" target="_blank">${submission.video_link}</a>`;
+    // Load feedback into textarea
+    document.getElementById('modalFeedback').value = submission.feedback || '';
+    
+    // Update events section
+    const eventsContainer = document.getElementById('modalEvents');
+    console.log('About to check events...');
+    console.log('submission.events:', submission.events);
+    console.log('Is array?', Array.isArray(submission.events));
+    console.log('Length:', submission.events ? submission.events.length : 'N/A');
+    
+    if (submission.events && Array.isArray(submission.events) && submission.events.length > 0) {
+        console.log('Generating events HTML...');
+        eventsContainer.innerHTML = generateEventsHTML(submission.events);
     } else {
-        videoLinkElement.textContent = 'N/A';
+        console.log('No events found, showing default message');
+        eventsContainer.innerHTML = '<p class="no-events">No events planned yet.</p>';
     }
     
     // Show modal
@@ -516,3 +532,165 @@ function generatePageNumbers(current, total) {
     
     return pages;
 }
+
+// Generate HTML for events list
+function generateEventsHTML(events) {
+    if (!events || events.length === 0) {
+        return '<p class="no-events">No events planned yet.</p>';
+    }
+
+    let html = '<div class="events-list">';
+    
+    events.forEach((event, index) => {
+        html += `
+            <div class="event-item">
+                <div class="event-header">
+                    <strong>Event ${index + 1}: ${escapeHtml(event.event_name)}</strong>
+                </div>
+                <div class="event-details">
+                    <div class="view-field">
+                        <label>Date:</label>
+                        <div class="field-value">${formatDate(event.event_date)}</div>
+                    </div>
+                    <div class="view-field">
+                        <label>Venue:</label>
+                        <div class="field-value">${escapeHtml(event.event_venue)}</div>
+                    </div>
+                    <div class="view-field">
+                        <label>Description:</label>
+                        <div class="field-value">${escapeHtml(event.event_description)}</div>
+                    </div>
+                    <div class="view-field">
+                        <label>Expected Participants:</label>
+                        <div class="field-value">${event.expected_participants}</div>
+                    </div>
+                    <div class="view-field">
+                        <label>Budget Estimate:</label>
+                        <div class="field-value">₱${parseFloat(event.budget_estimate).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    return html;
+}
+
+// Escape HTML to prevent XSS attacks
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text ? String(text).replace(/[&<>"']/g, m => map[m]) : '';
+}
+
+// Store current submission ID for modal actions
+let currentSubmissionId = null;
+
+// Update the openViewModal function to store submission ID
+const originalOpenViewModal = openViewModal;
+window.openViewModal = function(submissionId) {
+    currentSubmissionId = submissionId;
+    originalOpenViewModal(submissionId);
+};
+
+// Approve submission
+function approveSubmission() {
+    if (!currentSubmissionId) {
+        showNotification('No submission selected', 'error');
+        return;
+    }
+    
+    if (!confirm('Are you sure you want to approve this submission?')) {
+        return;
+    }
+    
+    const feedback = document.getElementById('modalFeedback').value.trim();
+    updateSubmissionStatus(currentSubmissionId, 'Approved', feedback);
+}
+
+// Return submission for revision
+function returnSubmission() {
+    if (!currentSubmissionId) {
+        showNotification('No submission selected', 'error');
+        return;
+    }
+    
+    if (!confirm('Are you sure you want to return this submission for revision?')) {
+        return;
+    }
+    
+    const feedback = document.getElementById('modalFeedback').value.trim();
+    if (!feedback) {
+        alert('Please provide feedback when returning a submission.');
+        return;
+    }
+    
+    updateSubmissionStatus(currentSubmissionId, 'Returned', feedback);
+}
+
+// Update submission status via API
+function updateSubmissionStatus(submissionId, status, feedback = null) {
+    const requestData = {
+        submission_id: submissionId,
+        status: status
+    };
+    
+    if (feedback) {
+        requestData.feedback = feedback;
+    }
+    
+    fetch('/api/update-submission-status.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification(`Submission ${status.toLowerCase()} successfully`, 'success');
+            closeViewModal();
+            // Reload submissions to reflect the change
+            loadSubmissions();
+        } else {
+            showNotification('Error: ' + data.message, 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Failed to update submission status', 'error');
+    });
+}
+
+// Show notification
+function showNotification(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    // Add to body
+    document.body.appendChild(notification);
+    
+    // Show notification
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+// Print function (window.print is already handled in HTML)

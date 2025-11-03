@@ -79,9 +79,11 @@ function displaySubmissions(submissions) {
             }">${capitalizeFirst(submission.status)}</span></td>
             <td>v1</td>
             <td class="feedback-cell">${
-              submission.status === "submitted"
-                ? "Pending review"
-                : "No feedback"
+              submission.feedback && submission.feedback.trim() 
+                ? escapeHtml(submission.feedback)
+                : (submission.status === "submitted" || submission.status === "Pending"
+                    ? "Pending review"
+                    : "No feedback")
             }</td>
             <td>
                 <button class="action-btn view-btn" onclick="viewSubmission(${
@@ -235,6 +237,12 @@ function sortSubmissions() {
     case "title-desc":
       sorted.sort((a, b) => b.submission_title.localeCompare(a.submission_title));
       break;
+    case "status-asc":
+      sorted.sort((a, b) => a.status.localeCompare(b.status));
+      break;
+    case "status-desc":
+      sorted.sort((a, b) => b.status.localeCompare(a.status));
+      break;
   }
 
   filteredSubmissions = sorted;
@@ -263,7 +271,11 @@ function viewSubmission(id) {
     "status-badge " + submission.status;
   document.getElementById("modalVersion").textContent = "v1";
   document.getElementById("modalFeedback").textContent =
-    submission.status === "submitted" ? "Pending review" : "No feedback";
+    submission.feedback && submission.feedback.trim() 
+      ? submission.feedback
+      : (submission.status === "submitted" || submission.status === "Pending"
+          ? "Pending review"
+          : "No feedback provided");
 
   // Update form content in modal
   updateModalContent(submission);
@@ -363,20 +375,17 @@ function updateModalContent(submission) {
         </div>
 
         <div class="view-section">
+            <h4>Planned Events</h4>
+            ${generateEventsHTML(submission.events)}
+        </div>
+
+        <div class="view-section">
             <h4>Additional Information</h4>
             <div class="view-field">
                 <label>CBL Status:</label>
                 <div class="field-value">${capitalizeFirst(
                   submission.cbl_status
                 )}</div>
-            </div>
-            <div class="view-field">
-                <label>Video Link:</label>
-                <div class="field-value"><a href="${escapeHtml(
-                  submission.video_link
-                )}" target="_blank">${escapeHtml(
-    submission.video_link
-  )}</a></div>
             </div>
         </div>
     `;
@@ -457,3 +466,48 @@ function escapeHtml(text) {
   };
   return text ? text.replace(/[&<>"']/g, (m) => map[m]) : "";
 }
+
+// Generate HTML for events list
+function generateEventsHTML(events) {
+  if (!events || events.length === 0) {
+    return '<p class="no-events">No events planned yet.</p>';
+  }
+
+  let html = '<div class="events-list">';
+  
+  events.forEach((event, index) => {
+    html += `
+      <div class="event-item">
+        <div class="event-header">
+          <strong>Event ${index + 1}: ${escapeHtml(event.event_name)}</strong>
+        </div>
+        <div class="event-details">
+          <div class="view-field">
+            <label>Date:</label>
+            <div class="field-value">${formatDate(event.event_date)}</div>
+          </div>
+          <div class="view-field">
+            <label>Venue:</label>
+            <div class="field-value">${escapeHtml(event.event_venue)}</div>
+          </div>
+          <div class="view-field">
+            <label>Description:</label>
+            <div class="field-value">${escapeHtml(event.event_description)}</div>
+          </div>
+          <div class="view-field">
+            <label>Expected Participants:</label>
+            <div class="field-value">${event.expected_participants}</div>
+          </div>
+          <div class="view-field">
+            <label>Budget Estimate:</label>
+            <div class="field-value">₱${parseFloat(event.budget_estimate).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  
+  html += '</div>';
+  return html;
+}
+

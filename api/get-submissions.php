@@ -1,4 +1,11 @@
 <?php
+/**
+ * Get Organization Form Submissions API
+ * 
+ * Retrieves organization form submissions with associated event details.
+ * Organizations see only their own submissions, OSA staff see all submissions.
+ */
+
 header('Content-Type: application/json');
 session_start();
 
@@ -21,7 +28,7 @@ try {
                     s.org_email, s.social_media_links, s.applicant_name, 
                     s.applicant_position, s.applicant_email, s.adviser_names, 
                     s.adviser_emails, s.category, s.org_type, s.cbl_status, 
-                    s.video_link, s.status, s.submitted_date, s.updated_date,
+                    s.status, s.feedback, s.submitted_date, s.updated_date,
                     c.org_name, c.username
                 FROM org_form_submissions s
                 INNER JOIN client c ON s.clientid = c.clientid
@@ -37,7 +44,7 @@ try {
                     s.org_email, s.social_media_links, s.applicant_name, 
                     s.applicant_position, s.applicant_email, s.adviser_names, 
                     s.adviser_emails, s.category, s.org_type, s.cbl_status, 
-                    s.video_link, s.status, s.submitted_date, s.updated_date,
+                    s.status, s.feedback, s.submitted_date, s.updated_date,
                     c.org_name, c.username
                 FROM org_form_submissions s
                 INNER JOIN client c ON s.clientid = c.clientid
@@ -51,6 +58,31 @@ try {
     
     $submissions = [];
     while ($row = $result->fetch_assoc()) {
+        $submission_id = $row['id'];
+        
+        // Get events for this submission
+        $event_sql = "SELECT 
+                        event_id, event_name, event_date, event_venue, 
+                        event_description, expected_participants, budget_estimate
+                      FROM org_events
+                      WHERE submission_id = ?
+                      ORDER BY event_date ASC";
+        
+        $event_stmt = $conn->prepare($event_sql);
+        $event_stmt->bind_param("i", $submission_id);
+        $event_stmt->execute();
+        $event_result = $event_stmt->get_result();
+        
+        $events = [];
+        while ($event_row = $event_result->fetch_assoc()) {
+            $events[] = $event_row;
+        }
+        $event_stmt->close();
+        
+        // Add events to submission data
+        $row['events'] = $events;
+        $row['event_count'] = count($events);
+        
         $submissions[] = $row;
     }
     
