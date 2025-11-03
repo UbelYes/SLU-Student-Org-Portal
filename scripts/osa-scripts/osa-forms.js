@@ -145,12 +145,8 @@ function openViewModal(submissionId) {
     // Update additional information
     document.getElementById('modalCblStatus').textContent = submission.cbl_status;
     
-    const videoLinkElement = document.getElementById('modalVideoLink');
-    if (submission.video_link) {
-        videoLinkElement.innerHTML = `<a href="${submission.video_link}" target="_blank">${submission.video_link}</a>`;
-    } else {
-        videoLinkElement.textContent = 'N/A';
-    }
+    // Load feedback into textarea
+    document.getElementById('modalFeedback').value = submission.feedback || '';
     
     // Update events section
     const eventsContainer = document.getElementById('modalEvents');
@@ -614,7 +610,8 @@ function approveSubmission() {
         return;
     }
     
-    updateSubmissionStatus(currentSubmissionId, 'Approved');
+    const feedback = document.getElementById('modalFeedback').value.trim();
+    updateSubmissionStatus(currentSubmissionId, 'Approved', feedback);
 }
 
 // Return submission for revision
@@ -624,23 +621,28 @@ function returnSubmission() {
         return;
     }
     
-    const notes = prompt('Please provide revision notes (optional):');
-    if (notes === null) {
-        return; // User cancelled
+    if (!confirm('Are you sure you want to return this submission for revision?')) {
+        return;
     }
     
-    updateSubmissionStatus(currentSubmissionId, 'Returned', notes);
+    const feedback = document.getElementById('modalFeedback').value.trim();
+    if (!feedback) {
+        alert('Please provide feedback when returning a submission.');
+        return;
+    }
+    
+    updateSubmissionStatus(currentSubmissionId, 'Returned', feedback);
 }
 
 // Update submission status via API
-function updateSubmissionStatus(submissionId, status, notes = null) {
+function updateSubmissionStatus(submissionId, status, feedback = null) {
     const requestData = {
         submission_id: submissionId,
         status: status
     };
     
-    if (notes) {
-        requestData.notes = notes;
+    if (feedback) {
+        requestData.feedback = feedback;
     }
     
     fetch('/api/update-submission-status.php', {

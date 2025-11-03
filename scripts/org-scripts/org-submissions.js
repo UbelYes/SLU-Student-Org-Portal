@@ -79,9 +79,11 @@ function displaySubmissions(submissions) {
             }">${capitalizeFirst(submission.status)}</span></td>
             <td>v1</td>
             <td class="feedback-cell">${
-              submission.status === "submitted"
-                ? "Pending review"
-                : "No feedback"
+              submission.feedback && submission.feedback.trim() 
+                ? escapeHtml(submission.feedback)
+                : (submission.status === "submitted" || submission.status === "Pending"
+                    ? "Pending review"
+                    : "No feedback")
             }</td>
             <td>
                 <button class="action-btn view-btn" onclick="viewSubmission(${
@@ -235,6 +237,12 @@ function sortSubmissions() {
     case "title-desc":
       sorted.sort((a, b) => b.submission_title.localeCompare(a.submission_title));
       break;
+    case "status-asc":
+      sorted.sort((a, b) => a.status.localeCompare(b.status));
+      break;
+    case "status-desc":
+      sorted.sort((a, b) => b.status.localeCompare(a.status));
+      break;
   }
 
   filteredSubmissions = sorted;
@@ -263,7 +271,11 @@ function viewSubmission(id) {
     "status-badge " + submission.status;
   document.getElementById("modalVersion").textContent = "v1";
   document.getElementById("modalFeedback").textContent =
-    submission.status === "submitted" ? "Pending review" : "No feedback";
+    submission.feedback && submission.feedback.trim() 
+      ? submission.feedback
+      : (submission.status === "submitted" || submission.status === "Pending"
+          ? "Pending review"
+          : "No feedback provided");
 
   // Update form content in modal
   updateModalContent(submission);
@@ -374,14 +386,6 @@ function updateModalContent(submission) {
                 <div class="field-value">${capitalizeFirst(
                   submission.cbl_status
                 )}</div>
-            </div>
-            <div class="view-field">
-                <label>Video Link:</label>
-                <div class="field-value"><a href="${escapeHtml(
-                  submission.video_link
-                )}" target="_blank">${escapeHtml(
-    submission.video_link
-  )}</a></div>
             </div>
         </div>
     `;

@@ -34,7 +34,6 @@ function submitForm(event) {
     category: getSelectedCategories(),
     org_type: document.querySelector('input[name="org_type"]:checked').value,
     cbl_status: document.querySelector('input[name="cbl_status"]:checked').value,
-    video_link: document.getElementById("video_link").value,
     events: getEventDetails()
   };
 

@@ -41,7 +41,7 @@ try {
     
     $submission_id = (int)$data['submission_id'];
     $status = $data['status'];
-    $notes = isset($data['notes']) ? $data['notes'] : null;
+    $feedback = isset($data['feedback']) ? $data['feedback'] : null;
     
     // Validate status value
     if (!in_array($status, ['Approved', 'Returned', 'Pending'])) {
@@ -53,11 +53,12 @@ try {
     // Update submission status
     $sql = "UPDATE org_form_submissions 
             SET status = ?, 
+                feedback = ?,
                 updated_date = CURRENT_TIMESTAMP 
             WHERE id = ?";
     
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $status, $submission_id);
+    $stmt->bind_param("ssi", $status, $feedback, $submission_id);
     
     if (!$stmt->execute()) {
         throw new Exception('Failed to update submission status');
