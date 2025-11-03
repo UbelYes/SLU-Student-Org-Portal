@@ -35,7 +35,7 @@ try {
         'submission_title', 'org_full_name', 'org_acronym', 'org_email',
         'applicant_name', 'applicant_position', 'applicant_email',
         'adviser_names', 'adviser_emails', 'category', 'org_type',
-        'cbl_status', 'video_link', 'events'
+        'cbl_status', 'events'
     ];
     
     foreach ($required_fields as $field) {
@@ -60,13 +60,13 @@ try {
     $sql = "INSERT INTO org_form_submissions (
         clientid, submission_title, org_full_name, org_acronym, org_email, 
         social_media_links, applicant_name, applicant_position, applicant_email,
-        adviser_names, adviser_emails, category, org_type, cbl_status, video_link
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        adviser_names, adviser_emails, category, org_type, cbl_status
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     $stmt = $conn->prepare($sql);
     
     $stmt->bind_param(
-        "issssssssssssss",
+        "isssssssssssss",
         $_SESSION['clientid'],
         $data['submission_title'],
         $data['org_full_name'],
@@ -80,8 +80,7 @@ try {
         $data['adviser_emails'],
         $data['category'],
         $data['org_type'],
-        $data['cbl_status'],
-        $data['video_link']
+        $data['cbl_status']
     );
     
     if (!$stmt->execute()) {

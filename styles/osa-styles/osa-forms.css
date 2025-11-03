@@ -937,6 +937,24 @@ body {
   text-decoration: underline;
 }
 
+.feedback-textarea {
+  width: 100%;
+  padding: 12px;
+  font-family: "Arimo", sans-serif;
+  font-size: 14px;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  resize: vertical;
+  min-height: 100px;
+  box-sizing: border-box;
+}
+
+.feedback-textarea:focus {
+  outline: none;
+  border-color: #444cf7;
+  box-shadow: 0 0 0 3px rgba(68, 76, 247, 0.1);
+}
+
 .document-list {
   margin-top: 12px;
 }
