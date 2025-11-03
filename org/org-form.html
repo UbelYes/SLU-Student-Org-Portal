@@ -252,56 +252,80 @@
                         </div>
                     </section>
 
-                    <!-- Required Documents -->
+                    <!-- Event Details -->
                     <section class="form-section">
-                        <h3 class="form-section__title">Required Documents
-                            (Note: Document upload is not yet implemented)</h3>
+                        <h3 class="form-section__title">Planned Events</h3>
+                        <p class="form-hint">Add details about your organization's planned events for the upcoming term</p>
 
-                        <div class="form-group">
-                            <label
-                                class="form-label">Strategic
-                                Plans 2025-2026</label>
-                            <div class="form-file-upload">Click to upload or
-                                drag and drop (Feature not implemented)</div>
+                        <div id="eventsContainer">
+                            <div class="event-entry" data-event-index="0">
+                                <h4 class="event-title">Event 1</h4>
+                                
+                                <div class="form-group">
+                                    <label class="form-label form-label--required">Event Name</label>
+                                    <input type="text" class="form-input event-name" 
+                                        name="event_name_0" 
+                                        required
+                                        placeholder="e.g. Annual General Assembly, Fundraising Drive">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label form-label--required">Event Date</label>
+                                    <input type="date" class="form-input event-date" 
+                                        name="event_date_0" 
+                                        required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label form-label--required">Event Venue</label>
+                                    <input type="text" class="form-input event-venue" 
+                                        name="event_venue_0" 
+                                        required
+                                        placeholder="e.g. Main Auditorium, Room 301, Online via Zoom">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label form-label--required">Event Description</label>
+                                    <textarea class="form-input event-description" 
+                                        name="event_description_0" 
+                                        rows="3"
+                                        required
+                                        placeholder="Brief description of the event and its objectives"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label form-label--required">Expected Number of Participants</label>
+                                    <input type="number" class="form-input event-participants" 
+                                        name="event_participants_0" 
+                                        min="1"
+                                        required
+                                        placeholder="e.g. 50">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Budget Estimate (PHP)</label>
+                                    <input type="number" class="form-input event-budget" 
+                                        name="event_budget_0" 
+                                        min="0"
+                                        step="0.01"
+                                        placeholder="e.g. 5000.00">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <span class="placeholder-icon">📎</span>
+                                        Attachment (Coming Soon)
+                                    </label>
+                                    <div class="upload-placeholder-box">
+                                        <p class="placeholder-text">File upload feature will be available in a future update</p>
+                                        <p class="placeholder-hint">You'll be able to attach images, PDFs, and documents to your events</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label
-                                class="form-label">Annual
-                                Report 2024-2025</label>
-                            <div class="form-file-upload">Click to upload or
-                                drag and drop (Feature not implemented)</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label
-                                class="form-label">Constitution
-                                & By-Laws</label>
-                            <div class="form-file-upload">Click to upload or
-                                drag and drop (Feature not implemented)</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">List
-                                of Officers (Spreadsheet)</label>
-                            <div class="form-file-upload">Click to upload or
-                                drag and drop (Feature not implemented)</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label
-                                class="form-label">Financial
-                                Statement 2023-2024</label>
-                            <div class="form-file-upload">Click to upload or
-                                drag and drop (Feature not implemented)</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label
-                                class="form-label">Updated
-                                Infographics</label>
-                            <div class="form-file-upload">Click to upload or
-                                drag and drop (Feature not implemented)</div>
+                        <div class="event-actions">
+                            <button type="button" class="btn btn--secondary" onclick="addEvent()">+ Add Another Event</button>
                         </div>
                     </section>
 

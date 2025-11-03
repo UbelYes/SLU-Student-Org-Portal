@@ -295,6 +295,13 @@
                         </div>
 
                         <div class="view-section">
+                            <h4>Planned Events</h4>
+                            <div id="modalEvents">
+                                <p class="no-events">No events planned yet.</p>
+                            </div>
+                        </div>
+
+                        <div class="view-section">
                             <h4>Additional Information</h4>
                             <div class="view-field">
                                 <label>CBL Status:</label>
@@ -312,8 +319,8 @@
                 <div class="modal-footer">
                     <button class="btn-secondary"
                         onclick="closeViewModal()">Close</button>
-                    <button class="btn-approve">Approve</button>
-                    <button class="btn-return">Return for Revision</button>
+                    <button class="btn-approve" onclick="approveSubmission()">Approve</button>
+                    <button class="btn-return" onclick="returnSubmission()">Return for Revision</button>
                     <button class="btn-print"
                         onclick="window.print()">Print</button>
                 </div>
