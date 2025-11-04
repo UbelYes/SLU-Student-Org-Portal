@@ -346,6 +346,13 @@ body {
   border-radius: 10px;
   border: 1px solid rgba(255, 215, 0, 0.3);
   background: linear-gradient(135deg, #036 0%, #001f3f 100%);
+  color: #fff;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  /* 150% */
 }
 
 .button-container {
@@ -360,15 +367,6 @@ body {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-}
-
-.button-text {
-  color: #fff;
-  font-family: Poppins;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 24px;
   /* 150% */
 }
 
