@@ -10,10 +10,18 @@
         <script src="/scripts/login.js" defer></script>
         <script src="/scripts/main_page.js" defer></script>
         <script src="/scripts/org-scripts/org-navbar.js" defer></script>
+        <script src="/scripts/org-scripts/hamburger-menu.js" defer></script>
         <script src="/scripts/org-scripts/org-submissions.js" defer></script>
     </head>
     <body>
-        <aside class="sidebar">
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger-menu" id="hamburger-toggle" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <aside class="sidebar" id="sidebar">
             <div class="logo-section">
                 <div class="logo-icon"><img
                         src="../resources/images/Saint-Louis-University-PH-Logo.png"
@@ -41,6 +49,9 @@
                 Logout
             </button>
         </aside>
+
+        <!-- Overlay for closing menu -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
         <main class="main-content">
             <header class="header">
