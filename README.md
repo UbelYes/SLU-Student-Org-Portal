@@ -9,7 +9,7 @@ A web portal for Saint Louis University's Office of Student Affairs (OSA) to man
 
 ### 2. Installation
 1. Install WAMP Server and start it (wait for **green** icon in system tray)
-2. Place this project in `c:\wamp64\www\`
+2. Place the files of this project in `c:\wamp64\www\`
 3. Import database:
    - Open `http://localhost/phpmyadmin`
    - Click **Import** → Choose file: `sql/312team-unbelibables-mid.sql`
