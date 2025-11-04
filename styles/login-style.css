@@ -173,11 +173,6 @@ body {
     width: 100% !important;
   }
 
-  .google-button {
-    width: 100%;
-    max-width: 100%;
-  }
-
   .or-container {
     width: auto;
   }
@@ -263,11 +258,6 @@ body {
   .or-container {
     margin: 8px auto;
     padding: 5px 15px;
-  }
-
-  .google-button {
-    height: 48px;
-    width: 100%;
   }
 
   #error-message {
@@ -392,33 +382,4 @@ body {
   width: 4rem;
   font-family: Poppins;
   text-align: center;
-}
-
-.google-button {
-  width: 280px;
-  height: 56px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  background: #fff;
-  display: block;
-  margin: 0 auto;
-}
-
-.google-text {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  color: #1f2937;
-  font-family: Poppins;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px;
-  /* 150% */
-}
-
-.google-icon img {
-  width: 20px;
-  height: 20px;
 }
