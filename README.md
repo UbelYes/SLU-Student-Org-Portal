@@ -1,101 +1,85 @@
 # SLU Student Organization Portal
 
-A web portal for Saint Louis University's Office of Student Affairs (OSA) to manage student organization form submissions, approvals, and administrative tasks.
-
-## � Quick Start
-
-### 1. Prerequisites
-- [WAMP Server](https://www.wampserver.com/en/) (Windows, Apache, MySQL, PHP 7.4+)
-
-### 2. Installation
-1. Install WAMP Server and start it (wait for **green** icon in system tray)
-2. Place the files of this project in `c:\wamp64\www\`
-3. Import database:
-   - Open `http://localhost/phpmyadmin`
-   - Click **Import** → Choose file: `sql/312team-unbelibables-mid.sql`
-   - Click **Go**
-
-### 3. Launch
-Open your browser and go to: **`http://localhost/`**
+A web portal for Saint Louis University's Office of Student Affairs (OSA) to manage student organization submissions and approvals.
 
 ---
 
-## 🔑 Login Credentials
+## 🚀 Getting Started
 
-| Role | Email | Password | Dashboard |
-|------|-------|----------|-----------|
-| **Admin** | `admin@slu.edu.ph` | `admin123` | Monitor users & activity |
-| **OSA Staff** | `osa@slu.edu.ph` | `osa123` | Review & approve submissions |
-| **Organization** | `icon@slu.edu.ph` | `icon123` | Submit forms & view history |
+### Install & Run (3 Steps)
 
----
-- Place this project folder in `c:\wamp64\www\`
-- The path should look like: `c:\wamp64\www\[project-folder]\`
-### 3. extract the folder contents
-- cut all the files inside `c:\wamp64\www\[project-folder]\`
-- paste those files in `c:\wamp64\www\`
-- index.html path should be `c:\wamp64\www\index.html`
-### 4. Set Up the Database
+1. **Install WAMP** - Download from [wampserver.com](https://www.wampserver.com/en/) and wait for green icon
+2. **Import Database** - Open `http://localhost/phpmyadmin` → Import → Choose `sql/slu_org_db.sql` → Go
+3. **Open Portal** - Visit `http://localhost/` in your browser
 
-## ✨ Key Features
-
-### 📋 For Organizations
-- Submit end-term requirement forms with multiple events
-- Track submission status (Pending/Approved/Returned)
-- View OSA feedback and revision requests
-- Search and filter submission history
-
-### ✅ For OSA Staff
-- Review all organization submissions
-- Approve or return submissions with feedback
-- Search, filter, and sort submissions
-- Manage documents
-
-### 📊 For Admins
-- Real-time monitoring of online users
-- View all organizations and OSA staff
-- Track system activity
-- Access system statistics
+> ⚠️ **Important**: Place all project files directly in `c:\wamp64\www\` (not in a subfolder)
 
 ---
-1. Make sure WAMP is running (green icon in system tray)
-2. Open your browser
-3. Navigate to: `http://localhost/index.html`
 
-## 🔧 Troubleshooting
+## 🔑 Test Accounts
 
-**WAMP not green?**
-- Stop apps using port 80 (Skype, IIS)
+| User Type | Email | Password | What You Can Do |
+|-----------|-------|----------|-----------------|
+| **Organization** | `icon@slu.edu.ph` | `icon123` | Submit forms, upload files, track status |
+| **OSA Staff** | `osa@slu.edu.ph` | `osa123` | Review submissions, download files |
+| **Admin** | `admin@slu.edu.ph` | `admin123` | Monitor users and activity |
+
+---
+
+## 📋 What Can You Do?
+
+### As an Organization
+1. **Submit Forms** - Fill out end-term requirements with multiple events
+2. **Upload Files** - Attach PDFs or images (max 10MB each)
+3. **Track Status** - See if your submission is Pending, Approved, or Returned
+4. **Read Feedback** - View comments from OSA staff
+
+### As OSA Staff
+1. **Review Submissions** - View all organization submissions
+2. **Manage Documents** - Browse and download all uploaded files
+3. **Approve/Return** - Accept submissions or send back with feedback
+4. **Search & Filter** - Find specific submissions quickly
+
+### As Admin
+1. **Monitor Activity** - See who's online right now
+2. **View Statistics** - Check total users and submissions
+3. **Track History** - Review login activity
+
+---
+
+## ❓ Common Issues
+
+**WAMP icon not green?**
+- Close Skype or other apps using port 80
 - Install Visual C++ Redistributable
 
 **Can't login?**
-- Verify database is imported
-- Clear browser cache/cookies
 - Check WAMP is running (green icon)
+- Make sure database is imported
+- Try clearing browser cookies
+
+**File upload failed?**
+- Only PDF and image files allowed
+- File must be under 10MB
+- Check that `uploads/` folder exists
 
 **Page not found?**
-- Ensure project is in `c:\wamp64\www\`
-- URL should be `http://localhost/`
-
-**Database connection error?**
-- Check WAMP is running
-- Verify MySQL service is started
-- Check `api/db.php` credentials (default: root, no password)
+- Files must be in `c:\wamp64\www\` (not in a subfolder)
+- URL should be `http://localhost/` not `http://localhost/[folder]/`
 
 ---
 
-## 📁 Project Structure
+## � Need More Details?
 
-```
-c:\wamp64\www\
-├── index.html              # Login page
-├── admin/                  # Admin dashboard
-├── org/                    # Organization forms & submissions
-├── osa-staff/              # OSA forms & documents
-├── api/                    # Backend PHP scripts
-├── scripts/                # JavaScript files
-├── styles/                 # CSS stylesheets
-├── sql/                    # Database file
+See **SYSTEM_DOCUMENTATION.md** for:
+- Complete database structure
+- API endpoints
+- Security features
+- Technical architecture
+
+---
+
+**Team Unbelievables** | 312 Database Management | Saint Louis University
 └── resources/              # Images, icons, fonts
 ```
 
@@ -111,7 +95,7 @@ c:\wamp64\www\
 
 ---
 
-**Team:** 312 Team Unbelievables  
+**Team:** 312 Team Unbeliebables  
 **Last Updated:** November 4, 2025  
 **Repository:** [SLU-Student-Org-Portal](https://github.com/UbelYes/SLU-Student-Org-Portal)  
 **Branch:** aj-development-branch

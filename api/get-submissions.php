@@ -28,7 +28,7 @@ try {
                     s.org_email, s.social_media_links, s.applicant_name, 
                     s.applicant_position, s.applicant_email, s.adviser_names, 
                     s.adviser_emails, s.category, s.org_type, s.cbl_status, 
-                    s.status, s.feedback, s.submitted_date, s.updated_date,
+                    s.status, s.feedback, s.attachment_path, s.submitted_date, s.updated_date,
                     c.org_name, c.username
                 FROM org_form_submissions s
                 INNER JOIN client c ON s.clientid = c.clientid
@@ -44,7 +44,7 @@ try {
                     s.org_email, s.social_media_links, s.applicant_name, 
                     s.applicant_position, s.applicant_email, s.adviser_names, 
                     s.adviser_emails, s.category, s.org_type, s.cbl_status, 
-                    s.status, s.feedback, s.submitted_date, s.updated_date,
+                    s.status, s.feedback, s.attachment_path, s.submitted_date, s.updated_date,
                     c.org_name, c.username
                 FROM org_form_submissions s
                 INNER JOIN client c ON s.clientid = c.clientid

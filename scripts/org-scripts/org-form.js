@@ -19,7 +19,7 @@ function submitForm(event) {
     return;
   }
 
-  // Collect form data as JSON
+  // Collect form data
   const formData = {
     submission_title: document.getElementById("submission_title").value,
     org_full_name: document.getElementById("org_full_name").value,
@@ -52,15 +52,45 @@ function submitForm(event) {
   submitBtn.disabled = true;
   submitBtn.textContent = "Submitting...";
 
+  // Create FormData for file upload support
+  const multipartFormData = new FormData();
+  
+  // Add file if selected
+  const fileInput = document.getElementById("attachment");
+  if (fileInput && fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    console.log("File selected:", {
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      lastModified: file.lastModified
+    });
+    multipartFormData.append("attachment", file);
+  } else {
+    console.log("No file selected");
+  }
+  
+  // Add all form fields
+  for (const [key, value] of Object.entries(formData)) {
+    if (key === 'events') {
+      multipartFormData.append(key, JSON.stringify(value));
+    } else {
+      multipartFormData.append(key, value);
+    }
+  }
+
+  console.log("Submitting form with data");
+
   fetch("/api/submit-form.php", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
+    body: multipartFormData,
   })
-    .then((response) => response.json())
+    .then((response) => {
+      console.log("Response status:", response.status);
+      return response.json();
+    })
     .then((data) => {
+      console.log("Response data:", data);
       if (data.success) {
         alert("Form submitted successfully!");
         form.reset();
@@ -257,4 +287,5 @@ function removeFile(eventIndex) {
   // Reserved for future implementation
   console.log('File upload feature coming soon');
 }
+
 
