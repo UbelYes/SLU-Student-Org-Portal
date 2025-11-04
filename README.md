@@ -29,6 +29,13 @@ Open your browser and go to: **`http://localhost/`**
 | **Organization** | `icon@slu.edu.ph` | `icon123` | Submit forms & view history |
 
 ---
+- Place this project folder in `c:\wamp64\www\`
+- The path should look like: `c:\wamp64\www\[project-folder]\`
+### 3. extract the folder contents
+- cut all the files inside `c:\wamp64\www\[project-folder]\`
+- paste those files in `c:\wamp64\www\`
+- index.html path should be `c:\wamp64\www\index.html`
+### 4. Set Up the Database
 
 ## ✨ Key Features
 
@@ -51,6 +58,9 @@ Open your browser and go to: **`http://localhost/`**
 - Access system statistics
 
 ---
+1. Make sure WAMP is running (green icon in system tray)
+2. Open your browser
+3. Navigate to: `http://localhost/index.html`
 
 ## 🔧 Troubleshooting
 
