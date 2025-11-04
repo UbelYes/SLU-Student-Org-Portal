@@ -18,8 +18,11 @@ A web portal for Saint Louis University's Office of Student Affairs (OSA) to man
 
 - Place this project folder in `c:\wamp64\www\`
 - The path should look like: `c:\wamp64\www\[project-folder]\`
-
-### 3. Set Up the Database
+### 3. extract the folder contents
+- cut all the files inside `c:\wamp64\www\[project-folder]\`
+- paste those files in `c:\wamp64\www\`
+- index.html path should be `c:\wamp64\www\index.html`
+### 4. Set Up the Database
 
 1. Open your browser and go to: `http://localhost/phpmyadmin`
 2. Click on "Import" tab
@@ -41,7 +44,7 @@ A web portal for Saint Louis University's Office of Student Affairs (OSA) to man
 
 1. Make sure WAMP is running (green icon in system tray)
 2. Open your browser
-3. Navigate to: `http://localhost/[project-folder]/index.html`
+3. Navigate to: `http://localhost/index.html`
 
 ## User Access
 
