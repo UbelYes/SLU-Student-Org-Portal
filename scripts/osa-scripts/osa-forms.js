@@ -145,6 +145,16 @@ function openViewModal(submissionId) {
     // Update additional information
     document.getElementById('modalCblStatus').textContent = submission.cbl_status;
     
+    // Update attachment display
+    const attachmentField = document.getElementById('attachmentField');
+    const attachmentLink = document.getElementById('attachmentLink');
+    if (submission.attachment_path) {
+        attachmentField.style.display = 'block';
+        attachmentLink.href = '/' + submission.attachment_path;
+    } else {
+        attachmentField.style.display = 'none';
+    }
+    
     // Load feedback into textarea
     document.getElementById('modalFeedback').value = submission.feedback || '';
     

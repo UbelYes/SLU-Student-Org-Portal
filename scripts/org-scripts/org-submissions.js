@@ -387,6 +387,16 @@ function updateModalContent(submission) {
                   submission.cbl_status
                 )}</div>
             </div>
+            ${submission.attachment_path ? `
+            <div class="view-field">
+                <label>Attachment:</label>
+                <div class="field-value">
+                    <a href="/${escapeHtml(submission.attachment_path)}" target="_blank" style="color: #036; text-decoration: underline;">
+                        📎 View Attachment
+                    </a>
+                </div>
+            </div>
+            ` : ''}
         </div>
     `;
 }

@@ -347,9 +347,16 @@ body {
     white-space: nowrap;
 }
 
+.button-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .btn-view {
-    background: #036;
-    color: #FFF;
+    background: #FFF;
+    color: #036;
     border: 1px solid #036;
     display: flex;
     align-items: center;
@@ -358,8 +365,8 @@ body {
 }
 
 .btn-view:hover {
-    background: #024d7f;
-    box-shadow: 0 2px 8px rgba(0, 51, 102, 0.3);
+    background: #F3F4F6;
+    box-shadow: 0 2px 8px rgba(0, 51, 102, 0.2);
 }
 
 .btn-approve {
@@ -383,8 +390,9 @@ body {
 }
 
 .btn-download {
-    background: #10B981;
+    background: #036;
     color: #FFF;
+    border: 1px solid #036;
     display: flex;
     align-items: center;
     gap: 5px;
@@ -392,8 +400,33 @@ body {
 }
 
 .btn-download:hover {
-    background: #059669;
-    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    background: #024d7f;
+    box-shadow: 0 2px 8px rgba(0, 51, 102, 0.3);
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: inline-block;
+}
+
+.status-badge.pending {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.status-badge.approved {
+    background: #D1FAE5;
+    color: #065F46;
+}
+
+.status-badge.returned {
+    background: #FEE2E2;
+    color: #991B1B;
 }
 
 /* Responsive Design */
@@ -769,6 +802,14 @@ body {
 .file-icon {
     font-size: 24px;
     flex-shrink: 0;
+}
+
+.file-type-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    flex-shrink: 0;
+    vertical-align: middle;
 }
 
 .file-name {

@@ -3,12 +3,12 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 03, 2025 at 12:00 PM
+-- Generation Time: Nov 04, 2025 at 12:00 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 --
 -- Database: `slu_org_db` - Redesigned Schema
--- Removed unused tables and added event details functionality
+-- Includes: Event details, feedback system, and file upload functionality
 --
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -133,6 +133,7 @@ CREATE TABLE IF NOT EXISTS `org_form_submissions` (
   `cbl_status` enum('with-revisions','without-revisions') NOT NULL,
   `status` enum('Pending','Approved','Returned') NOT NULL DEFAULT 'Pending',
   `feedback` text DEFAULT NULL,
+  `attachment_path` varchar(500) DEFAULT NULL,
   `submitted_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
