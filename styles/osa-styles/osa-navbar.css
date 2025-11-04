@@ -61,8 +61,9 @@
     background: linear-gradient(180deg, #036 0%, #001F3F 100%);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    padding: 20px 0;
     z-index: 1200; /* reinforce stacking for child container */
 }
 
@@ -108,12 +109,12 @@
 .menu-container {
     display: flex;
     width: 280px;
-    height: 60vh;
+    flex: 1;
     padding: 16px 0 0 16px;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-    flex-shrink: 0;
+    overflow-y: auto;
 }
 
 .menu-container text{
@@ -178,26 +179,12 @@
     border: none;
     cursor: pointer;
     color: white;
+    margin-bottom: 20px;
 }
 
 main {
     margin-left: 280px;
     padding: 20px;
-}
-
-/* Responsive adjustments */
-/* Tablet: reduce sidebar slightly */
-@media (max-width: 1260px) and (max-height: 800px) {
-    .menu-container {
-        height: 55vh;
-    }
-}
-
-@media (max-height: 900px) {
-    .menu-container {
-        height: 50vh;
-    }
-
 }
 
 /* Mobile: icon-only collapsed sidebar */
@@ -221,9 +208,10 @@ main {
     .navigation-container {
         width: 280px;
         align-items: center;
-        padding: 20px 0;
+        padding: 20px 0 0 0;
         overflow-y: auto;
         box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+        justify-content: flex-start;
     }
 
     .banner {
@@ -246,6 +234,8 @@ main {
         padding: 16px 0 0 16px;
         align-items: flex-start;
         gap: 8px;
+        flex: 0 1 auto;
+        overflow-y: visible;
     }
 
     /* Full menu buttons with text */
@@ -274,6 +264,8 @@ main {
         height: 48px;
         justify-content: center;
         border-radius: 10px;
+        margin-top: auto;
+        margin-bottom: 20px;
     }
 
     /* Normal icon size */

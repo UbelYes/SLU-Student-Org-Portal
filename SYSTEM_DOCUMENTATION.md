@@ -692,22 +692,6 @@ $DB_NAME = 'slu_org_db';
 - Redirects to login page
 - Handles relative path based on current location
 
-#### `auth.js`
-**Purpose**: Google OAuth authentication (placeholder).
-
-**Status**: Not fully implemented, prepared for future OAuth integration
-
-**Configuration:**
-- CLIENT_ID: Google OAuth client ID
-- REDIRECT_URI: Callback URL
-- HOSTED_DOMAIN: SLU domain restriction
-
-**Functions:**
-- `getGoogleOAuthURL()`: Generates OAuth URL
-- `handleGoogleLogin()`: Initiates OAuth flow
-- `processAuthCode()`: Exchanges code for token
-- `AuthStorage`: Token management utility
-
 #### `main_page.js`
 **Purpose**: Navigation button state management.
 

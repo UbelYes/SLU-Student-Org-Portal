@@ -11,6 +11,73 @@ body {
   display: flex;
   height: 100vh;
   overflow: hidden;
+  position: relative;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1001;
+  background: #004080;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 4px;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.hamburger-menu span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-menu:hover {
+  background: #003366;
+}
+
+.hamburger-menu.active span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.active span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+  display: block;
+  opacity: 1;
 }
 
 .sidebar {
@@ -455,4 +522,232 @@ textarea.form-input {
   color: #6c757d;
   font-style: italic;
   margin: 0;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  body {
+    flex-direction: column;
+    height: auto;
+    overflow-y: auto;
+  }
+
+  /* Show hamburger menu */
+  .hamburger-menu {
+    display: flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 250px;
+    height: 100vh;
+    z-index: 1000;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .logo-section {
+    margin-bottom: 20px;
+  }
+
+  .logo-section h3 {
+    font-size: 12px;
+  }
+
+  .logo-icon,
+  .logo-icon img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+  }
+
+  .user-profile {
+    margin-bottom: 20px;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .user-info h4 {
+    font-size: 12px;
+  }
+
+  .user-info p {
+    font-size: 11px;
+  }
+
+  .nav-menu {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .nav-item {
+    padding: 10px 15px;
+    font-size: 12px;
+    flex: 1;
+    text-align: center;
+  }
+
+  .logout-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .main-content {
+    padding: 20px 15px;
+    overflow-y: auto;
+  }
+
+  .form-container {
+    padding: 20px 15px;
+    margin: 0;
+  }
+
+  .form-header__title {
+    font-size: 20px;
+  }
+
+  .form-header__subtitle {
+    font-size: 13px;
+  }
+
+  .form-section__title {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+
+  .form-label {
+    font-size: 13px;
+  }
+
+  .form-input,
+  .form-input[type="text"],
+  .form-input[type="email"],
+  .form-input[type="url"],
+  .form-input[type="date"],
+  .form-input[type="number"],
+  textarea.form-input {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .form-hint {
+    font-size: 11px;
+  }
+
+  .form-checkbox-group,
+  .form-radio-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-checkbox,
+  .form-radio {
+    width: 100%;
+  }
+
+  .event-entry {
+    padding: 15px;
+  }
+
+  .event-title {
+    font-size: 14px;
+  }
+
+  .btn,
+  .btn--primary,
+  .btn--secondary {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-alert {
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  .form-alert__title {
+    font-size: 13px;
+  }
+
+  .form-alert__text {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .sidebar {
+    padding: 10px;
+  }
+
+  .logo-section h3 {
+    font-size: 11px;
+  }
+
+  .main-content {
+    padding: 15px 10px;
+  }
+
+  .form-container {
+    padding: 15px 10px;
+  }
+
+  .form-header__title {
+    font-size: 18px;
+  }
+
+  .form-header__subtitle {
+    font-size: 12px;
+  }
+
+  .form-section__title {
+    font-size: 14px;
+  }
+
+  .form-label {
+    font-size: 12px;
+  }
+
+  .form-input,
+  textarea.form-input {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .nav-item {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .btn {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .event-entry {
+    padding: 12px;
+  }
 }
