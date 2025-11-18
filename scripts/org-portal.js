@@ -41,6 +41,9 @@ function submitForm(event) {
         organization_school: Array.from(document.querySelectorAll('input[name="category"]:checked')).map(checkbox => checkbox.value|| ''),
         organization_type: document.querySelector('input[name="org_type"]:checked')?.value || '',
 
+    /*
+    
+     */
         events: Array.from(document.querySelectorAll('.event-section')).map(event => ({
         name: event.querySelector('[name="event_name[]"]').value || '',
         date: event.querySelector('[name="event_date[]"]').value || '',

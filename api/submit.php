@@ -8,33 +8,40 @@ if ($method === 'POST') {
     // Create new submission
     $input = json_decode(file_get_contents('php://input'), true);
     
-    $org_name = $conn->real_escape_string($input['org_name'] ?? '');
-    $submission_title = $conn->real_escape_string($input['submission_title'] ?? '');
-    $applicant_name = $conn->real_escape_string($input['applicant_name'] ?? '');
+    /*
+    Collect data from the org js when submitted. 
+     */
+    $submission_title = trim($input['submission_title'] ?? '');
+    $org_name = trim($input['org_name'] ?? '');
+    $org_acronym = trim($input['org_acronym'] ?? '');
+    $org_email = trim($input['org_email'] ?? '');
+    $social_media = trim($input['social_media'] ?? '');
+    $applicant_name = trim($input['applicant_name'] ?? '');
+    $applicant_position = trim($input['applicant_position'] ?? '');
+    $applicant_email = trim($input['applicant_email'] ?? '');
+    $adviser_names = trim($input['adviser_names'] ?? '');
+    $adviser_emails = trim($input['adviser_emails'] ?? '');
+    $organization_school = isset($input['organization_school']) && is_array($input['organization_school']) ? 
+        implode(',', $input['organization_school']) : '';
+    $organization_type = trim($input['organization_type'] ?? '');
     
-    if (empty($org_name) || empty($submission_title) || empty($applicant_name)) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'All fields are required'
-        ]);
-        exit;
-    }
+    $events = isset($input['events']) && is_array($input['events']) ? $input['events'] : [];
+    $events_json = json_encode($events);
     
-    $sql = "INSERT INTO submissions (org_name, submission_title, applicant_name) 
-            VALUES ('$org_name', '$submission_title', '$applicant_name')";
+    $stmt = $conn->prepare("INSERT INTO submissions (submission_title, org_name, org_acronym, org_email, 
+        social_media, applicant_name, applicant_position, applicant_email, adviser_names, adviser_emails, 
+        organization_school, organization_type, events_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     
-    if ($conn->query($sql)) {
-        echo json_encode([
-            'success' => true,
-            'message' => 'Submission created successfully',
-            'id' => $conn->insert_id
-        ]);
+    $stmt->bind_param('sssssssssssss', $submission_title, $org_name, $org_acronym, $org_email, 
+        $social_media, $applicant_name, $applicant_position, $applicant_email, $adviser_names, 
+        $adviser_emails, $organization_school, $organization_type, $events_json);
+    
+    if ($stmt->execute()) {
+        echo json_encode(['success' => true, 'message' => 'Submission created successfully', 'id' => $conn->insert_id]);
     } else {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Failed to create submission'
-        ]);
+        echo json_encode(['success' => false, 'message' => 'Failed to create submission']);
     }
+    $stmt->close();
     
 } elseif ($method === 'DELETE') {
     // Delete submission
@@ -49,19 +56,15 @@ if ($method === 'POST') {
         exit;
     }
     
-    $sql = "DELETE FROM submissions WHERE id = $id";
+    $stmt = $conn->prepare("DELETE FROM submissions WHERE id = ?");
+    $stmt->bind_param('i', $id);
     
-    if ($conn->query($sql)) {
-        echo json_encode([
-            'success' => true,
-            'message' => 'Submission deleted successfully'
-        ]);
+    if ($stmt->execute()) {
+        echo json_encode(['success' => true, 'message' => 'Submission deleted successfully']);
     } else {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Failed to delete submission'
-        ]);
+        echo json_encode(['success' => false, 'message' => 'Failed to delete submission']);
     }
+    $stmt->close();
     
 } else {
     echo json_encode([
