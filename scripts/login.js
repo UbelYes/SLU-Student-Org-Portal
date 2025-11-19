@@ -1,67 +1,27 @@
-/**
- * SLU Student Organization Portal - Login System
- *
- * Handles user authentication by connecting to backend PHP + MySQL.
- * Manages login form submission, stores user session data in localStorage,
- * and handles logout functionality with appropriate redirects based on user role.
- */
+// Simple login - for demonstration only
+function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-async function handleLogin(event) {
-  event.preventDefault();
-
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const errorMessage = document.getElementById("error-message");
-
-  if (errorMessage) {
-    errorMessage.textContent = "";
-  }
-  try {
-    const response = await fetch("api/login.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok || !data.success) {
-      throw new Error(data.message || "Invalid email or password");
+    if (!email || !password) {
+        alert('Please enter both email and password');
+        return false;
     }
 
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("userEmail", email);
-    localStorage.setItem("userRole", data.role);
-    localStorage.setItem("userName", data.name || "User");
-    if (data.org) {
-      localStorage.setItem("userOrg", data.org);
+    // Simple routing based on email domain
+    if (email.includes('admin')) {
+        window.location.href = '/pages/admin-portal.html';
+    } else if (email.includes('osa')) {
+        window.location.href = '/pages/osa-portal.html';
     } else {
-      localStorage.removeItem("userOrg");
+        window.location.href = '/pages/org-portal.html';
     }
-
-    window.location.href = data.redirectPath || "./index.html";
-  } catch (err) {
-    if (errorMessage) {
-      errorMessage.textContent = err.message || "Login failed.";
-    }
-  }
+    return false;
 }
 
 function handleLogout() {
-  localStorage.removeItem("isLoggedIn");
-  localStorage.removeItem("userEmail");
-  localStorage.removeItem("userRole");
-  localStorage.removeItem("userName");
-  localStorage.removeItem("userOrg");
-
-  const currentPage = window.location.pathname;
-  if (
-    currentPage.includes("/admin/") ||
-    currentPage.includes("/osa-staff/") ||
-    currentPage.includes("/org/")
-  ) {
-    window.location.href = "../index.html";
-  } else {
-    window.location.href = "index.html";
-  }
+    if (confirm('Are you sure you want to logout?')) {
+        window.location.href = '/index.html';
+    }
 }
