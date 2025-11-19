@@ -131,7 +131,6 @@
                                                 <th>Submitted By</th>
                                                 <th>Date Submitted</th>
                                                 <th>School</th>
-                                                <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -150,11 +149,6 @@
                                 </div>
                                 <div class="pagination-controls">
                                     <button class="btn-page"
-                                        id="forms-first-page"
-                                        onclick="formsGoToPage(1)" disabled>
-                                        <span>⏮</span> First
-                                    </button>
-                                    <button class="btn-page"
                                         id="forms-prev-page"
                                         onclick="formsPreviousPage()" disabled>
                                         <span>◀</span> Previous
@@ -169,175 +163,8 @@
                                         onclick="formsNextPage()">
                                         Next <span>▶</span>
                                     </button>
-                                    <button class="btn-page"
-                                        id="forms-last-page"
-                                        onclick="formsGoToLastPage()">
-                                        Last <span>⏭</span>
-                                    </button>
-                                </div>
-                                <div class="items-per-page">
-                                    <label for="forms-items-per-page">Items per
-                                        page:</label>
-                                    <select id="forms-items-per-page"
-                                        onchange="formsChangeItemsPerPage()">
-                                        <option value="5">5</option>
-                                        <option value="10" selected>10</option>
-                                        <option value="20">20</option>
-                                        <option value="50">50</option>
-                                    </select>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- View Submission Modal -->
-                <div id="viewModal" class="modal">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 id="modalFormTitle">Form Submission Details</h2>
-                            <button class="modal-close"
-                                onclick="closeViewModal()">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="submission-metadata">
-                                <div class="meta-item">
-                                    <strong>Organization:</strong> <span
-                                        id="modalOrgName">-</span>
-                                </div>
-                                <div class="meta-item">
-                                    <strong>Submitted By:</strong> <span
-                                        id="modalSubmittedBy">-</span>
-                                </div>
-                                <div class="meta-item">
-                                    <strong>Date Submitted:</strong> <span
-                                        id="modalSubmittedDate">-</span>
-                                </div>
-                                <div class="meta-item">
-                                    <strong>School:</strong> <span
-                                        id="modalSchool">-</span>
-                                </div>
-                                <div class="meta-item">
-                                    <strong>Status:</strong> <span id="modalStatus"
-                                        class="status-badge">-</span>
-                                </div>
-                            </div>
-
-                            <!-- Form Content (Read-only) -->
-                            <div class="form-view-container">
-                                <h3>Submission Information</h3>
-
-                                <div class="view-section">
-                                    <h4>Organization Information</h4>
-                                    <div class="view-field">
-                                        <label>Complete Name of Organization:</label>
-                                        <div class="field-value"
-                                            id="modalOrgFullName">-</div>
-                                    </div>
-                                    <div class="view-field">
-                                        <label>Acronym:</label>
-                                        <div class="field-value"
-                                            id="modalOrgAcronym">-</div>
-                                    </div>
-                                    <div class="view-field">
-                                        <label>Official SLU Institutional Email:</label>
-                                        <div class="field-value"
-                                            id="modalOrgEmail">-</div>
-                                    </div>
-                                    <div class="view-field">
-                                        <label>Social Media Pages:</label>
-                                        <div class="field-value"
-                                            id="modalSocialMedia">-</div>
-                                    </div>
-                                </div>
-
-                                <div class="view-section">
-                                    <h4>Applicant Information</h4>
-                                    <div class="view-field">
-                                        <label>Name of Applicant:</label>
-                                        <div class="field-value"
-                                            id="modalApplicantName">-</div>
-                                    </div>
-                                    <div class="view-field">
-                                        <label>Position:</label>
-                                        <div class="field-value"
-                                            id="modalApplicantPosition">-</div>
-                                    </div>
-                                    <div class="view-field">
-                                        <label>Applicant's Email:</label>
-                                        <div class="field-value"
-                                            id="modalApplicantEmail">-</div>
-                                    </div>
-                                </div>
-
-                                <div class="view-section">
-                                    <h4>Adviser Information</h4>
-                                    <div class="view-field">
-                                        <label>Name of Adviser/s:</label>
-                                        <div class="field-value"
-                                            id="modalAdviserNames">-</div>
-                                    </div>
-                                    <div class="view-field">
-                                        <label>Adviser Email/s:</label>
-                                        <div class="field-value"
-                                            id="modalAdviserEmails">-</div>
-                                    </div>
-                                </div>
-
-                                <div class="view-section">
-                                    <h4>Category & Type</h4>
-                                    <div class="view-field">
-                                        <label>Category:</label>
-                                        <div class="field-value"
-                                            id="modalCategory">-</div>
-                                    </div>
-                                    <div class="view-field">
-                                        <label>Type of Organization:</label>
-                                        <div class="field-value"
-                                            id="modalOrgType">-</div>
-                                    </div>
-                                </div>
-
-                                <div class="view-section">
-                                    <h4>Planned Events</h4>
-                                    <div id="modalEvents">
-                                        <p class="no-events">No events planned yet.</p>
-                                    </div>
-                                </div>
-
-                                <div class="view-section">
-                                    <h4>Additional Information</h4>
-                                    <div class="view-field">
-                                        <label>CBL Status:</label>
-                                        <div class="field-value"
-                                            id="modalCblStatus">-</div>
-                                    </div>
-                                    <div class="view-field" id="attachmentField" style="display: none;">
-                                        <label>Attachment:</label>
-                                        <div class="field-value">
-                                            <a id="attachmentLink" href="#" target="_blank" style="color: #036; text-decoration: underline;">
-                                                📎 View Attachment
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="view-section">
-                                    <h4>OSA Feedback</h4>
-                                    <div class="view-field">
-                                        <label>Feedback/Notes:</label>
-                                        <textarea id="modalFeedback" class="feedback-textarea" rows="4" placeholder="Enter feedback for the organization..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn-secondary"
-                                onclick="closeViewModal()">Close</button>
-                            <button class="btn-approve" onclick="approveSubmission()">Approve</button>
-                            <button class="btn-return" onclick="returnSubmission()">Return for Revision</button>
-                            <button class="btn-print"
-                                onclick="window.print()">Print</button>
                         </div>
                     </div>
                 </div>

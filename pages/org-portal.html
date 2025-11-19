@@ -22,7 +22,7 @@
             <div class="logo-icon">
                 <img src="/resources/images/Saint-Louis-University-PH-Logo.png" alt="SLU-logo">
             </div>
-            <h3>Student<br>Organisation Portal</h3>
+            <h3>Student<br>Organization Portal</h3>
         </div>
 
         <div class="user-profile">
@@ -254,23 +254,32 @@
     <main class="main-content tab-content" id="submissions-content">
         <header class="header">
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search submissions...">
+                <input type="text" id="searchInput" placeholder="Search submissions..." oninput="
+                    let q = this.value.toLowerCase();
+                    let filtered = allRecords.filter(r => 
+                        (r.org_name||'').toLowerCase().includes(q) || 
+                        (r.submission_title||'').toLowerCase().includes(q) || 
+                        (r.applicant_name||'').toLowerCase().includes(q) ||
+                        (r.created_at||'').includes(q)
+                    );
+                    displayRecords(filtered);
+                ">
             </div>
+
             <div class="filter-controls">
-                <select id="sortFilter" class="status-filter">
+                <select id="sortFilter" class="status-filter" onchange="
+                    let s = [...allRecords];
+                    if(this.value=='date-desc') s.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+                    if(this.value=='date-asc') s.sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+                    if(this.value=='title-asc') s.sort((a,b)=>(a.submission_title||'').localeCompare(b.submission_title||''));
+                    if(this.value=='title-desc') s.sort((a,b)=>(b.submission_title||'').localeCompare(a.submission_title||''));
+                    displayRecords(s);
+                ">
                     <option value="">Sort By</option>
                     <option value="date-desc">Date (Newest First)</option>
                     <option value="date-asc">Date (Oldest First)</option>
                     <option value="title-asc">Title (A-Z)</option>
                     <option value="title-desc">Title (Z-A)</option>
-                    <option value="status-asc">Status (A-Z)</option>
-                    <option value="status-desc">Status (Z-A)</option>
-                </select>
-                <select id="statusFilter" class="status-filter">
-                    <option value>All Status</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Returned">Returned</option>
                 </select>
             </div>
         </header>
@@ -285,11 +294,10 @@
                 <table class="submissions-table">
                     <thead>
                         <tr>
+                            <th>Organization</th>
                             <th>Form Title</th>
-                            <th>Submitted Date</th>
-                            <th>Status</th>
-                            <th>Version</th>
-                            <th>Feedback</th>
+                            <th>Applicant</th>
+                            <th>Date Submitted</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -305,9 +313,7 @@
                             <span>«</span> Previous
                         </button>
                         <div class="pagination-numbers">
-                            <button class="page-number active">1</button>
-                            <button class="page-number">2</button>
-                            <button class="page-number">3</button>
+                            <button class="page-number active">1</button> 
                         </div>
                         <button class="pagination-btn">
                             Next <span>»</span>
@@ -317,7 +323,6 @@
 
                 <!-- Empty state -->
                 <div class="empty-state" style="display: none;">
-                    <div class="empty-icon">📋</div>
                     <h3>No Submissions Yet</h3>
                     <p>You haven't submitted any forms yet. Start by filling out a form.</p>
                     <a href="#" onclick="showTab('form'); return false;" class="btn-primary">Go to Form</a>
