@@ -113,11 +113,6 @@
                                             value="org">Organization</option>
                                     </select>
                                 </div>
-
-                                <button class="btn-refresh"
-                                    onclick="refreshForms()">
-                                    Refresh
-                                </button>
                             </div>
 
                             <!-- Forms Table -->
@@ -143,10 +138,6 @@
 
                             <!-- Pagination Controls -->
                             <div class="pagination-container">
-                                <div class="pagination-info">
-                                    <span id="forms-pagination-info">Showing 0
-                                        of 0 forms</span>
-                                </div>
                                 <div class="pagination-controls">
                                     <button class="btn-page"
                                         id="forms-prev-page"
@@ -199,10 +190,6 @@
                                 <option value="org">Organization</option>
                             </select>
                         </div>
-                        <button class="btn-refresh"
-                            onclick="refreshDocuments()">
-                            Refresh
-                        </button>
                     </div>
 
                     <!-- Documents Table -->
@@ -215,16 +202,14 @@
                                         <th>Submission Title</th>
                                         <th>Organization</th>
                                         <th>Upload Date</th>
-                                        <th>File Size</th>
-                                        <th>Status</th>
+                                        <th>File Name</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="documents-table-body">
                                     <tr>
                                         <td colspan="7"
-                                            class="text-center loading">Loading
-                                            documents...</td>
+                                            class="text-center loading">No Document</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -233,15 +218,7 @@
 
                     <!-- Pagination Controls -->
                     <div class="pagination-container">
-                        <div class="pagination-info">
-                            <span id="pagination-info-text">Showing 0 of 0
-                                documents</span>
-                        </div>
                         <div class="pagination-controls">
-                            <button class="btn-page" id="first-page"
-                                onclick="goToPage(1)" disabled>
-                                <span>⏮</span> First
-                            </button>
                             <button class="btn-page" id="prev-page"
                                 onclick="previousPage()" disabled>
                                 <span>◀</span> Previous
@@ -253,20 +230,6 @@
                                 onclick="nextPage()">
                                 Next <span>▶</span>
                             </button>
-                            <button class="btn-page" id="last-page"
-                                onclick="goToLastPage()">
-                                Last <span>⏭</span>
-                            </button>
-                        </div>
-                        <div class="items-per-page">
-                            <label for="items-per-page">Items per page:</label>
-                            <select id="items-per-page"
-                                onchange="changeItemsPerPage()">
-                                <option value="5">5</option>
-                                <option value="10" selected>10</option>
-                                <option value="20">20</option>
-                                <option value="50">50</option>
-                            </select>
                         </div>
                     </div>
                 </div>

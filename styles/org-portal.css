@@ -285,6 +285,10 @@ body {
   margin-bottom: 35px;
 }
 
+.event-actions{
+  margin-bottom: 35px;
+}
+
 .form-section__title {
   font-size: 16px;
   color: #007bff;

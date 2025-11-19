@@ -13,11 +13,11 @@ function loadSubmissions() {
             if (data.success && data.records) {
                 tbody.innerHTML = data.records.map(record => `
                     <tr>
-                        <td>${escapeHtml(record.submission_title || '')}</td>
-                        <td>${escapeHtml(record.org_name || '')}</td>
-                        <td>${escapeHtml(record.applicant_name || '')}</td>
-                        <td>${escapeHtml(record.created_at || '')}</td>
-                        <td>${escapeHtml(record.organization_school || '')}</td>
+                        <td>${record.submission_title || ''}</td>
+                        <td>${record.org_name || ''}</td>
+                        <td>${record.applicant_name || ''}</td>
+                        <td>${record.created_at || ''}</td>
+                        <td>${record.organization_school || ''}</td>
                         <td>
                             <button onclick="viewPDF(${record.id})" style="padding:5px 10px;margin-right:5px;background:#004080;color:white;border:none;border-radius:4px;cursor:pointer">View</button>
                         </td>
@@ -42,8 +42,12 @@ function loadDocuments() {
                     <tr>
                         <td>${escapeHtml(record.org_name || 'Document')}</td>
                         <td>${escapeHtml(record.submission_title || '')}</td>
-                        <td>${new Date(record.created_at).toLocaleDateString()}</td>
-                        <td><button onclick="alert('View document')">View</button></td>
+                        <td>${escapeHtml(record.organization_school || '')}</td>
+                        <td>${escapeHtml(record.created_at || '')}</td>
+                        <td>${escapeHtml(record.file_path || 'N/A')}</td>
+                        <td>
+                            ${record.file_path ? `<button onclick="window.open('/uploads/${record.file_path}', '_blank')" style="padding:5px 10px;background:#28a745;color:white;border:none;border-radius:4px;cursor:pointer">Open File</button>` : ''}
+                        </td>
                     </tr>
                 `).join('');
             }

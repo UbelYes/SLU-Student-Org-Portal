@@ -5,36 +5,51 @@ require_once 'db.php';
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'POST') {
-    // Create new submission
-    $input = json_decode(file_get_contents('php://input'), true);
+    // Handle file upload
+    $file_path = null;
+    if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+        $max_size = 10 * 1024 * 1024; 
+        
+        if ($_FILES['file']['size'] > $max_size) {
+            echo json_encode(['success' => false, 'message' => 'File size exceeds 10MB limit']);
+            exit;
+        }
+        
+        $upload_dir = '../uploads/';
+        if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
+        
+        $timestamp = date('Y-m-d_H-i-s');
+        $extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+        $file_name = $submission_title . '_' . $timestamp . '.' . $extension;
+        $target = $upload_dir . $file_name;
+        
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $target)) {
+            $file_path = $file_name;
+        }
+    }
     
-    /*
-    Collect data from the org js when submitted. 
-     */
-    $submission_title = trim($input['submission_title'] ?? '');
-    $org_name = trim($input['org_name'] ?? '');
-    $org_acronym = trim($input['org_acronym'] ?? '');
-    $org_email = trim($input['org_email'] ?? '');
-    $social_media = trim($input['social_media'] ?? '');
-    $applicant_name = trim($input['applicant_name'] ?? '');
-    $applicant_position = trim($input['applicant_position'] ?? '');
-    $applicant_email = trim($input['applicant_email'] ?? '');
-    $adviser_names = trim($input['adviser_names'] ?? '');
-    $adviser_emails = trim($input['adviser_emails'] ?? '');
-    $organization_school = isset($input['organization_school']) && is_array($input['organization_school']) ? 
-        implode(',', $input['organization_school']) : '';
-    $organization_type = trim($input['organization_type'] ?? '');
-    
-    $events = isset($input['events']) && is_array($input['events']) ? $input['events'] : [];
-    $events_json = json_encode($events);
+    // Get form data
+    $submission_title = trim($_POST['submission_title'] ?? '');
+    $org_name = trim($_POST['org_name'] ?? '');
+    $org_acronym = trim($_POST['org_acronym'] ?? '');
+    $org_email = trim($_POST['org_email'] ?? '');
+    $social_media = trim($_POST['social_media'] ?? '');
+    $applicant_name = trim($_POST['applicant_name'] ?? '');
+    $applicant_position = trim($_POST['applicant_position'] ?? '');
+    $applicant_email = trim($_POST['applicant_email'] ?? '');
+    $adviser_names = trim($_POST['adviser_names'] ?? '');
+    $adviser_emails = trim($_POST['adviser_emails'] ?? '');
+    $organization_school = trim($_POST['organization_school'] ?? '');
+    $organization_type = trim($_POST['organization_type'] ?? '');
+    $events_json = trim($_POST['events'] ?? '[]');
     
     $stmt = $conn->prepare("INSERT INTO submissions (submission_title, org_name, org_acronym, org_email, 
         social_media, applicant_name, applicant_position, applicant_email, adviser_names, adviser_emails, 
-        organization_school, organization_type, events_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        organization_school, organization_type, events_json, file_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     
-    $stmt->bind_param('sssssssssssss', $submission_title, $org_name, $org_acronym, $org_email, 
+    $stmt->bind_param('ssssssssssssss', $submission_title, $org_name, $org_acronym, $org_email, 
         $social_media, $applicant_name, $applicant_position, $applicant_email, $adviser_names, 
-        $adviser_emails, $organization_school, $organization_type, $events_json);
+        $adviser_emails, $organization_school, $organization_type, $events_json, $file_path);
     
     if ($stmt->execute()) {
         echo json_encode(['success' => true, 'message' => 'Submission created successfully', 'id' => $conn->insert_id]);

@@ -21,6 +21,7 @@ CREATE TABLE `submissions` (
   `organization_school` varchar(255) NOT NULL,
   `organization_type` varchar(50) NOT NULL,
   `events_json` text,
+  `file_path` varchar(255),
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

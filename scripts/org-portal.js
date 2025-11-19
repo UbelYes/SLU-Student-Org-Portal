@@ -22,48 +22,41 @@ document.addEventListener('DOMContentLoaded', () => {
 function submitForm(event) {
     event.preventDefault();
     
-    /*
-    Collect the data from the html and by get element since most of the inputs are 
-    given IDs idk about class. For checkboxes and other selects, turn them into arrays first
-    and iterate through them. Brackets are to show php its an array. 
-    */
-    const formData = {
-        submission_title: document.getElementById('submission_title')?.value || '',
-        org_name: document.getElementById('org_full_name')?.value || '',
-        org_acronym: document.getElementById('org_acronym')?.value || '',
-        org_email: document.getElementById('org_email')?.value || '',
-        social_media: document.getElementById('social_media_links')?.value || '',
-        applicant_name: document.getElementById('applicant_name')?.value || '',
-        applicant_position: document.getElementById('applicant_position')?.value || '',
-        applicant_email: document.getElementById('applicant_email')?.value || '',
-        adviser_names: document.getElementById('adviser_names')?.value || '',
-        adviser_emails: document.getElementById('adviser_emails')?.value || '',
-        organization_school: Array.from(document.querySelectorAll('input[name="category"]:checked')).map(checkbox => checkbox.value|| ''),
-        organization_type: document.querySelector('input[name="org_type"]:checked')?.value || '',
-
-    /*
+    const formData = new FormData();
+    formData.append('submission_title', document.getElementById('submission_title')?.value || '');
+    formData.append('org_name', document.getElementById('org_full_name')?.value || '');
+    formData.append('org_acronym', document.getElementById('org_acronym')?.value || '');
+    formData.append('org_email', document.getElementById('org_email')?.value || '');
+    formData.append('social_media', document.getElementById('social_media_links')?.value || '');
+    formData.append('applicant_name', document.getElementById('applicant_name')?.value || '');
+    formData.append('applicant_position', document.getElementById('applicant_position')?.value || '');
+    formData.append('applicant_email', document.getElementById('applicant_email')?.value || '');
+    formData.append('adviser_names', document.getElementById('adviser_names')?.value || '');
+    formData.append('adviser_emails', document.getElementById('adviser_emails')?.value || '');
+    formData.append('organization_school', Array.from(document.querySelectorAll('input[name="category"]:checked')).map(c => c.value).join(','));
+    formData.append('organization_type', document.querySelector('input[name="org_type"]:checked')?.value || '');
     
-     */
-        events: Array.from(document.querySelectorAll('.event-section')).map(event => ({
+    const events = Array.from(document.querySelectorAll('.event-section')).map(event => ({
         name: event.querySelector('[name="event_name[]"]').value || '',
         date: event.querySelector('[name="event_date[]"]').value || '',
         venue: event.querySelector('[name="event_venue[]"]').value || '',
         description: event.querySelector('[name="event_description[]"]').value || '',
         participants: event.querySelector('[name="event_participants[]"]').value || '',
         budget: event.querySelector('[name="event_budget[]"]').value || ''
-    }))
-    };
+    }));
+    formData.append('events', JSON.stringify(events));
+    
+    const fileInput = document.getElementById('uploaded_file');
+    if (fileInput?.files[0]) formData.append('file', fileInput.files[0]);
 
     fetch('/api/submit.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             alert('Form submitted successfully!');
-            // Reload submissions and switch to submissions tab
             loadSubmissions();
             showTab('submissions');
         } else {
