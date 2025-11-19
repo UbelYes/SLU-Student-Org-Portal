@@ -87,15 +87,14 @@ function loadSubmissions() {
         .catch(() => console.error('Failed to load submissions'));
 }
 
-// gotta use escapehtml to prevent sql injection
 function displayRecords(records) {
     const tbody = document.querySelector('.submissions-table tbody');
     tbody.innerHTML = records.map(record => `
         <tr>
-            <td>${escapeHtml(record.org_name || '')}</td>
-            <td>${escapeHtml(record.submission_title || '')}</td>
-            <td>${escapeHtml(record.applicant_name || '')}</td>
-            <td>${escapeHtml(record.created_at)}</td>
+            <td>${record.org_name || ''}</td>
+            <td>${record.submission_title || ''}</td>
+            <td>${record.applicant_name || ''}</td>
+            <td>${record.created_at}</td>
             <td>
                 <button onclick="viewPDF(${record.id})" style="padding:5px 10px;margin-right:5px;background:#004080;color:white;border:none;border-radius:4px;cursor:pointer">View</button>
             </td>
@@ -212,9 +211,4 @@ ${eventsHTML || '<div class="value">No events listed</div>'}
 </body></html>`;
 }
 
-// UTILITY FUNCTIONS
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
+

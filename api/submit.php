@@ -18,9 +18,7 @@ if ($method === 'POST') {
         $upload_dir = '../uploads/';
         if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
         
-        $timestamp = date('Y-m-d_H-i-s');
-        $extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
-        $file_name = $submission_title . '_' . $timestamp . '.' . $extension;
+        $file_name = $submission_title . '_' . date('Y-m-d_H-i-s') . '.' . pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
         $target = $upload_dir . $file_name;
         
         if (move_uploaded_file($_FILES['file']['tmp_name'], $target)) {

@@ -40,11 +40,11 @@ function loadDocuments() {
             if (tbody && data.success && data.records) {
                 tbody.innerHTML = data.records.map(record => `
                     <tr>
-                        <td>${escapeHtml(record.org_name || 'Document')}</td>
-                        <td>${escapeHtml(record.submission_title || '')}</td>
-                        <td>${escapeHtml(record.organization_school || '')}</td>
-                        <td>${escapeHtml(record.created_at || '')}</td>
-                        <td>${escapeHtml(record.file_path || 'N/A')}</td>
+                        <td>${record.org_name || 'Document'}</td>
+                        <td>${record.submission_title || ''}</td>
+                        <td>${record.organization_school || ''}</td>
+                        <td>${record.created_at || ''}</td>
+                        <td>${record.file_path || 'N/A'}</td>
                         <td>
                             ${record.file_path ? `<button onclick="window.open('/uploads/${record.file_path}', '_blank')" style="padding:5px 10px;background:#28a745;color:white;border:none;border-radius:4px;cursor:pointer">Open File</button>` : ''}
                         </td>
@@ -119,13 +119,6 @@ ${eventsHTML || '<div class="value">No events listed</div>'}
 
 function refreshDocuments() {
     loadDocuments();
-}
-
-// UTILITY FUNCTIONS
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
 }
 
 // INITIALIZATION
