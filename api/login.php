@@ -1,4 +1,5 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 require_once 'db.php';
 
@@ -18,6 +19,13 @@ try {
     $result = $stmt->get_result();
     
     if ($row = $result->fetch_assoc()) {
+        // Store user data in session
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['user_email'] = $row['email'];
+        $_SESSION['user_type'] = $row['user_type'];
+        $_SESSION['user_name'] = $row['name'];
+        $_SESSION['logged_in'] = true;
+        
         echo json_encode([
             'success' => true,
             'user' => [
@@ -27,7 +35,7 @@ try {
             ]
         ]);
     } else { 
-        echo(['success' => false, 'message' => 'Invalid email or password']);
+        echo json_encode(['success' => false, 'message' => 'Invalid email or password']);
     }
 } catch (Exception $e) {
     echo json_encode(['success' => false, 'message' => 'Login error']);
