@@ -25,7 +25,6 @@ function handleLogout() {
 
 // DASHBOARD INITIALIZATION
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Admin dashboard loaded');
     loadAccounts();
     setInterval(loadAccounts, 3000); // Refresh every 3 seconds
 });

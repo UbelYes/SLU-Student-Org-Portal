@@ -5,6 +5,21 @@ require_once 'db.php';
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'POST') {
+    // Get form data first
+    $submission_title = trim($_POST['submission_title'] ?? '');
+    $org_name = trim($_POST['org_name'] ?? '');
+    $org_acronym = trim($_POST['org_acronym'] ?? '');
+    $org_email = trim($_POST['org_email'] ?? '');
+    $social_media = trim($_POST['social_media'] ?? '');
+    $applicant_name = trim($_POST['applicant_name'] ?? '');
+    $applicant_position = trim($_POST['applicant_position'] ?? '');
+    $applicant_email = trim($_POST['applicant_email'] ?? '');
+    $adviser_names = trim($_POST['adviser_names'] ?? '');
+    $adviser_emails = trim($_POST['adviser_emails'] ?? '');
+    $organization_school = trim($_POST['organization_school'] ?? '');
+    $organization_type = trim($_POST['organization_type'] ?? '');
+    $events_json = trim($_POST['events'] ?? '[]');
+    
     // Handle file upload
     $file_path = null;
     if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
@@ -25,21 +40,6 @@ if ($method === 'POST') {
             $file_path = $file_name;
         }
     }
-    
-    // Get form data
-    $submission_title = trim($_POST['submission_title'] ?? '');
-    $org_name = trim($_POST['org_name'] ?? '');
-    $org_acronym = trim($_POST['org_acronym'] ?? '');
-    $org_email = trim($_POST['org_email'] ?? '');
-    $social_media = trim($_POST['social_media'] ?? '');
-    $applicant_name = trim($_POST['applicant_name'] ?? '');
-    $applicant_position = trim($_POST['applicant_position'] ?? '');
-    $applicant_email = trim($_POST['applicant_email'] ?? '');
-    $adviser_names = trim($_POST['adviser_names'] ?? '');
-    $adviser_emails = trim($_POST['adviser_emails'] ?? '');
-    $organization_school = trim($_POST['organization_school'] ?? '');
-    $organization_type = trim($_POST['organization_type'] ?? '');
-    $events_json = trim($_POST['events'] ?? '[]');
     
     $stmt = $conn->prepare("INSERT INTO submissions (submission_title, org_name, org_acronym, org_email, 
         social_media, applicant_name, applicant_position, applicant_email, adviser_names, adviser_emails, 
