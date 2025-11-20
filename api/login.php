@@ -26,6 +26,11 @@ try {
         $_SESSION['user_name'] = $row['name'];
         $_SESSION['logged_in'] = true;
         
+        // Update user status to online
+        $stmt = $conn->prepare("UPDATE users SET is_online = 1, last_activity = NOW() WHERE email = ?");
+        $stmt->bind_param("s", $row['email']);
+        $stmt->execute();
+        
         echo json_encode([
             'success' => true,
             'user' => [

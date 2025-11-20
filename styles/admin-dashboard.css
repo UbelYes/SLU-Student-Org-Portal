@@ -292,22 +292,12 @@ body {
     text-transform: capitalize;
 }
 
-.status-badge.status-online {
+.status-badge.online {
     background: #d1fae5;
     color: #065f46;
 }
 
 .status-badge.status-offline {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.status-badge.status-active {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.status-badge.status-inactive {
     background: #fee2e2;
     color: #991b1b;
 }
@@ -331,72 +321,6 @@ body {
     color: #64748b;
     font-weight: 400;
     margin: 0;
-}
-
-/* Tab Navigation */
-.tab-navigation {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
-    border-bottom: 2px solid #E9ECEF;
-    padding-bottom: 0;
-    flex-wrap: wrap;
-}
-
-.tab-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    background: transparent;
-    border: none;
-    border-bottom: 3px solid transparent;
-    color: #64748b;
-    font-family: "Arimo", sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: -2px;
-}
-
-.tab-button:hover {
-    color: #09375C;
-    background: rgba(68, 76, 247, 0.05);
-}
-
-.tab-button.active {
-    color: #09375C;
-    border-bottom-color: #444cf7;
-    font-weight: 600;
-}
-
-.tab-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 24px;
-    height: 20px;
-    padding: 0 6px;
-    background: #E9ECEF;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 600;
-    color: #495057;
-}
-
-.tab-button.active .tab-badge {
-    background: #444cf7;
-    color: white;
-}
-
-/* Tab Content */
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
 }
 
 /* Section Header */

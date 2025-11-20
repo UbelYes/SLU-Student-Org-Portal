@@ -12,6 +12,8 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `user_type` varchar(20) NOT NULL COMMENT 'admin, osa, org',
   `name` varchar(100) DEFAULT NULL,
+  `last_activity` timestamp NULL,
+  `is_online` tinyint(1) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
