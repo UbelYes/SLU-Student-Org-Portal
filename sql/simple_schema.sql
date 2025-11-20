@@ -5,6 +5,24 @@ DROP DATABASE IF EXISTS `simple_portal`;
 CREATE DATABASE `simple_portal`;
 USE `simple_portal`;
 
+-- Users table for authentication
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `user_type` varchar(20) NOT NULL COMMENT 'admin, osa, org',
+  `name` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Insert sample credentials (passwords are plain text for simplicity)
+INSERT INTO `users` (`email`, `password`, `user_type`, `name`) VALUES
+('admin@slu.edu.ph', 'admin123', 'admin', 'Admin User'),
+('osa@slu.edu.ph', 'osa123', 'osa', 'OSA Staff'),
+('icon@slu.edu.ph', 'icon123', 'org', 'Student Council');
+
 -- Simple submissions table
 CREATE TABLE `submissions` (
   `id` int NOT NULL AUTO_INCREMENT,

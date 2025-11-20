@@ -16,7 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Load submissions when page loads
     loadSubmissions();
+    displayUserInfo();
 });
+
+function displayUserInfo() {
+    const userName = sessionStorage.getItem('userName') || 'User';
+    document.getElementById('user-name').textContent = userName;
+}
 
 // FORM SUBMISSION
 function submitForm(event) {

@@ -1,8 +1,8 @@
 General
 [ ] Rename the database schema after testing
 [ ] Remove comments 
-[ ] Add login credentials
-[ ]
+[x] Add login credentials
+[ ] Avoid page viewing when not logged in 
 
 OSA Portal
 [x] Remove status and action in Forms tab and replace it with only download and view
@@ -13,5 +13,5 @@ Org Portal
 [x] Add view and download in Actions tab
 
 Admin Portal
-[ ] Make the tabs functional
+[ ] Remove tabs and combine to only one page
 [ ] Use session handling to check online and offline people
