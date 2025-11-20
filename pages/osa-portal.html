@@ -112,7 +112,21 @@
 
                                 <div class="sort-dropdown">
                                     <label for="sort-by">Sort by:</label>
-                                    <select id="sort-by" class="sort-select">
+                                    <select id="sort-by" class="sort-select" onchange="
+                                    let forms = [...formRecords];
+                                    if(this.value=='date-newest') {
+                                        forms.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+                                    } else if (this.value=='date-oldest') {
+                                        forms.sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+                                    } else if (this.value=='name-az') {
+                                        forms.sort((a,b) => (a.submission_title||'').localeCompare(b.submission_title||''));
+                                    } else if (this.value=='name-za') {
+                                        forms.sort((a,b) => (b.submission_title||'').localeCompare(a.submission_title||''));
+                                    } else if (this.value=='org') {
+                                        forms.sort((a,b) => (a.org_name||'').localeCompare(b.org_name||''));
+                                    }
+                                    displayForms(forms);
+                                    ">
                                         <option value="date-newest">Date
                                             (Newest)</option>
                                         <option value="date-oldest">Date
@@ -185,7 +199,21 @@
 
                         <div class="sort-dropdown">
                             <label for="sort-by">Sort by:</label>
-                            <select id="sort-by" class="sort-select">
+                            <select id="sort-by" class="sort-select" onchange="
+                            let sort = [...allDocuments];
+                            if (this.value=='date-newest') {
+                                sort.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+                            } else if (this.value=='date-oldest') {
+                                sort.sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+                            } else if (this.value=='name-az') {
+                                sort.sort((a,b) => (a.submission_title||'').localeCompare(b.submission_title||''));
+                            } else if (this.value=='name-za') {
+                                sort.sort((a,b) => (b.submission_title||'').localeCompare(a.submission_title||''));
+                            } else if (this.value=='org') {
+                                sort.sort((a,b) => (a.org_name||'').localeCompare(b.org_name||''));
+                            }
+                            displayDocuments(sort);
+                            ">
                                 <option value="date-newest">Date
                                     (Newest)</option>
                                 <option value="date-oldest">Date
