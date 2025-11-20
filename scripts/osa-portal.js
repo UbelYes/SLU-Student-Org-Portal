@@ -5,13 +5,23 @@ function handleLogout() {
 
 // FORMS MANAGEMENT
 // Load submissions for OSA review
+let formRecords = [];
+
 function loadSubmissions() {
     fetch('/api/read.php')
         .then(response => response.json())
         .then(data => {
             const tbody = document.querySelector('.form-table tbody');
             if (data.success && data.records) {
-                tbody.innerHTML = data.records.map(record => `
+                formRecords = data.records;
+                displayForms(data.records);
+            }
+        });
+}
+
+function displayForms(data) {
+    const tbody = document.querySelector('.form-table tbody');
+    tbody.innerHTML = data.map(record => `
                     <tr>
                         <td>${record.submission_title || ''}</td>
                         <td>${record.org_name || ''}</td>
@@ -23,22 +33,28 @@ function loadSubmissions() {
                         </td>
                     </tr>
                 `).join('');
-            }
-        });
 }
 
-function refreshForms() {
-    loadSubmissions();
-}
 
 // DOCUMENTS MANAGEMENT
+
+let allDocuments = [];
 function loadDocuments() {
     fetch('/api/read.php')
         .then(response => response.json())
         .then(data => {
             const tbody = document.getElementById('documents-table-body');
             if (tbody && data.success && data.records) {
-                tbody.innerHTML = data.records.map(record => `
+                allDocuments = data.records;
+                displayDocuments(data.records);
+            }
+        });
+}
+
+function displayDocuments(data) {
+    const tbody = document.getElementById('documents-table-body');
+    const withFiles = data.filter(withFile => withFile.file_path);
+    tbody.innerHTML = withFiles.map(record => `
                     <tr>
                         <td>${record.org_name || 'Document'}</td>
                         <td>${record.submission_title || ''}</td>
@@ -46,12 +62,10 @@ function loadDocuments() {
                         <td>${record.created_at || ''}</td>
                         <td>${record.file_path || 'N/A'}</td>
                         <td>
-                            ${record.file_path ? `<button onclick="window.open('/uploads/${record.file_path}', '_blank')" style="padding:5px 10px;background:#28a745;color:white;border:none;border-radius:4px;cursor:pointer">Open File</button>` : ''}
+                            <button onclick="window.open('/uploads/${record.file_path}', '_blank')" style="padding:5px 10px;background:#28a745;color:white;border:none;border-radius:4px;cursor:pointer">Open File</button>
                         </td>
                     </tr>
                 `).join('');
-            }
-        });
 }
 
 function viewPDF(id) {
@@ -78,7 +92,7 @@ function generatePDFHTML(record) {
             <div class="value">Description: ${e.description || 'N/A'}</div>
         </div>
     `).join('');
-    
+
     return `<!DOCTYPE html>
 <html><head><title>${record.submission_title}</title>
 <style>

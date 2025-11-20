@@ -51,14 +51,16 @@
                     </div>
 
                     <div class="menu-container">
-                        <button class="menu-button active" id="forms-button" onclick="showTab('forms')">
+                        <button class="menu-button active" id="forms-button"
+                            onclick="showTab('forms')">
                             <img class="menu-icon-img"
                                 src="/resources/icons/document-icon.svg"
                                 alt="Forms">
                             Forms
                         </button>
 
-                        <button class="menu-button" id="documents-button" onclick="showTab('documents')">
+                        <button class="menu-button" id="documents-button"
+                            onclick="showTab('documents')">
                             <img class="menu-icon-img"
                                 src="/resources/icons/folder-icon.svg"
                                 alt="Documents">
@@ -96,7 +98,17 @@
                                     alt="Search">
                                 <input type="text" id="search-input"
                                     placeholder="Search forms"
-                                    class="search-bar">
+                                    class="search-bar" oninput="
+                                    let searched = this.value.toLowerCase();
+                                    let filtered = formRecords.filter(sorted => 
+                                    (sorted.submission_title||'').toLowerCase().includes(searched) || 
+                                    (sorted.org_name||'').toLowerCase().includes(searched) ||
+                                    (sorted.applicant_name||'').toLowerCase().includes(searched) ||
+                                    (sorted.created_at||'').includes(searched) ||
+                                    (sorted.organization_school||'').toLowerCase().includes(searched)
+                                    );
+                                    displayForms(filtered);
+                                    ">
 
                                 <div class="sort-dropdown">
                                     <label for="sort-by">Sort by:</label>
@@ -135,27 +147,6 @@
                                     </table>
                                 </div>
                             </div>
-
-                            <!-- Pagination Controls -->
-                            <div class="pagination-container">
-                                <div class="pagination-controls">
-                                    <button class="btn-page"
-                                        id="forms-prev-page"
-                                        onclick="formsPreviousPage()" disabled>
-                                        <span>◀</span> Previous
-                                    </button>
-                                    <div class="page-numbers"
-                                        id="forms-page-numbers">
-                                        <button
-                                            class="btn-page-num active">1</button>
-                                    </div>
-                                    <button class="btn-page"
-                                        id="forms-next-page"
-                                        onclick="formsNextPage()">
-                                        Next <span>▶</span>
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -168,7 +159,8 @@
                         <h1>Document Management</h1>
                     </div>
                     <div class="documents-description">
-                        <p>View and manage uploaded documents from Student Organizations</p>
+                        <p>View and manage uploaded documents from Student
+                            Organizations</p>
                     </div>
 
                     <!-- Search and Sort Controls -->
@@ -176,8 +168,21 @@
                         <div class="search-box">
                             <input type="text" id="document-search"
                                 placeholder="Search documents..."
-                                class="search-input">
+                                class="search-input" oninput="
+                                let documentSearch = this.value.toLowerCase();
+                                    let docFilter = allDocuments.filter(sorted => 
+                                    (sorted.submission_title||'').toLowerCase().includes(documentSearch) || 
+                                    (sorted.org_name||'').toLowerCase().includes(documentSearch) ||
+                                    (sorted.applicant_name||'').toLowerCase().includes(documentSearch) ||
+                                    (sorted.created_at||'').includes(documentSearch) ||
+                                    (sorted.organization_school||'').toLowerCase().includes(documentSearch)
+                                    ) || (sorted.files.some(file => 
+                                        (file.file_name||'').toLowerCase().includes(documentSearch)
+                                    ));
+                                    displayDocuments(docFilter);
+                                ">
                         </div>
+
                         <div class="sort-dropdown">
                             <label for="sort-by">Sort by:</label>
                             <select id="sort-by" class="sort-select">
@@ -209,27 +214,11 @@
                                 <tbody id="documents-table-body">
                                     <tr>
                                         <td colspan="7"
-                                            class="text-center loading">No Document</td>
+                                            class="text-center loading">No
+                                            Document</td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-
-                    <!-- Pagination Controls -->
-                    <div class="pagination-container">
-                        <div class="pagination-controls">
-                            <button class="btn-page" id="prev-page"
-                                onclick="previousPage()" disabled>
-                                <span>◀</span> Previous
-                            </button>
-                            <div class="page-numbers" id="page-numbers">
-                                <button class="btn-page-num active">1</button>
-                            </div>
-                            <button class="btn-page" id="next-page"
-                                onclick="nextPage()">
-                                Next <span>▶</span>
-                            </button>
                         </div>
                     </div>
                 </div>
