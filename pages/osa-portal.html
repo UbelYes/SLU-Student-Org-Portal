@@ -8,6 +8,7 @@
             href="/resources/images/Saint-Louis-University-PH-Logo.png">
         <link rel="stylesheet" href="/styles/osa-portal.css">
         <script src="/scripts/login.js" defer></script>
+        <script src="/scripts/pdf-utils.js" defer></script>
         <script src="/scripts/osa-portal.js" defer></script>
         <style>
             /* Tab Content Visibility */
@@ -51,14 +52,16 @@
                     </div>
 
                     <div class="menu-container">
-                        <button class="menu-button active" id="forms-button" onclick="showTab('forms')">
+                        <button class="menu-button active" id="forms-button"
+                            onclick="showTab('forms')">
                             <img class="menu-icon-img"
                                 src="/resources/icons/document-icon.svg"
                                 alt="Forms">
                             Forms
                         </button>
 
-                        <button class="menu-button" id="documents-button" onclick="showTab('documents')">
+                        <button class="menu-button" id="documents-button"
+                            onclick="showTab('documents')">
                             <img class="menu-icon-img"
                                 src="/resources/icons/folder-icon.svg"
                                 alt="Documents">
@@ -96,11 +99,35 @@
                                     alt="Search">
                                 <input type="text" id="search-input"
                                     placeholder="Search forms"
-                                    class="search-bar">
+                                    class="search-bar" oninput="
+                                    let searched = this.value.toLowerCase();
+                                    let filtered = formRecords.filter(sorted => 
+                                    (sorted.submission_title||'').toLowerCase().includes(searched) || 
+                                    (sorted.org_name||'').toLowerCase().includes(searched) ||
+                                    (sorted.applicant_name||'').toLowerCase().includes(searched) ||
+                                    (sorted.created_at||'').includes(searched) ||
+                                    (sorted.organization_school||'').toLowerCase().includes(searched)
+                                    );
+                                    displayForms(filtered);
+                                    ">
 
                                 <div class="sort-dropdown">
                                     <label for="sort-by">Sort by:</label>
-                                    <select id="sort-by" class="sort-select">
+                                    <select id="sort-by" class="sort-select" onchange="
+                                    let forms = [...formRecords];
+                                    if(this.value=='date-newest') {
+                                        forms.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+                                    } else if (this.value=='date-oldest') {
+                                        forms.sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+                                    } else if (this.value=='name-az') {
+                                        forms.sort((a,b) => (a.submission_title||'').localeCompare(b.submission_title||''));
+                                    } else if (this.value=='name-za') {
+                                        forms.sort((a,b) => (b.submission_title||'').localeCompare(a.submission_title||''));
+                                    } else if (this.value=='org') {
+                                        forms.sort((a,b) => (a.org_name||'').localeCompare(b.org_name||''));
+                                    }
+                                    displayForms(forms);
+                                    ">
                                         <option value="date-newest">Date
                                             (Newest)</option>
                                         <option value="date-oldest">Date
@@ -113,11 +140,6 @@
                                             value="org">Organization</option>
                                     </select>
                                 </div>
-
-                                <button class="btn-refresh"
-                                    onclick="refreshForms()">
-                                    Refresh
-                                </button>
                             </div>
 
                             <!-- Forms Table -->
@@ -140,31 +162,6 @@
                                     </table>
                                 </div>
                             </div>
-
-                            <!-- Pagination Controls -->
-                            <div class="pagination-container">
-                                <div class="pagination-info">
-                                    <span id="forms-pagination-info">Showing 0
-                                        of 0 forms</span>
-                                </div>
-                                <div class="pagination-controls">
-                                    <button class="btn-page"
-                                        id="forms-prev-page"
-                                        onclick="formsPreviousPage()" disabled>
-                                        <span>◀</span> Previous
-                                    </button>
-                                    <div class="page-numbers"
-                                        id="forms-page-numbers">
-                                        <button
-                                            class="btn-page-num active">1</button>
-                                    </div>
-                                    <button class="btn-page"
-                                        id="forms-next-page"
-                                        onclick="formsNextPage()">
-                                        Next <span>▶</span>
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -177,7 +174,8 @@
                         <h1>Document Management</h1>
                     </div>
                     <div class="documents-description">
-                        <p>View and manage uploaded documents from Student Organizations</p>
+                        <p>View and manage uploaded documents from Student
+                            Organizations</p>
                     </div>
 
                     <!-- Search and Sort Controls -->
@@ -185,11 +183,38 @@
                         <div class="search-box">
                             <input type="text" id="document-search"
                                 placeholder="Search documents..."
-                                class="search-input">
+                                class="search-input" oninput="
+                                let documentSearch = this.value.toLowerCase();
+                                    let docFilter = allDocuments.filter(sorted => 
+                                    (sorted.submission_title||'').toLowerCase().includes(documentSearch) || 
+                                    (sorted.org_name||'').toLowerCase().includes(documentSearch) ||
+                                    (sorted.applicant_name||'').toLowerCase().includes(documentSearch) ||
+                                    (sorted.created_at||'').includes(documentSearch) ||
+                                    (sorted.organization_school||'').toLowerCase().includes(documentSearch)
+                                    ) || (sorted.files.some(file => 
+                                        (file.file_name||'').toLowerCase().includes(documentSearch)
+                                    ));
+                                    displayDocuments(docFilter);
+                                ">
                         </div>
+
                         <div class="sort-dropdown">
                             <label for="sort-by">Sort by:</label>
-                            <select id="sort-by" class="sort-select">
+                            <select id="sort-by" class="sort-select" onchange="
+                            let sort = [...allDocuments];
+                            if (this.value=='date-newest') {
+                                sort.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+                            } else if (this.value=='date-oldest') {
+                                sort.sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+                            } else if (this.value=='name-az') {
+                                sort.sort((a,b) => (a.submission_title||'').localeCompare(b.submission_title||''));
+                            } else if (this.value=='name-za') {
+                                sort.sort((a,b) => (b.submission_title||'').localeCompare(a.submission_title||''));
+                            } else if (this.value=='org') {
+                                sort.sort((a,b) => (a.org_name||'').localeCompare(b.org_name||''));
+                            }
+                            displayDocuments(sort);
+                            ">
                                 <option value="date-newest">Date
                                     (Newest)</option>
                                 <option value="date-oldest">Date
@@ -199,10 +224,6 @@
                                 <option value="org">Organization</option>
                             </select>
                         </div>
-                        <button class="btn-refresh"
-                            onclick="refreshDocuments()">
-                            Refresh
-                        </button>
                     </div>
 
                     <!-- Documents Table -->
@@ -215,58 +236,18 @@
                                         <th>Submission Title</th>
                                         <th>Organization</th>
                                         <th>Upload Date</th>
-                                        <th>File Size</th>
-                                        <th>Status</th>
+                                        <th>File Name</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="documents-table-body">
                                     <tr>
                                         <td colspan="7"
-                                            class="text-center loading">Loading
-                                            documents...</td>
+                                            class="text-center loading">No
+                                            Document</td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-
-                    <!-- Pagination Controls -->
-                    <div class="pagination-container">
-                        <div class="pagination-info">
-                            <span id="pagination-info-text">Showing 0 of 0
-                                documents</span>
-                        </div>
-                        <div class="pagination-controls">
-                            <button class="btn-page" id="first-page"
-                                onclick="goToPage(1)" disabled>
-                                <span>⏮</span> First
-                            </button>
-                            <button class="btn-page" id="prev-page"
-                                onclick="previousPage()" disabled>
-                                <span>◀</span> Previous
-                            </button>
-                            <div class="page-numbers" id="page-numbers">
-                                <button class="btn-page-num active">1</button>
-                            </div>
-                            <button class="btn-page" id="next-page"
-                                onclick="nextPage()">
-                                Next <span>▶</span>
-                            </button>
-                            <button class="btn-page" id="last-page"
-                                onclick="goToLastPage()">
-                                Last <span>⏭</span>
-                            </button>
-                        </div>
-                        <div class="items-per-page">
-                            <label for="items-per-page">Items per page:</label>
-                            <select id="items-per-page"
-                                onchange="changeItemsPerPage()">
-                                <option value="5">5</option>
-                                <option value="10" selected>10</option>
-                                <option value="20">20</option>
-                                <option value="50">50</option>
-                            </select>
                         </div>
                     </div>
                 </div>
