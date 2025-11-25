@@ -1,5 +1,3 @@
-// ADMIN PORTAL - COMBINED SCRIPTS
-
 // Check session
 fetch('/api/admin/session', { credentials: 'include' })
     .then(res => res.json())
@@ -42,10 +40,11 @@ function displayAccounts(accounts) {
     if (!tbody) return;
     
     tbody.innerHTML = accounts.map(account => {
-        const type = account.user_type === 'admin' ? 'Admin' : account.user_type === 'osa' ? 'OSA Staff' : 'Organization';
-        const lastActivity = account.last_activity ? new Date(account.last_activity).toLocaleString() : 'N/A';
-        const statusClass = account.status === 'online' ? 'online' : 'status-offline';
-        const statusText = account.status === 'online' ? 'Online' : 'Offline';
+        const type = account.user_type === 'admin' ? 'Admin' : account.user_type === 'osa' ? 'OSA' : 'Organization';
+        const lastActivity = account.last_activity ? new Date(account.last_activity).toLocaleString() : 'Never';
+        const isOnline = account.status == 1;
+        const statusClass = isOnline ? 'online' : 'status-offline';
+        const statusText = isOnline ? 'Online' : 'Offline';
         
         return `<tr>
             <td>${type}</td>
@@ -59,13 +58,10 @@ function displayAccounts(accounts) {
 
 // Update stats
 function updateStats(accounts) {
-    const onlineAccounts = accounts.filter(a => a.status === 'online');
-    const orgCount = onlineAccounts.filter(a => a.user_type === 'org').length;
-    const osaCount = onlineAccounts.filter(a => a.user_type === 'osa').length;
-    
-    if (document.getElementById('online-orgs')) document.getElementById('online-orgs').textContent = orgCount;
-    if (document.getElementById('online-osa')) document.getElementById('online-osa').textContent = osaCount;
-    if (document.getElementById('total-users')) document.getElementById('total-users').textContent = accounts.length;
+    const online = accounts.filter(a => a.status == 1);
+    document.getElementById('online-orgs').textContent = online.filter(a => a.user_type === 'org').length;
+    document.getElementById('online-osa').textContent = online.filter(a => a.user_type === 'osa').length;
+    document.getElementById('total-users').textContent = accounts.length;
 }
 
 // Refresh data

@@ -7,8 +7,10 @@ const path = require('path');
 const app = express();
 const PORT = 3001;
 
-app.use(cors({ origin: 'http://localhost', credentials: true }));
+app.use(cors({ origin: ['http://localhost:3001', 'http://127.0.0.1:3001'], credentials: true }));
 app.use(express.json());
+app.use('/styles', express.static(path.join(__dirname, '..', 'styles')));
+app.use('/resources', express.static(path.join(__dirname, '..', 'resources')));
 app.use(express.static(path.join(__dirname)));
 app.use(session({ secret: 'admin-secret', resave: false, saveUninitialized: false, cookie: { secure: false } }));
 
@@ -23,12 +25,15 @@ app.post('/api/admin/login', async (req, res) => {
     try {
         const conn = await mysql.createConnection(db);
         const [rows] = await conn.execute('SELECT * FROM users WHERE email = ? AND password = ? AND user_type = "admin"', [email, password]);
-        await conn.end();
         
         if (rows.length > 0) {
+            // Update user as online
+            await conn.execute('UPDATE users SET is_online = 1, last_activity = NOW() WHERE id = ?', [rows[0].id]);
             req.session.user = rows[0];
+            await conn.end();
             res.json({ success: true, user: { email: rows[0].email, type: rows[0].user_type, name: rows[0].name } });
         } else {
+            await conn.end();
             res.json({ success: false, message: 'Invalid credentials' });
         }
     } catch (err) {
@@ -54,7 +59,14 @@ app.get('/api/admin/accounts', async (req, res) => {
 });
 
 // Logout
-app.post('/api/admin/logout', (req, res) => {
+app.post('/api/admin/logout', async (req, res) => {
+    if (req.session.user) {
+        try {
+            const conn = await mysql.createConnection(db);
+            await conn.execute('UPDATE users SET is_online = 0 WHERE id = ?', [req.session.user.id]);
+            await conn.end();
+        } catch (err) {}
+    }
     req.session.destroy();
     res.json({ success: true });
 });
