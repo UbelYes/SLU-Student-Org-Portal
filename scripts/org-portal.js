@@ -17,6 +17,8 @@ function handleLogout() {
     fetch('/api/logout.php', { method: 'POST' })
         .then(() => {
             sessionStorage.clear();
+            session_unset();
+            session_destroy();
             window.location.href = '/index.html';
         });
 }
@@ -25,13 +27,13 @@ function handleLogout() {
 document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.getElementById('hamburger-toggle');
     const sidebar = document.getElementById('sidebar');
-    
+
     if (hamburger && sidebar) {
         hamburger.addEventListener('click', () => {
             sidebar.classList.toggle('active');
         });
     }
-    
+
     // Load submissions when page loads
     loadSubmissions();
     displayUserInfo();
@@ -45,7 +47,7 @@ function displayUserInfo() {
 // FORM SUBMISSION
 function submitForm(event) {
     event.preventDefault();
-    
+
     const formData = new FormData();
     formData.append('submission_title', document.getElementById('submission_title')?.value || '');
     formData.append('org_name', document.getElementById('org_full_name')?.value || '');
@@ -59,7 +61,7 @@ function submitForm(event) {
     formData.append('adviser_emails', document.getElementById('adviser_emails')?.value || '');
     formData.append('organization_school', Array.from(document.querySelectorAll('input[name="category"]:checked')).map(c => c.value).join(','));
     formData.append('organization_type', document.querySelector('input[name="org_type"]:checked')?.value || '');
-    
+
     const events = Array.from(document.querySelectorAll('.event-section')).map(event => ({
         name: event.querySelector('[name="event_name[]"]').value || '',
         date: event.querySelector('[name="event_date[]"]').value || '',
@@ -69,7 +71,7 @@ function submitForm(event) {
         budget: event.querySelector('[name="event_budget[]"]').value || ''
     }));
     formData.append('events', JSON.stringify(events));
-    
+
     const fileInput = document.getElementById('uploaded_file');
     if (fileInput?.files[0]) formData.append('file', fileInput.files[0]);
 
@@ -77,17 +79,17 @@ function submitForm(event) {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Form submitted successfully!');
-            loadSubmissions();
-            showTab('submissions');
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(() => alert('Failed to submit form'));
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Form submitted successfully!');
+                loadSubmissions();
+                showTab('submissions');
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(() => alert('Failed to submit form'));
 }
 
 function clearForm() {
@@ -98,6 +100,11 @@ function clearForm() {
 
 // SUBMISSIONS DISPLAY
 let allRecords = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadSubmissions();
+    setInterval(loadSubmissions, 10000);
+});
 
 function loadSubmissions() {
     fetch('/api/read.php')
@@ -122,9 +129,13 @@ function displayRecords(records) {
             <td>
                 <button onclick="viewPDF(${record.id})" style="padding:5px 10px;margin-right:5px;background:#004080;color:white;border:none;border-radius:4px;cursor:pointer">View</button>
             </td>
+            ${record.file_path ? `<td>
+                <button onclick="window.open('/uploads/${record.file_path}', '_blank')" style="padding:5px 10px;background:#28a745;color:white;border:none;border-radius:4px;cursor:pointer">Open File</button>
+            </td>` : ''}
         </tr>
     `).join('');
 }
+
 
 // DYNAMIC EVENT MANAGEMENT
 function addEvent() {
@@ -159,7 +170,7 @@ function addEvent() {
         </div>
         <button type="button" class="btn btn--danger" onclick="this.parentElement.remove()" style="margin-top: 10px;">Remove Event</button>
     `;
-    
+
     // Insert before the "Add Another Event" button
     const addButton = container.querySelector('.event-actions');
     container.insertBefore(newEvent, addButton);

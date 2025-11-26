@@ -24,11 +24,9 @@ function handleLogin(event) {
             sessionStorage.setItem('userName', data.user.name);
             
             // Redirect based on user type
-            if (data.user.type === 'admin') {
-                window.location.href = '/pages/admin-portal.html';
-            } else if (data.user.type === 'osa') {
+            if (data.user.type === 'osa') {
                 window.location.href = '/pages/osa-portal.html';
-            } else {
+            } else if (data.user.type === 'org') {
                 window.location.href = '/pages/org-portal.html';
             }
         } else {
@@ -43,8 +41,4 @@ function handleLogin(event) {
     return false;
 }
 
-function handleLogout() {
-    if (confirm('Are you sure you want to logout?')) {
-        window.location.href = '/index.html';
-    }
-}
+

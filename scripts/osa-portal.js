@@ -17,13 +17,19 @@ function handleLogout() {
     fetch('/api/logout.php', { method: 'POST' })
         .then(() => {
             sessionStorage.clear();
+            session_unset();
+            session_destroy();
             window.location.href = '/index.html';
         });
 }
 
 // FORMS MANAGEMENT
-// Load submissions for OSA review
 let formRecords = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadSubmissions();
+    setInterval(loadSubmissions, 10000);
+});
 
 function loadSubmissions() {
     fetch('/api/read.php')
