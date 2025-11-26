@@ -101,6 +101,11 @@ function clearForm() {
 // SUBMISSIONS DISPLAY
 let allRecords = [];
 
+document.addEventListener('DOMContentLoaded', () => {
+    loadSubmissions();
+    setInterval(loadSubmissions, 10000);
+});
+
 function loadSubmissions() {
     fetch('/api/read.php')
         .then(response => response.json())

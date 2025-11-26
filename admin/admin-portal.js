@@ -19,7 +19,7 @@ function handleLogout() {
 // DASHBOARD INITIALIZATION
 document.addEventListener('DOMContentLoaded', () => {
     loadAccounts();
-    setInterval(loadAccounts, 3000); // Refresh every 3 seconds
+    setInterval(loadAccounts, 10000);
 });
 
 // Load accounts

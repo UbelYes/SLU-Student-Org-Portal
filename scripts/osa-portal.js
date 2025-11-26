@@ -24,8 +24,12 @@ function handleLogout() {
 }
 
 // FORMS MANAGEMENT
-// Load submissions for OSA review
 let formRecords = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadSubmissions();
+    setInterval(loadSubmissions, 10000);
+});
 
 function loadSubmissions() {
     fetch('/api/read.php')
