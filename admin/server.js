@@ -14,7 +14,13 @@ app.use('/resources', express.static(path.join(__dirname, '..', 'resources')));
 app.use(express.static(path.join(__dirname)));
 app.use(session({ secret: 'admin-secret', resave: false, saveUninitialized: false, cookie: { secure: false } }));
 
-const db = { host: 'localhost', user: 'root', password: '', database: 'simple_portal' };
+const db = { 
+    host: '127.0.0.1',  // Use IP instead of localhost to force TCP
+    port: 3306,
+    user: 'root', 
+    password: '',       // Update with your MySQL root password
+    database: 'simple_portal' 
+};
 
 // Redirect root to login page
 app.get('/', (req, res) => res.redirect('/admin-login.html'));
