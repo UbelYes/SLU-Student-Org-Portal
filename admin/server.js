@@ -7,14 +7,14 @@ const path = require('path');
 const app = express();
 const PORT = 3001;
 
-app.use(cors({ origin: ['http://localhost:3001', 'http://127.0.0.1:3001'], credentials: true }));
+app.use(cors({ origin: ['http://0.0.0.0:3001', 'http://127.0.0.1:3001', 'http://localhost:3001'], credentials: true }));
 app.use(express.json());
 app.use('/styles', express.static(path.join(__dirname, '..', 'styles')));
 app.use('/resources', express.static(path.join(__dirname, '..', 'resources')));
 app.use(express.static(path.join(__dirname)));
 app.use(session({ secret: 'admin-secret', resave: false, saveUninitialized: false, cookie: { secure: false } }));
 
-const db = { host: 'localhost', user: 'root', password: '', database: 'simple_portal' };
+const db = { host: '127.0.0.1' ,port: '3306', user: 'user', password: 'user', database: 'simple_portal' };
 
 // Redirect root to login page
 app.get('/', (req, res) => res.redirect('/admin-login.html'));
@@ -37,7 +37,8 @@ app.post('/api/admin/login', async (req, res) => {
             res.json({ success: false, message: 'Invalid credentials' });
         }
     } catch (err) {
-        res.status(500).json({ success: false });
+	console.error("Database connection failed", err);
+        res.status(500).json({ success: false, message: 'Database connection failed' });
     }
 });
 
@@ -71,4 +72,4 @@ app.post('/api/admin/logout', async (req, res) => {
     res.json({ success: true });
 });
 
-app.listen(PORT, () => console.log(`Admin server on http://localhost:${PORT}`));
+app.listen(PORT, "0.0.0.0", () => console.log(`Admin server on http://localhost:${PORT}`));

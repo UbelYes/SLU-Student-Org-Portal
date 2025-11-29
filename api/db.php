@@ -2,8 +2,8 @@
 // Simple DB connection helper for WAMP
 // Adjust credentials if needed
 $DB_HOST = 'localhost';
-$DB_USER = 'root';
-$DB_PASS = '';
+$DB_USER = 'user';
+$DB_PASS = 'user';
 $DB_NAME = 'simple_portal';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
