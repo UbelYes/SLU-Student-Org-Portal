@@ -1,3 +1,20 @@
+// PDF Utilities
+// - Provides `generatePDFHTML(record)` which turns a submission record into
+//   a printable HTML document (used by portal view -> Print).
+// - Also installs a small global fetch wrapper to default `cache: 'no-store'`
+//   so requests for sensitive data aren't cached by the browser.
+(function(){
+    // Ensure fetch responses are not cached by default (applies globally when this script loads)
+    if (typeof window !== 'undefined' && window.fetch) {
+        const _fetch = window.fetch.bind(window);
+        window.fetch = function(input, init){ init = init || {}; if (!('cache' in init)) init.cache = 'no-store'; return _fetch(input, init); };
+    }
+})();
+
+// generatePDFHTML(record)
+// - `record` is a single submission object returned from `/api/read.php?id=...`.
+// - The function outputs a complete HTML document string ready to be written
+//   to a new window for printing (`win.document.write(...)`).
 function generatePDFHTML(record) {
     const events = record.events_json ? JSON.parse(record.events_json) : [];
     const eventsHTML = events.map((e, i) => `

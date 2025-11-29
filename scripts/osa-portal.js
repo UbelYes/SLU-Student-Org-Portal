@@ -1,3 +1,10 @@
+// Ensure fetch responses are not cached by default
+(function(){
+    if (typeof window === 'undefined' || !window.fetch) return;
+    const _fetch = window.fetch.bind(window);
+    window.fetch = function(input, init){ init = init || {}; if (!('cache' in init)) init.cache = 'no-store'; return _fetch(input, init); };
+})();
+
 // Auth check: verify session with server and populate sessionStorage
 function checkAuth() {
     return fetch('/api/logout.php')
@@ -21,12 +28,14 @@ function checkAuth() {
 checkAuth();
 window.addEventListener('pageshow', (event) => { if (event.persisted) checkAuth(); });
 
-// NAVIGATION & LOGOUT
+// -----------------------------
+// Navigation & Logout
+// - Calls the server logout endpoint to clear the PHP session
+// - Clears client-side UI state and replaces history so Back cannot return
+// -----------------------------
 function handleLogout() {
     fetch('/api/logout.php', { method: 'POST' })
         .then(() => {
-            session_unset();
-            session_destroy();
             sessionStorage.clear();
             window.location.replace('/index.html');
         })
@@ -36,10 +45,7 @@ function handleLogout() {
 // FORMS MANAGEMENT
 let formRecords = [];
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadSubmissions();
-    setInterval(loadSubmissions, 10000);
-});
+// Note: page initialization happens in the single DOMContentLoaded handler below.
 
 function loadSubmissions() {
     fetch('/api/read.php')
@@ -120,9 +126,14 @@ function refreshDocuments() {
 }
 
 // INITIALIZATION
+// DOM ready initialization
+// - Wires UI/data initialization: load submissions and documents
+// - Starts a periodic refresh for submissions
 document.addEventListener('DOMContentLoaded', () => {
-    // Load forms data
+    // Load forms and documents
     loadSubmissions();
-    // Load documents data
     loadDocuments();
+
+    // Periodically refresh submissions list
+    setInterval(loadSubmissions, 10000);
 });

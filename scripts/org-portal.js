@@ -1,3 +1,10 @@
+// Ensure fetch responses are not cached by default
+(function(){
+    if (typeof window === 'undefined' || !window.fetch) return;
+    const _fetch = window.fetch.bind(window);
+    window.fetch = function(input, init){ init = init || {}; if (!('cache' in init)) init.cache = 'no-store'; return _fetch(input, init); };
+})();
+
 // Auth check: verify session with server and populate sessionStorage
 function checkAuth() {
     return fetch('/api/logout.php')
@@ -23,33 +30,37 @@ function checkAuth() {
 checkAuth();
 window.addEventListener('pageshow', (event) => { if (event.persisted) checkAuth(); });
 
-// NAVIGATION & LOGOUT
+// -----------------------------
+// Navigation & Logout
+// - `handleLogout()` calls the logout API (server destroys PHP session)
+// - Clears client-side state (sessionStorage) and replaces browser history
+//   so the Back button cannot return to the protected page.
+// -----------------------------
 function handleLogout() {
     fetch('/api/logout.php', { method: 'POST' })
         .then(() => {
-            // Clear any client-side session state and replace history so Back won't return
-            session_unset();
-            session_destroy();
+            // Remove only client-side UI storage; PHP session is cleared server-side
             sessionStorage.clear();
             window.location.replace('/index.html');
         })
         .catch(() => window.location.replace('/index.html'));
 }
 
-// HAMBURGER MENU
+// -----------------------------
+// DOM ready initialization
+// - Wires the hamburger toggle, loads submissions and populates user info
+// - Polling: loadSubmissions() is called periodically to refresh the table
+// -----------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.getElementById('hamburger-toggle');
     const sidebar = document.getElementById('sidebar');
 
-    if (hamburger && sidebar) {
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-    }
+    if (hamburger && sidebar) hamburger.addEventListener('click', () => sidebar.classList.toggle('active'));
 
-    // Load submissions when page loads
-    loadSubmissions();
+    // Initialize UI and data
     displayUserInfo();
+    loadSubmissions();
+    setInterval(loadSubmissions, 10000);
 });
 
 function displayUserInfo() {
@@ -96,8 +107,9 @@ function submitForm(event) {
         .then(data => {
             if (data.success) {
                 alert('Form submitted successfully!');
+                // Refresh submissions list and show submissions tab
                 loadSubmissions();
-                showTab('submissions');
+                if (typeof showTab === 'function') showTab('submissions');
             } else {
                 alert('Error: ' + data.message);
             }
@@ -105,19 +117,18 @@ function submitForm(event) {
         .catch(() => alert('Failed to submit form'));
 }
 
+// Clear the submission form when user confirms
 function clearForm() {
     if (confirm('Clear all form data?')) {
-        document.getElementById('orgSubmissionForm').reset();
+        const form = document.getElementById('orgSubmissionForm');
+        if (form) form.reset();
     }
 }
 
 // SUBMISSIONS DISPLAY
 let allRecords = [];
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadSubmissions();
-    setInterval(loadSubmissions, 10000);
-});
+// Note: DOMContentLoaded initialization is above to avoid duplicate setup
 
 function loadSubmissions() {
     fetch('/api/read.php')

@@ -1,8 +1,17 @@
 <?php
+// ------------------------------------------------------------------
+// read.php
+// - Returns submission records as JSON
+// - If `id` query param is provided, returns a single `record`, otherwise returns `records` (all)
+// - Sets cache-control header to discourage browsers/intermediate caches
+// ------------------------------------------------------------------
+
 header('Content-Type: application/json');
+// Prevent browsers/intermediate caches from storing API responses
+header('Cache-Control: no-store');
 require_once 'db.php';
 
-// Check if requesting a single record
+// If an `id` is present in the query string, return that specific submission
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $sql = "SELECT * FROM submissions WHERE id = $id";
@@ -14,13 +23,14 @@ if (isset($_GET['id'])) {
             'record' => $row
         ]);
     } else {
+        // Record not found
         echo json_encode([
             'success' => false,
             'message' => 'Record not found'
         ]);
     }
 } else {
-    // Read all submissions
+    // No id provided: return all submissions ordered by newest first
     $sql = "SELECT * FROM submissions ORDER BY created_at DESC";
     $result = $conn->query($sql);
 
