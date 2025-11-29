@@ -1,26 +1,36 @@
-// Check authentication with server session
-fetch('/api/logout.php')
-    .then(res => res.json())
-    .then(data => {
-        if (!data.logged_in || data.user.type !== 'osa') {
-            window.location.href = '/index.html';
-        } else {
+// Auth check: verify session with server and populate sessionStorage
+function checkAuth() {
+    return fetch('/api/logout.php')
+        .then(res => res.json())
+        .then(data => {
+            if (!data.logged_in || data.user.type !== 'osa') {
+                window.location.replace('/index.html');
+                return false;
+            }
             sessionStorage.setItem('userEmail', data.user.email);
             sessionStorage.setItem('userType', data.user.type);
             sessionStorage.setItem('userName', data.user.name);
-        }
-    })
-    .catch(() => window.location.href = '/index.html');
+            return true;
+        })
+        .catch(() => {
+            window.location.replace('/index.html');
+            return false;
+        });
+}
+
+checkAuth();
+window.addEventListener('pageshow', (event) => { if (event.persisted) checkAuth(); });
 
 // NAVIGATION & LOGOUT
 function handleLogout() {
     fetch('/api/logout.php', { method: 'POST' })
         .then(() => {
-            sessionStorage.clear();
             session_unset();
             session_destroy();
-            window.location.href = '/index.html';
-        });
+            sessionStorage.clear();
+            window.location.replace('/index.html');
+        })
+        .catch(() => window.location.replace('/index.html'));
 }
 
 // FORMS MANAGEMENT

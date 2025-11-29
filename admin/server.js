@@ -13,8 +13,13 @@ app.use('/styles', express.static(path.join(__dirname, '..', 'styles')));
 app.use('/resources', express.static(path.join(__dirname, '..', 'resources')));
 app.use(express.static(path.join(__dirname)));
 app.use(session({ secret: 'admin-secret', resave: false, saveUninitialized: false, cookie: { secure: false } }));
+// Prevent caching of sensitive admin responses
+app.use((req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store');
+    next();
+});
 
-const db = { host: '127.0.0.1' ,port: '3306', user: 'user', password: 'user', database: 'simple_portal' };
+const db = { host: '127.0.0.1' ,port: '3306', user: 'root', password: '', database: 'simple_portal' };
 
 // Redirect root to login page
 app.get('/', (req, res) => res.redirect('/admin-login.html'));

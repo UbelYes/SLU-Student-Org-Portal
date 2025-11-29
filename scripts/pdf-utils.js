@@ -1,4 +1,3 @@
-// Shared PDF generation utility
 function generatePDFHTML(record) {
     const events = record.events_json ? JSON.parse(record.events_json) : [];
     const eventsHTML = events.map((e, i) => `

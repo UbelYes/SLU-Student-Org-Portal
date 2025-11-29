@@ -9,7 +9,6 @@ function handleLogin(event) {
         return false;
     }
 
-    // Validate credentials with database
     fetch('/api/login.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -22,7 +21,6 @@ function handleLogin(event) {
             sessionStorage.setItem('userEmail', data.user.email);
             sessionStorage.setItem('userType', data.user.type);
             sessionStorage.setItem('userName', data.user.name);
-            
             // Redirect based on user type
             if (data.user.type === 'osa') {
                 window.location.href = '/pages/osa-portal.html';

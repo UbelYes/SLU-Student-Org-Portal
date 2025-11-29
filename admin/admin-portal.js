@@ -1,19 +1,30 @@
-// Check session
-fetch('/api/admin/session', { credentials: 'include' })
-    .then(res => res.json())
-    .then(data => {
-        if (!data.logged_in || data.user.type !== 'admin') return window.location.href = 'admin-login.html';
-        Object.entries({userEmail: data.user.email, userType: data.user.type, userName: data.user.name})
-            .forEach(([k, v]) => sessionStorage.setItem(k, v));
-    })
-    .catch(() => window.location.href = 'admin-login.html');
+// Check session (admin)
+function checkAdminAuth() {
+    return fetch('/api/admin/session', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.logged_in || data.user.type !== 'admin') {
+                window.location.replace('admin-login.html');
+                return false;
+            }
+            Object.entries({userEmail: data.user.email, userType: data.user.type, userName: data.user.name})
+                .forEach(([k, v]) => sessionStorage.setItem(k, v));
+            return true;
+        })
+        .catch(() => { window.location.replace('admin-login.html'); return false; });
+}
+
+checkAdminAuth();
+window.addEventListener('pageshow', (event) => { if (event.persisted) checkAdminAuth(); });
 
 function handleLogout() {
     fetch('/api/admin/logout', { method: 'POST', credentials: 'include' })
         .then(() => {
             sessionStorage.clear();
-            window.location.href = 'admin-login.html';
-        });
+            // Replace history entry so Back cannot return to dashboard
+            window.location.replace('admin-login.html');
+        })
+        .catch(() => window.location.replace('admin-login.html'));
 }
 
 // DASHBOARD INITIALIZATION

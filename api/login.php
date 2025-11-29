@@ -1,6 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
+header('Cache-Control: no-store');
 require_once 'db.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
