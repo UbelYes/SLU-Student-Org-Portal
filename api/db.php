@@ -2,7 +2,7 @@
 $DB_HOST = 'localhost';
 $DB_USER = 'user';
 $DB_PASS = 'user';
-$DB_NAME = 'SLU_Org_Portal';
+$DB_NAME = 'slu_org_portal';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 

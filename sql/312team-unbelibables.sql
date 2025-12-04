@@ -1,6 +1,5 @@
-DROP DATABASE IF EXISTS `SLU_Org_Portal`;
-CREATE DATABASE `SLU_Org_Portal`;
-USE `SLU_Org_Portal`;
+CREATE DATABASE IF NOT EXISTS slu_org_portal;
+USE slu_org_portal;
 
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
