@@ -26,6 +26,20 @@ function checkAdminAuth() {
 checkAdminAuth();
 window.addEventListener('pageshow', (event) => { if (event.persisted) checkAdminAuth(); });
 
+// Check if logged in elsewhere every 5 seconds
+setInterval(() => {
+    fetch('/api/admin/session-check', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            if (data.force_logout) {
+                sessionStorage.clear();
+                alert('You have been logged out because this account was logged in from another device.');
+                window.location.replace('admin-login.html');
+            }
+        })
+        .catch(() => {});
+}, 5000);
+
 /*
  * Logout
  * - POSTs to the admin logout endpoint (server should clear session)

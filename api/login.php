@@ -33,6 +33,11 @@ try {
     $result = $stmt->get_result();
     
     if ($row = $result->fetch_assoc()) {
+        // Force logout any existing session by setting is_online to 0 first
+        $stmt = $conn->prepare("UPDATE users SET is_online = 0 WHERE id = ?");
+        $stmt->bind_param("i", $row['id']);
+        $stmt->execute();
+        
         // Store user data in session (server-side authoritative state)
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['user_email'] = $row['email'];
@@ -41,8 +46,8 @@ try {
         $_SESSION['logged_in'] = true;
         
         // Update user status to online and record last activity
-        $stmt = $conn->prepare("UPDATE users SET is_online = 1, last_activity = NOW() WHERE email = ?");
-        $stmt->bind_param("s", $row['email']);
+        $stmt = $conn->prepare("UPDATE users SET is_online = 1, last_activity = NOW() WHERE id = ?");
+        $stmt->bind_param("i", $row['id']);
         $stmt->execute();
         
         // Return user info to the client (client will store small UI state only)

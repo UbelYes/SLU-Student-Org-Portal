@@ -32,6 +32,8 @@ app.post('/api/admin/login', async (req, res) => {
         const [rows] = await conn.execute('SELECT * FROM users WHERE email = ? AND password = ? AND user_type = "admin"', [email, password]);
         
         if (rows.length > 0) {
+            // Force logout any existing session by setting is_online to 0 first
+            await conn.execute('UPDATE users SET is_online = 0 WHERE id = ?', [rows[0].id]);
             // Update user as online
             await conn.execute('UPDATE users SET is_online = 1, last_activity = NOW() WHERE id = ?', [rows[0].id]);
             req.session.user = rows[0];
@@ -50,6 +52,23 @@ app.post('/api/admin/login', async (req, res) => {
 // Session check
 app.get('/api/admin/session', (req, res) => {
     res.json(req.session.user ? { logged_in: true, user: { email: req.session.user.email, type: req.session.user.user_type, name: req.session.user.name } } : { logged_in: false });
+});
+
+// Session check for forced logout
+app.get('/api/admin/session-check', async (req, res) => {
+    if (req.session.user && req.session.user.id) {
+        try {
+            const conn = await mysql.createConnection(db);
+            const [rows] = await conn.execute('SELECT is_online FROM users WHERE id = ?', [req.session.user.id]);
+            await conn.end();
+            
+            if (rows.length > 0 && rows[0].is_online == 0) {
+                req.session.destroy();
+                return res.json({ logged_in: false, force_logout: true });
+            }
+        } catch (err) {}
+    }
+    res.json({ logged_in: true });
 });
 
 // Get accounts

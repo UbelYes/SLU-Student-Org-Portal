@@ -30,6 +30,20 @@ function checkAuth() {
 checkAuth();
 window.addEventListener('pageshow', (event) => { if (event.persisted) checkAuth(); });
 
+// Check if logged in elsewhere every 5 seconds
+setInterval(() => {
+    fetch('/api/check-session.php')
+        .then(res => res.json())
+        .then(data => {
+            if (data.force_logout) {
+                sessionStorage.clear();
+                alert('You have been logged out because this account was logged in from another device.');
+                window.location.replace('/index.html');
+            }
+        })
+        .catch(() => {});
+}, 5000);
+
 // -----------------------------
 // Navigation & Logout
 // - `handleLogout()` calls the logout API (server destroys PHP session)
