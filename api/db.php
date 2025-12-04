@@ -1,8 +1,8 @@
 <?php
 $DB_HOST = 'localhost';
-$DB_USER = 'root';
-$DB_PASS = '';
-$DB_NAME = 'simple_portal';
+$DB_USER = 'user';
+$DB_PASS = 'user';
+$DB_NAME = 'SLU_Org_Portal';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 

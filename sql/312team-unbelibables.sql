@@ -42,13 +42,19 @@ CREATE TABLE `submissions` (
 
 INSERT INTO `submissions` (`submission_title`, `org_name`, `org_acronym`, `org_email`, `social_media`, 
     `applicant_name`, `applicant_position`, `applicant_email`, `adviser_names`, `adviser_emails`, 
-    `organization_school`, `organization_type`, `events_json`) VALUES
+    `organization_school`, `organization_type`, `events_json`, `file_path`) VALUES
 ('Annual Event Proposal', 'Student Council', 'SC', 'sc@slu.edu.ph', 'https://facebook.com/sc', 
     'John Doe', 'President', 'jdoe@slu.edu.ph', 'Prof. Smith', 'smith@slu.edu.ph', 
-    'SAMCIS,University-Wide', 'co-curricular', '[]'),
+    'SAMCIS,University-Wide', 'co-curricular', '[]', 'uploads/annual_event_proposal_sc.pdf'),
 ('Workshop Registration', 'Tech Club', 'TC', 'tech@slu.edu.ph', 'https://facebook.com/techclub', 
     'Jane Smith', 'Vice President', 'jsmith@slu.edu.ph', 'Prof. Johnson', 'johnson@slu.edu.ph', 
-    'SAMCIS', 'extra-curricular', '[]'),
+    'SAMCIS', 'extra-curricular', '[]', 'uploads/workshop_registration_tc.pdf'),
 ('Exhibition Request', 'Arts Society', 'AS', 'arts@slu.edu.ph', '', 
     'Bob Johnson', 'Secretary', 'bjohnson@slu.edu.ph', 'Prof. Williams', 'williams@slu.edu.ph', 
-    'STELA', 'extra-curricular', '[]');
+    'STELA', 'extra-curricular', '[]', 'uploads/exhibition_request_as.pdf'),
+('Community Outreach Program', 'Volunteers Club', 'VC', 'volunteers@slu.edu.ph', 'https://facebook.com/volunteerclub', 
+    'Maria Garcia', 'President', 'mgarcia@slu.edu.ph', 'Prof. Davis', 'davis@slu.edu.ph', 
+    'STELA,University-Wide', 'co-curricular', '[]', 'uploads/community_outreach_vc.pdf'),
+('Sports Tournament 2025', 'Athletics Association', 'AA', 'athletics@slu.edu.ph', 'https://instagram.com/sluathletics', 
+    'Carlos Rivera', 'Sports Coordinator', 'crivera@slu.edu.ph', 'Coach Martinez', 'martinez@slu.edu.ph', 
+    'University-Wide', 'co-curricular', '[]', 'uploads/sports_tournament_aa.pdf');

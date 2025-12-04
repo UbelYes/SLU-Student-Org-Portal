@@ -18,7 +18,7 @@ app.use((req, res, next) => {
     next();
 });
 
-const db = { host: '127.0.0.1' ,port: '3306', user: 'root', password: '', database: 'simple_portal' };
+const db = { host: '127.0.0.1' ,port: '3306', user: 'user', password: 'user', database: 'SLU_Org_Portal' };
 
 app.get('/', (req, res) => res.redirect('/admin-login.html'));
 
