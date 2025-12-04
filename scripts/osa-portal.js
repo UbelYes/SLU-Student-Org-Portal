@@ -1,35 +1,65 @@
-// Check authentication with server session
-fetch('/api/logout.php')
-    .then(res => res.json())
-    .then(data => {
-        if (!data.logged_in || data.user.type !== 'osa') {
-            window.location.href = '/index.html';
-        } else {
+// Ensure fetch responses are not cached by default
+(function(){
+    if (typeof window === 'undefined' || !window.fetch) return;
+    const _fetch = window.fetch.bind(window);
+    window.fetch = function(input, init){ init = init || {}; if (!('cache' in init)) init.cache = 'no-store'; return _fetch(input, init); };
+})();
+
+// Auth check: verify session with server and populate sessionStorage
+function checkAuth() {
+    return fetch('/api/logout.php')
+        .then(res => res.json())
+        .then(data => {
+            if (!data.logged_in || data.user.type !== 'osa') {
+                window.location.replace('/index.html');
+                return false;
+            }
             sessionStorage.setItem('userEmail', data.user.email);
             sessionStorage.setItem('userType', data.user.type);
             sessionStorage.setItem('userName', data.user.name);
-        }
-    })
-    .catch(() => window.location.href = '/index.html');
+            return true;
+        })
+        .catch(() => {
+            window.location.replace('/index.html');
+            return false;
+        });
+}
 
-// NAVIGATION & LOGOUT
+checkAuth();
+window.addEventListener('pageshow', (event) => { if (event.persisted) checkAuth(); });
+
+// Check if logged in elsewhere every 5 seconds
+setInterval(() => {
+    fetch('/api/check-session.php')
+        .then(res => res.json())
+        .then(data => {
+            if (data.force_logout) {
+                sessionStorage.clear();
+                alert('You have been logged out because this account was logged in from another device.');
+                window.location.replace('/index.html');
+            }
+        })
+        .catch(() => {});
+}, 5000);
+
+// -----------------------------
+// Navigation & Logout
+// - Calls the server logout endpoint to clear the PHP session
+// - Clears client-side UI state and replaces history so Back cannot return
+// -----------------------------
 function handleLogout() {
     fetch('/api/logout.php', { method: 'POST' })
         .then(() => {
             sessionStorage.clear();
-            session_unset();
-            session_destroy();
-            window.location.href = '/index.html';
-        });
+            window.location.replace('/index.html');
+        })
+        .catch(() => window.location.replace('/index.html'));
 }
 
 // FORMS MANAGEMENT
 let formRecords = [];
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadSubmissions();
-    setInterval(loadSubmissions, 10000);
-});
+// Note: page initialization happens in the single DOMContentLoaded handler below.
 
 function loadSubmissions() {
     fetch('/api/read.php')
@@ -110,9 +140,14 @@ function refreshDocuments() {
 }
 
 // INITIALIZATION
+// DOM ready initialization
+// - Wires UI/data initialization: load submissions and documents
+// - Starts a periodic refresh for submissions
 document.addEventListener('DOMContentLoaded', () => {
-    // Load forms data
+    // Load forms and documents
     loadSubmissions();
-    // Load documents data
     loadDocuments();
+
+    // Periodically refresh submissions list
+    setInterval(loadSubmissions, 10000);
 });

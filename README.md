@@ -1,59 +1,47 @@
-# Student Organization Portal - Simplified
+# Student Organization Portal
 
 A basic web portal for managing student organization submissions with simple HTML/CSS/JS and minimal PHP database operations.
 
 ---
 
-## 🚀 Quick Setup (3 Steps)
+## Quick start
 
-1. **Import Database**
-   ```bash
-   # Open phpMyAdmin: http://localhost/phpmyadmin
-   # Import sql/simple_schema.sql
-   ```
+- Requirements: `WAMP` (or PHP + MySQL) and optionally `Node.js` + `npm` for the admin server.
+- Import the database: open `http://localhost/phpmyadmin` and import `sql/312team-unbelibables.sql`.
+- Edit database credentials in `api/db.php` to match your MySQL user/password.
+- Start WAMP (Apache + MySQL) and open the app at `http://localhost/`.
 
-2. **Configure Database Connection**
-   - Edit `api/db.php` with your credentials:
-   ```php
-   $host = 'localhost';
-   $username = 'root';
-   $password = 'your_password';
-   $database = 'simple_portal';
-   ```
+Optional — start the local admin server (Node/Express):
+```powershell
+cd C:\wamp64\www\admin
+npm install   # only if dependencies are missing
+node server.js
+# admin server: http://localhost:3001
+```
 
-3. **Start WAMP & Access**
-   - Start WAMP server (green icon)
-   - Visit `http://localhost/`
-
-> ⚠️ **Important**: Place all files in `c:\wamp64\www\` (not in a subfolder)
+Keep project files under `C:\wamp64\www\` so URLs and relative paths resolve.
 
 ---
 
-## 🎯 Features
+## Features
 
-- ✅ Basic submission forms with preserved original design
-- ✅ View submissions list
-- ✅ Simple database read/write operations
-- ✅ Clean navigation between pages
-- ❌ No authentication (simple email-based routing)
-- ❌ No file uploads
-- ❌ No activity tracking
+- Basic submission forms and submission list display
+- Simple PHP + MySQL CRUD endpoints for submissions and session checks
+- Admin UI (optional) served by a small Node/Express server in `admin/`
+- Basic session handling (server-side PHP sessions) and client-side routing
 
----
-
-## 🔑 Login (Simple Routing)
-
-| Email Contains | Redirects To |
-|----------------|--------------|
-| `admin` | Admin Dashboard |
-| `osa` | OSA Forms Page |
-| Other emails | Organization Form |
-
-**Note**: No password required - just basic routing based on email pattern.
+Security: this repository uses simple session handling intended for local/dev use. Harden before production.
 
 ---
 
-## 📊 Database Schema
+## Authentication & session
+
+- PHP endpoints use `$_SESSION` to track login state. Client scripts call `/api/login.php`, `/api/logout.php`, and `/api/logout.php` (GET) for session checks.
+- Protected pages run a session check on load and on `pageshow` restoration; on logout the client uses `location.replace(...)` so the browser Back button won't return to protected pages.
+
+---
+
+## Database Schema
 
 **Database**: `simple_portal`  
 **Table**: `submissions`
@@ -68,119 +56,44 @@ A basic web portal for managing student organization submissions with simple HTM
 
 ---
 
-## 🔌 API Endpoints
+## Key files & API endpoints
 
-### Read Operations
-- **GET** `/api/read.php`
-  - Returns all submissions as JSON
-  - Response: `{"success": true, "records": [...]}`
+- `api/db.php` — database connection (update credentials here)
+- `api/login.php` — login handler (POST expects JSON `{email,password}`)
+- `api/logout.php` — logout handler and session check (POST to logout, GET to check session)
+- `api/read.php` — read submissions (GET)
+- `api/submit.php` — submit new form (POST, multipart/form-data for file uploads)
+- `api/*.php` — other helper endpoints used by the UI
 
-### Write Operations  
-- **POST** `/api/write.php`
-  - Create new submission
-  - Body: `{org_name, submission_title, applicant_name}`
-  - Response: `{"success": true, "id": 123}`
-
-- **DELETE** `/api/write.php`
-  - Delete submission by ID
-  - Body: `{id: 123}`
-  - Response: `{"success": true}`
+Client-side scripts that protect pages are under `scripts/` (`org-portal.js`, `osa-portal.js`, `admin/admin-portal.js`).
 
 ---
 
-## 📁 Project Structure
+## Project layout (important files)
 
 ```
-├── index.html              # Login page
-├── admin/
-│   └── admin-dashboard.html
-├── org/
-│   ├── org-form.html
-│   └── org-submissions.html
-├── osa-staff/
-│   ├── osa-forms.html
-│   └── osa-documents.html
-├── api/
-│   ├── db.php             # Database connection
-│   ├── read.php           # Fetch submissions
-│   └── write.php          # Create/delete submissions
-├── scripts/
-│   ├── login.js           # Simple routing
-│   ├── utils.js           # Shared utilities
-│   ├── admin-scripts/
-│   ├── org-scripts/
-│   └── osa-scripts/
-├── styles/                # All CSS preserved
-├── resources/             # Images, icons, fonts
-└── sql/
-    └── simple_schema.sql  # Simplified database
+index.html
+admin/
+  ├─ admin-login.html
+  ├─ admin-portal.html
+  └─ server.js            # Node/Express admin server (optional)
+api/
+  ├─ db.php               # DB connection
+  ├─ login.php
+  ├─ logout.php
+  ├─ read.php
+  └─ submit.php
+pages/
+  ├─ org-portal.html
+  └─ osa-portal.html
+scripts/
+  ├─ login.js
+  ├─ org-portal.js
+  ├─ osa-portal.js
+  └─ admin/admin-portal.js
+styles/
+resources/
+sql/
+  └─ 312team-unbelibables.sql
 ```
 
----
-
-## ❓ Common Issues
-
-**Q: WAMP icon is orange or yellow?**  
-A: Wait for all services to start. Check port 80 isn't used by Skype/IIS.
-
-**Q: Database connection error?**  
-A: Verify credentials in `api/db.php` match your MySQL setup.
-
-**Q: Page shows blank/error?**  
-A: Check browser console (F12) for JavaScript errors. Ensure all files are in correct paths.
-
-**Q: Forms not submitting?**  
-A: Verify `api/write.php` exists and database table 'submissions' is created from `simple_schema.sql`.
-
-**Q: Page not found?**  
-A: Files must be in `c:\wamp64\www\` (not in a subfolder). URL should be `http://localhost/` not `http://localhost/[folder]/`.
-
----
-
-## 🔧 Tech Stack
-
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+) - No frameworks
-- **Backend**: PHP 7.4+ (minimal - only database operations)
-- **Database**: MySQL 5.7+
-- **Server**: WAMP/LAMP/MAMP
-
----
-
-## 📝 What Was Removed
-
-This is a simplified reset version. The following features were removed:
-
-- ❌ User authentication & sessions
-- ❌ Password validation
-- ❌ Activity tracking & monitoring
-- ❌ File upload system
-- ❌ Document management
-- ❌ Feedback/comments system
-- ❌ Real-time status updates
-- ❌ Complex state management
-- ❌ Multi-table database relationships
-
----
-
-## ✨ What's Preserved
-
-- ✅ All HTML pages with original design and layout
-- ✅ All CSS styling and responsive design
-- ✅ Basic form interactions
-- ✅ Simple page navigation
-- ✅ Core database CRUD operations
-- ✅ Clean, maintainable code structure
-
----
-
-## 🔐 Important Notes
-
-⚠️ **This is a development/learning version**:
-- No authentication system (routing based on email pattern only)
-- No input sanitization beyond basic escaping
-- Suitable for local development and learning PHP/MySQL basics
-- Before production: Add authentication, input validation, and security measures
-
----
-
-**Made simple for learning and basic functionality**

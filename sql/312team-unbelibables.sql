@@ -1,11 +1,7 @@
--- Simplified database schema
--- Database: simple_portal
+DROP DATABASE IF EXISTS `SLU_Org_Portal`;
+CREATE DATABASE `SLU_Org_Portal`;
+USE `SLU_Org_Portal`;
 
-DROP DATABASE IF EXISTS `simple_portal`;
-CREATE DATABASE `simple_portal`;
-USE `simple_portal`;
-
--- Users table for authentication
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
@@ -19,13 +15,11 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Insert sample credentials (passwords are plain text for simplicity)
 INSERT INTO `users` (`email`, `password`, `user_type`, `name`) VALUES
 ('admin@slu.edu.ph', 'admin123', 'admin', 'Admin User'),
 ('osa@slu.edu.ph', 'osa123', 'osa', 'OSA Staff'),
 ('icon@slu.edu.ph', 'icon123', 'org', 'Student Council');
 
--- Simple submissions table
 CREATE TABLE `submissions` (
   `id` int NOT NULL AUTO_INCREMENT,
   `submission_title` varchar(255) NOT NULL,
@@ -46,7 +40,6 @@ CREATE TABLE `submissions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Insert sample data
 INSERT INTO `submissions` (`submission_title`, `org_name`, `org_acronym`, `org_email`, `social_media`, 
     `applicant_name`, `applicant_position`, `applicant_email`, `adviser_names`, `adviser_emails`, 
     `organization_school`, `organization_type`, `events_json`) VALUES

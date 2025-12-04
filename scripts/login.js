@@ -1,4 +1,22 @@
-// Simple login with database validation
+// Ensure fetch responses are not cached by default
+/*
+ * Small runtime helper: wrap window.fetch to default to `cache: 'no-store'`
+ * - This prevents accidental cache hits for API requests in browsers.
+ * - Individual fetch calls can still override `cache` if needed.
+ */
+(function(){
+    if (typeof window === 'undefined' || !window.fetch) return;
+    const _fetch = window.fetch.bind(window);
+    window.fetch = function(input, init){ init = init || {}; if (!('cache' in init)) init.cache = 'no-store'; return _fetch(input, init); };
+})();
+
+/*
+ * handleLogin(event)
+ * - Prevents the default form submit
+ * - Reads email/password from inputs
+ * - Calls `/api/login.php` (POST JSON)
+ * - On success: stores small UI state in sessionStorage and redirects to the appropriate portal
+ */
 function handleLogin(event) {
     event.preventDefault();
     const email = document.getElementById('email').value.trim();
@@ -9,7 +27,6 @@ function handleLogin(event) {
         return false;
     }
 
-    // Validate credentials with database
     fetch('/api/login.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -22,7 +39,6 @@ function handleLogin(event) {
             sessionStorage.setItem('userEmail', data.user.email);
             sessionStorage.setItem('userType', data.user.type);
             sessionStorage.setItem('userName', data.user.name);
-            
             // Redirect based on user type
             if (data.user.type === 'osa') {
                 window.location.href = '/pages/osa-portal.html';

@@ -1,42 +1,80 @@
-// Check authentication with server session
-fetch('/api/logout.php')
-    .then(res => res.json())
-    .then(data => {
-        if (!data.logged_in || data.user.type !== 'org') {
-            window.location.href = '/index.html';
-        } else {
+// Ensure fetch responses are not cached by default
+(function(){
+    if (typeof window === 'undefined' || !window.fetch) return;
+    const _fetch = window.fetch.bind(window);
+    window.fetch = function(input, init){ init = init || {}; if (!('cache' in init)) init.cache = 'no-store'; return _fetch(input, init); };
+})();
+
+// Auth check: verify session with server and populate sessionStorage
+function checkAuth() {
+    return fetch('/api/logout.php')
+        .then(res => res.json())
+        .then(data => {
+            if (!data.logged_in || data.user.type !== 'org') {
+                // Replace current history entry so Back cannot return here
+                window.location.replace('/index.html');
+                return false;
+            }
             sessionStorage.setItem('userEmail', data.user.email);
             sessionStorage.setItem('userType', data.user.type);
             sessionStorage.setItem('userName', data.user.name);
-        }
-    })
-    .catch(() => window.location.href = '/index.html');
-
-// NAVIGATION & LOGOUT
-function handleLogout() {
-    fetch('/api/logout.php', { method: 'POST' })
-        .then(() => {
-            sessionStorage.clear();
-            session_unset();
-            session_destroy();
-            window.location.href = '/index.html';
+            return true;
+        })
+        .catch(() => {
+            window.location.replace('/index.html');
+            return false;
         });
 }
 
-// HAMBURGER MENU
+// Run initial auth check and re-check when page is restored from bfcache
+checkAuth();
+window.addEventListener('pageshow', (event) => { if (event.persisted) checkAuth(); });
+
+// Check if logged in elsewhere every 5 seconds
+setInterval(() => {
+    fetch('/api/check-session.php')
+        .then(res => res.json())
+        .then(data => {
+            if (data.force_logout) {
+                sessionStorage.clear();
+                alert('You have been logged out because this account was logged in from another device.');
+                window.location.replace('/index.html');
+            }
+        })
+        .catch(() => {});
+}, 5000);
+
+// -----------------------------
+// Navigation & Logout
+// - `handleLogout()` calls the logout API (server destroys PHP session)
+// - Clears client-side state (sessionStorage) and replaces browser history
+//   so the Back button cannot return to the protected page.
+// -----------------------------
+function handleLogout() {
+    fetch('/api/logout.php', { method: 'POST' })
+        .then(() => {
+            // Remove only client-side UI storage; PHP session is cleared server-side
+            sessionStorage.clear();
+            window.location.replace('/index.html');
+        })
+        .catch(() => window.location.replace('/index.html'));
+}
+
+// -----------------------------
+// DOM ready initialization
+// - Wires the hamburger toggle, loads submissions and populates user info
+// - Polling: loadSubmissions() is called periodically to refresh the table
+// -----------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.getElementById('hamburger-toggle');
     const sidebar = document.getElementById('sidebar');
 
-    if (hamburger && sidebar) {
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-    }
+    if (hamburger && sidebar) hamburger.addEventListener('click', () => sidebar.classList.toggle('active'));
 
-    // Load submissions when page loads
-    loadSubmissions();
+    // Initialize UI and data
     displayUserInfo();
+    loadSubmissions();
+    setInterval(loadSubmissions, 10000);
 });
 
 function displayUserInfo() {
@@ -83,8 +121,9 @@ function submitForm(event) {
         .then(data => {
             if (data.success) {
                 alert('Form submitted successfully!');
+                // Refresh submissions list and show submissions tab
                 loadSubmissions();
-                showTab('submissions');
+                if (typeof showTab === 'function') showTab('submissions');
             } else {
                 alert('Error: ' + data.message);
             }
@@ -92,19 +131,18 @@ function submitForm(event) {
         .catch(() => alert('Failed to submit form'));
 }
 
+// Clear the submission form when user confirms
 function clearForm() {
     if (confirm('Clear all form data?')) {
-        document.getElementById('orgSubmissionForm').reset();
+        const form = document.getElementById('orgSubmissionForm');
+        if (form) form.reset();
     }
 }
 
 // SUBMISSIONS DISPLAY
 let allRecords = [];
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadSubmissions();
-    setInterval(loadSubmissions, 10000);
-});
+// Note: DOMContentLoaded initialization is above to avoid duplicate setup
 
 function loadSubmissions() {
     fetch('/api/read.php')
