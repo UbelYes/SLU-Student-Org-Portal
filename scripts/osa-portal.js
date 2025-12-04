@@ -1,11 +1,9 @@
-// Ensure fetch responses are not cached by default
 (function(){
     if (typeof window === 'undefined' || !window.fetch) return;
     const _fetch = window.fetch.bind(window);
     window.fetch = function(input, init){ init = init || {}; if (!('cache' in init)) init.cache = 'no-store'; return _fetch(input, init); };
 })();
 
-// Auth check: verify session with server and populate sessionStorage
 function checkAuth() {
     return fetch('/api/logout.php')
         .then(res => res.json())
@@ -28,7 +26,6 @@ function checkAuth() {
 checkAuth();
 window.addEventListener('pageshow', (event) => { if (event.persisted) checkAuth(); });
 
-// Check if logged in elsewhere every 5 seconds
 setInterval(() => {
     fetch('/api/check-session.php')
         .then(res => res.json())
@@ -42,11 +39,6 @@ setInterval(() => {
         .catch(() => {});
 }, 5000);
 
-// -----------------------------
-// Navigation & Logout
-// - Calls the server logout endpoint to clear the PHP session
-// - Clears client-side UI state and replaces history so Back cannot return
-// -----------------------------
 function handleLogout() {
     fetch('/api/logout.php', { method: 'POST' })
         .then(() => {
@@ -56,10 +48,7 @@ function handleLogout() {
         .catch(() => window.location.replace('/index.html'));
 }
 
-// FORMS MANAGEMENT
 let formRecords = [];
-
-// Note: page initialization happens in the single DOMContentLoaded handler below.
 
 function loadSubmissions() {
     fetch('/api/read.php')
@@ -88,9 +77,6 @@ function displayForms(data) {
                     </tr>
                 `).join('');
 }
-
-
-// DOCUMENTS MANAGEMENT
 
 let allDocuments = [];
 function loadDocuments() {
@@ -139,15 +125,9 @@ function refreshDocuments() {
     loadDocuments();
 }
 
-// INITIALIZATION
-// DOM ready initialization
-// - Wires UI/data initialization: load submissions and documents
-// - Starts a periodic refresh for submissions
 document.addEventListener('DOMContentLoaded', () => {
-    // Load forms and documents
     loadSubmissions();
     loadDocuments();
 
-    // Periodically refresh submissions list
     setInterval(loadSubmissions, 10000);
 });

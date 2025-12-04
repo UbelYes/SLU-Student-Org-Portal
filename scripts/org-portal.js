@@ -1,17 +1,14 @@
-// Ensure fetch responses are not cached by default
 (function(){
     if (typeof window === 'undefined' || !window.fetch) return;
     const _fetch = window.fetch.bind(window);
     window.fetch = function(input, init){ init = init || {}; if (!('cache' in init)) init.cache = 'no-store'; return _fetch(input, init); };
 })();
 
-// Auth check: verify session with server and populate sessionStorage
 function checkAuth() {
     return fetch('/api/logout.php')
         .then(res => res.json())
         .then(data => {
             if (!data.logged_in || data.user.type !== 'org') {
-                // Replace current history entry so Back cannot return here
                 window.location.replace('/index.html');
                 return false;
             }
@@ -26,11 +23,9 @@ function checkAuth() {
         });
 }
 
-// Run initial auth check and re-check when page is restored from bfcache
 checkAuth();
 window.addEventListener('pageshow', (event) => { if (event.persisted) checkAuth(); });
 
-// Check if logged in elsewhere every 5 seconds
 setInterval(() => {
     fetch('/api/check-session.php')
         .then(res => res.json())
@@ -44,34 +39,21 @@ setInterval(() => {
         .catch(() => {});
 }, 5000);
 
-// -----------------------------
-// Navigation & Logout
-// - `handleLogout()` calls the logout API (server destroys PHP session)
-// - Clears client-side state (sessionStorage) and replaces browser history
-//   so the Back button cannot return to the protected page.
-// -----------------------------
 function handleLogout() {
     fetch('/api/logout.php', { method: 'POST' })
         .then(() => {
-            // Remove only client-side UI storage; PHP session is cleared server-side
             sessionStorage.clear();
             window.location.replace('/index.html');
         })
         .catch(() => window.location.replace('/index.html'));
 }
 
-// -----------------------------
-// DOM ready initialization
-// - Wires the hamburger toggle, loads submissions and populates user info
-// - Polling: loadSubmissions() is called periodically to refresh the table
-// -----------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.getElementById('hamburger-toggle');
     const sidebar = document.getElementById('sidebar');
 
     if (hamburger && sidebar) hamburger.addEventListener('click', () => sidebar.classList.toggle('active'));
 
-    // Initialize UI and data
     displayUserInfo();
     loadSubmissions();
     setInterval(loadSubmissions, 10000);
@@ -82,7 +64,6 @@ function displayUserInfo() {
     document.getElementById('user-name').textContent = userName;
 }
 
-// FORM SUBMISSION
 function submitForm(event) {
     event.preventDefault();
 
@@ -131,7 +112,6 @@ function submitForm(event) {
         .catch(() => alert('Failed to submit form'));
 }
 
-// Clear the submission form when user confirms
 function clearForm() {
     if (confirm('Clear all form data?')) {
         const form = document.getElementById('orgSubmissionForm');
@@ -139,10 +119,7 @@ function clearForm() {
     }
 }
 
-// SUBMISSIONS DISPLAY
 let allRecords = [];
-
-// Note: DOMContentLoaded initialization is above to avoid duplicate setup
 
 function loadSubmissions() {
     fetch('/api/read.php')
@@ -174,8 +151,6 @@ function displayRecords(records) {
     `).join('');
 }
 
-
-// DYNAMIC EVENT MANAGEMENT
 function addEvent() {
     const container = document.querySelector('.event-section');
     const newEvent = document.createElement('div');
@@ -209,12 +184,10 @@ function addEvent() {
         <button type="button" class="btn btn--danger" onclick="this.parentElement.remove()" style="margin-top: 10px;">Remove Event</button>
     `;
 
-    // Insert before the "Add Another Event" button
     const addButton = container.querySelector('.event-actions');
     container.insertBefore(newEvent, addButton);
 }
 
-// PDF FUNCTIONS
 function viewPDF(id) {
     fetch(`/api/read.php?id=${id}`)
         .then(r => r.json())
