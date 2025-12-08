@@ -1,99 +1,143 @@
-# Student Organization Portal
+SLU Student Organization Portal - Team Unbelibables
 
-A basic web portal for managing student organization submissions with simple HTML/CSS/JS and minimal PHP database operations.
+## Quick Setup
 
----
-
-## Quick start
-
-- Requirements: `WAMP` (or PHP + MySQL) and optionally `Node.js` + `npm` for the admin server.
-- Import the database: open `http://localhost/phpmyadmin` and import `sql/312team-unbelibables.sql`.
-- Edit database credentials in `api/db.php` to match your MySQL user/password.
-- Start WAMP (Apache + MySQL) and open the app at `http://localhost/`.
-
-Optional — start the local admin server (Node/Express):
-```powershell
-cd C:\wamp64\www\admin
-npm install   # only if dependencies are missing
-node server.js
-# admin server: http://localhost:3001
-```
-
-Keep project files under `C:\wamp64\www\` so URLs and relative paths resolve.
+1. **Install WAMP Server** and start it
+2. **Import the database**:
+   - Go to `http://localhost/phpmyadmin`
+   - Import `sql/312team-unbelibables.sql`
+3. **Open the app**: `http://localhost/`
 
 ---
 
-## Features
+## How to Login
 
-- Basic submission forms and submission list display
-- Simple PHP + MySQL CRUD endpoints for submissions and session checks
-- Admin UI (optional) served by a small Node/Express server in `admin/`
-- Basic session handling (server-side PHP sessions) and client-side routing
+Use these test accounts to explore different roles:
 
-Security: this repository uses simple session handling intended for local/dev use. Harden before production.
-
----
-
-## Authentication & session
-
-- PHP endpoints use `$_SESSION` to track login state. Client scripts call `/api/login.php`, `/api/logout.php`, and `/api/logout.php` (GET) for session checks.
-- Protected pages run a session check on load and on `pageshow` restoration; on logout the client uses `location.replace(...)` so the browser Back button won't return to protected pages.
+| Role                   | Email            | Password |
+| ---------------------- | ---------------- | -------- |
+| **Organization** | icon@slu.edu.ph  | icon123  |
+| **OSA Staff**    | osa@slu.edu.ph   | osa123   |
+| **Admin**        | admin@slu.edu.ph | admin123 |
 
 ---
 
-## Database Schema
+## How It Works
 
-**Database**: `simple_portal`  
-**Table**: `submissions`
+### For Organizations
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | INT (PK, AI) | Unique identifier |
-| org_name | VARCHAR(255) | Organization name |
-| submission_title | VARCHAR(255) | Title of submission |
-| applicant_name | VARCHAR(255) | Name of applicant |
-| created_at | TIMESTAMP | Auto-generated timestamp |
+1. Login with organization account
+2. Fill out the submission form with your event details
+3. Upload a PDF document
+4. Submit and track your proposal
 
----
+### For OSA Staff
 
-## Key files & API endpoints
+1. Login with OSA account
+2. View all submitted proposals
+3. Review documents and track organization activities
 
-- `api/db.php` — database connection (update credentials here)
-- `api/login.php` — login handler (POST expects JSON `{email,password}`)
-- `api/logout.php` — logout handler and session check (POST to logout, GET to check session)
-- `api/read.php` — read submissions (GET)
-- `api/submit.php` — submit new form (POST, multipart/form-data for file uploads)
-- `api/*.php` — other helper endpoints used by the UI
+### For Admins
 
-Client-side scripts that protect pages are under `scripts/` (`org-portal.js`, `osa-portal.js`, `admin/admin-portal.js`).
+1. Login with admin account
+2. See all online users
 
----
-
-## Project layout (important files)
+## Project Structure
 
 ```
-index.html
-admin/
-  ├─ admin-login.html
-  ├─ admin-portal.html
-  └─ server.js            # Node/Express admin server (optional)
-api/
-  ├─ db.php               # DB connection
-  ├─ login.php
-  ├─ logout.php
-  ├─ read.php
-  └─ submit.php
-pages/
-  ├─ org-portal.html
-  └─ osa-portal.html
-scripts/
-  ├─ login.js
-  ├─ org-portal.js
-  ├─ osa-portal.js
-  └─ admin/admin-portal.js
-styles/
-resources/
-sql/
-  └─ 312team-unbelibables.sql
+SLU-Student-Org-Portal/
+├── index.html                      # Main landing/login page
+├── README.md                       # This file
+├── Documentation.md                # Additional documentation
+├── TODO.md                         # Project task list
+│
+├── admin/                          # Admin portal (Node.js)
+│   ├── admin-login.html           # Admin login page
+│   ├── admin-login.js             # Admin login logic
+│   ├── admin-portal.html          # Admin dashboard
+│   ├── admin-portal.js            # Admin dashboard logic
+│   ├── package.json               # Node dependencies
+│   └── server.js                  # Express server
+│
+├── api/                           # Backend API (PHP)
+│   ├── db.php                     # Database connection
+│   ├── login.php                  # Login endpoint
+│   ├── logout.php                 # Logout endpoint
+│   ├── check-session.php          # Session validation
+│   ├── read.php                   # Read submissions
+│   └── submit.php                 # Create submission
+│
+├── pages/                         # Portal pages
+│   ├── org-portal.html            # Organization dashboard
+│   └── osa-portal.html            # OSA dashboard
+│
+├── scripts/                       # JavaScript files
+│   ├── login.js                   # Login page logic
+│   ├── org-portal.js              # Org portal logic
+│   ├── osa-portal.js              # OSA portal logic
+│   └── pdf-utils.js               # PDF handling utilities
+│
+├── styles/                        # CSS stylesheets
+│   ├── login-style.css            # Login page styles
+│   ├── org-portal.css             # Org portal styles
+│   ├── osa-portal.css             # OSA portal styles
+│   ├── admin-dashboard.css        # Admin dashboard styles
+│   └── fonts.css                  # Font definitions
+│
+├── resources/                     # Static assets
+│   ├── fonts/                     # Custom fonts
+│   ├── icons/                     # Icon files
+│   └── images/                    # Images
+│
+├── sql/                           # Database scripts
+│   └── 312team-unbelibables.sql   # Database schema & sample data
+│
+└── uploads/                       # Uploaded PDF files
+    ├── annual_event_proposal_sc.pdf
+    ├── workshop_registration_tc.pdf
+    ├── exhibition_request_as.pdf
+    ├── community_outreach_vc.pdf
+    └── sports_tournament_aa.pdf
 ```
 
+---
+
+## Database Configuration
+
+If you get database errors, check `api/db.php`:
+
+```php
+$DB_HOST = 'localhost';
+$DB_USER = 'root';      // Default WAMP username
+$DB_PASS = '';          // Default WAMP password (empty)
+$DB_NAME = 'slu_org_portal';
+```
+
+---
+
+## Troubleshooting
+
+**Can't connect to database?**
+
+- Make sure WAMP is running (green icon)
+- Check MySQL service is started
+- Verify credentials in `api/db.php`
+
+**Login not working?**
+
+- Clear browser cache and cookies
+- Make sure you imported the SQL file
+
+**File upload fails?**
+
+- Ensure `uploads/` folder exists
+- Check folder has write permissions
+
+---
+
+## Tech Stack
+
+- **Frontend**: HTML, CSS, JavaScript
+- **Backend**: PHP
+- **Database**: MySQL
+- **Server**: WAMP (Apache)

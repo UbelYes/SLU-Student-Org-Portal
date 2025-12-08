@@ -102,7 +102,6 @@ function submitForm(event) {
         .then(data => {
             if (data.success) {
                 alert('Form submitted successfully!');
-                // Refresh submissions list and show submissions tab
                 loadSubmissions();
                 if (typeof showTab === 'function') showTab('submissions');
             } else {
