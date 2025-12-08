@@ -38,9 +38,23 @@ function handleLogout() {
         .catch(() => window.location.replace('admin-login.html'));
 }
 
+let allAccounts = [];
+
 document.addEventListener('DOMContentLoaded', () => {
     loadAccounts();
     setInterval(loadAccounts, 10000);
+    
+    const searchInput = document.getElementById('online-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allAccounts.filter(a => 
+                (a.name || '').toLowerCase().includes(query) || 
+                a.email.toLowerCase().includes(query)
+            );
+            displayAccounts(filtered);
+        });
+    }
 });
 
 function loadAccounts() {
@@ -48,8 +62,9 @@ function loadAccounts() {
         .then(res => res.json())
         .then(data => {
             if (data.success && data.accounts) {
-                displayAccounts(data.accounts);
-                updateStats(data.accounts);
+                allAccounts = data.accounts;
+                displayAccounts(allAccounts);
+                updateStats(allAccounts);
             }
         });
 }

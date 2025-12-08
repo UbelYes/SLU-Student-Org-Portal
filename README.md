@@ -1,12 +1,18 @@
-SLU Student Organization Portal - Team Unbelibables
+# SLU Student Organization Portal - Team Unbelibables
 
 ## Quick Setup
 
 1. **Install WAMP Server** and start it
-2. **Import the database**:
+2. **Import the database in PhpMyAdmin**:
    - Go to `http://localhost/phpmyadmin`
    - Import `sql/312team-unbelibables.sql`
 3. **Open the app**: `http://localhost/`
+
+To start the Admin server:
+
+1. Navigate to the admin folder
+2. Run 'node server.js' in the terminal
+3. Navigate to http://localhost:3001
 
 ---
 
@@ -132,12 +138,3 @@ $DB_NAME = 'slu_org_portal';
 
 - Ensure `uploads/` folder exists
 - Check folder has write permissions
-
----
-
-## Tech Stack
-
-- **Frontend**: HTML, CSS, JavaScript
-- **Backend**: PHP
-- **Database**: MySQL
-- **Server**: WAMP (Apache)
