@@ -105,36 +105,3 @@ SLU-Student-Org-Portal/
     ├── community_outreach_vc.pdf
     └── sports_tournament_aa.pdf
 ```
-
----
-
-## Database Configuration
-
-If you get database errors, check `api/db.php`:
-
-```php
-$DB_HOST = 'localhost';
-$DB_USER = 'root';      // Default WAMP username
-$DB_PASS = '';          // Default WAMP password (empty)
-$DB_NAME = 'slu_org_portal';
-```
-
----
-
-## Troubleshooting
-
-**Can't connect to database?**
-
-- Make sure WAMP is running (green icon)
-- Check MySQL service is started
-- Verify credentials in `api/db.php`
-
-**Login not working?**
-
-- Clear browser cache and cookies
-- Make sure you imported the SQL file
-
-**File upload fails?**
-
-- Ensure `uploads/` folder exists
-- Check folder has write permissions
