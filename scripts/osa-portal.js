@@ -126,6 +126,17 @@ function refreshDocuments() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger-toggle');
+    const sidebar = document.getElementById('navigation-sidebar');
+    
+    if (hamburger && sidebar) {
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+    }
+
     loadSubmissions();
     loadDocuments();
 
