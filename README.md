@@ -1,4 +1,13 @@
-# SLU Student Organization Portal - Team Unbelibables
+# SLU Student Organization Portal - 9487_Team_Unbelibables 
+
+<b>Team members:</b> <br>
+ABADECIO, ROBE ROENZ SALVADOR <br>
+AQUINO, DUSTIN PIOU <br>
+POLICARPIO, JULIAN EYMARD MALLARI <br>
+UMALI, JERVIGN ADRIANNE PRADO <br>
+SARMIENTO, ALFREDO JULIENNE SESE <br>
+WACDAGAN, BENEDICT
+
 
 ## Quick Setup
 
