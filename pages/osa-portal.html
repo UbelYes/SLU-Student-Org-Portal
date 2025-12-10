@@ -168,7 +168,7 @@
             </main>
 
             <!-- DOCUMENTS TAB CONTENT -->
-            <main class="main-content tab-content" id="documents-content">
+            <div class="main-content tab-content" id="documents-content">
                 <div class="documents-container">
                     <div class="documents-title">
                         <h1>Document Management</h1>
@@ -199,8 +199,8 @@
                         </div>
 
                         <div class="sort-dropdown">
-                            <label for="sort-by">Sort by:</label>
-                            <select id="sort-by" class="sort-select" onchange="
+                            <label for="document-sort-by">Sort by:</label>
+                            <select id="document-sort-by" class="sort-select" onchange="
                             let sort = [...allDocuments];
                             if (this.value=='date-newest') {
                                 sort.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
@@ -242,7 +242,7 @@
                                 </thead>
                                 <tbody id="documents-table-body">
                                     <tr>
-                                        <td colspan="7"
+                                        <td colspan="6"
                                             class="text-center loading">No
                                             Document</td>
                                     </tr>
@@ -251,7 +251,7 @@
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
 
         <script>
