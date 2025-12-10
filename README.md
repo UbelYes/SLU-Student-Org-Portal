@@ -26,7 +26,7 @@ To start the Admin server:
 ## Virtual Machine Setup
 Virtual Machine Credentials: <br>
 Username: user <br>
-Password: user
+Password: 1
 
 1. Navigate to home directory 'cd /'
 2. Navigate to /var/www/html/admin/
@@ -41,6 +41,10 @@ Password: user
 4. Run 'source /var/www/html/sql/312team-unbelibables.sql'
 4. Run 'GRANT ALL PRIVILEGES ON slu_org_portal.* TO 'user'@'localhost';'
 5. Run 'flush privileges'
+
+Database user credentials:
+Username: user
+Password: user
 
 ---
 
