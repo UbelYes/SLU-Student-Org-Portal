@@ -20,18 +20,17 @@ try {
     $result = $stmt->get_result();
     
     if ($row = $result->fetch_assoc()) {
-        $stmt = $conn->prepare("UPDATE users SET is_online = 0 WHERE id = ?");
-        $stmt->bind_param("i", $row['id']);
-        $stmt->execute();
+        $session_token = bin2hex(random_bytes(16));
         
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['user_email'] = $row['email'];
         $_SESSION['user_type'] = $row['user_type'];
         $_SESSION['user_name'] = $row['name'];
         $_SESSION['logged_in'] = true;
+        $_SESSION['session_token'] = $session_token;
         
-        $stmt = $conn->prepare("UPDATE users SET is_online = 1, last_activity = NOW() WHERE id = ?");
-        $stmt->bind_param("i", $row['id']);
+        $stmt = $conn->prepare("UPDATE users SET is_online = 1, session_token = ?, last_activity = NOW() WHERE id = ?");
+        $stmt->bind_param("si", $session_token, $row['id']);
         $stmt->execute();
         
         echo json_encode([

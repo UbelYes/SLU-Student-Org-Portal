@@ -253,7 +253,19 @@
             </form>
 
             <div class="form-actions">
-                <button type="submit" class="btn btn--primary" onclick="submitForm(event)">Submit Form</button>
+                <button type="submit" class="btn btn--primary" onclick="
+                    event.preventDefault();
+                    const form = document.getElementById('orgSubmissionForm');
+                    if (!form.checkValidity()) {
+                        form.reportValidity();
+                        return false;
+                    }
+                    if (!document.querySelector('input[name=category]:checked')) {
+                        alert('Please select at least one category');
+                        return false;
+                    }
+                    submitForm(event);
+                ">Submit Form</button>
                 <button type="button" class="btn btn--secondary" onclick="clearForm()">Clear Form</button>
             </div>
         </div>

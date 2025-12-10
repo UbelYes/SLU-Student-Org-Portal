@@ -9,6 +9,7 @@ CREATE TABLE `users` (
   `name` varchar(100) DEFAULT NULL,
   `last_activity` timestamp NULL,
   `is_online` tinyint(1) DEFAULT 0,
+  `session_token` varchar(64) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
