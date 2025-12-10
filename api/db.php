@@ -1,10 +1,8 @@
 <?php
-// Simple DB connection helper for WAMP
-// Adjust credentials if needed
 $DB_HOST = 'localhost';
 $DB_USER = 'root';
 $DB_PASS = '';
-$DB_NAME = 'slu_org_db';
+$DB_NAME = 'slu_org_portal';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 

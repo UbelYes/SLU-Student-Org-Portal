@@ -1,85 +1,141 @@
-# SLU Student Organization Portal
+# SLU Student Organization Portal - 9487_Team_Unbelibables 
 
-A web portal for Saint Louis University's Office of Student Affairs (OSA) to manage student organizations, forms, and submissions.
+<b>Team members:</b> <br>
+ABADECIO, ROBE ROENZ SALVADOR <br>
+AQUINO, DUSTIN PIOU <br>
+POLICARPIO, JULIAN EYMARD MALLARI <br>
+UMALI, JERVIGN ADRIANNE PRADO <br>
+SARMIENTO, ALFREDO JULIENNE SESE <br>
+WACDAGAN, BENEDICT
 
-## Prerequisites
 
-- **WAMP Server** (Windows, Apache, MySQL, PHP)
-- A modern web browser (Chrome, Firefox, Edge, etc.)
+## Quick Setup
 
-## Installation Steps
+1. **Install WAMP Server** and start it
+2. **Import the database in PhpMyAdmin**:
+   - Go to `http://localhost/phpmyadmin`
+   - Import `sql/312team-unbelibables.sql`
+3. **Open the app**: `http://localhost/`
 
-### 1. Install WAMP Server
+To start the Admin server:
 
-- Download and install [WAMP Server](https://www.wampserver.com/en/)
-- Make sure WAMP is running (the icon should be green)
+1. Navigate to the admin folder
+2. Run 'node server.js' in the terminal
+3. Navigate to http://localhost:3001
 
-### 2. Set Up the Project
+## Virtual Machine Setup
+Virtual Machine Credentials: <br>
+Username: user <br>
+Password: 1
 
-- Place this project folder in `c:\wamp64\www\`
-- The path should look like: `c:\wamp64\www\[project-folder]\`
+1. Navigate to home directory 'cd /'
+2. Navigate to /var/www/html/admin/
+3. Run 'pm2 start server.js'
+4. Open the virtual machine's IP adress in the browser
+5. Add ':3001' for admin login
 
-### 3. Set Up the Database
+### Database Setup (If no database setup yet)
+1. Run 'mysql -u user -p'
+2. Create a new database 'create database slu_org_portal'
+3. Use database 'use slu_org_portal'
+4. Run 'source /var/www/html/sql/312team-unbelibables.sql'
+4. Run 'GRANT ALL PRIVILEGES ON slu_org_portal.* TO 'user'@'localhost';'
+5. Run 'flush privileges'
 
-1. Open your browser and go to: `http://localhost/phpmyadmin`
-2. Click on "Import" tab
-3. Choose the file: `tableswithconstraints.sql`
-4. Click "Go" to import the database
-   - This will create the database `slu_org_db` with all required tables
+Database user credentials:
+Username: user
+Password: user
 
-### 4. Configure Database Connection (Optional)
+---
 
-- If you changed your MySQL credentials, edit `api\db.php`:
-  ```php
-  $DB_HOST = 'localhost';
-  $DB_USER = 'root';        // Your MySQL username
-  $DB_PASS = '';            // Your MySQL password
-  $DB_NAME = 'slu_org_db';
-  ```
+## How to Login
 
-## Running the Website
+Use these test accounts to explore different roles:
 
-1. Make sure WAMP is running (green icon in system tray)
-2. Open your browser
-3. Navigate to: `http://localhost/[project-folder]/index.html`
+| Role                   | Email            | Password |
+| ---------------------- | ---------------- | -------- |
+| **Organization** | icon@slu.edu.ph  | icon123  |
+| **OSA Staff**    | osa@slu.edu.ph   | osa123   |
+| **Admin**        | admin@slu.edu.ph | admin123 |
 
-## User Access
+---
 
-The portal has three types of users:
+## How It Works
 
-- **Admin** - Access admin dashboard at `/admin/admin-dashboard.html`
-- **OSA Staff** - Manage accounts, forms, and documents
-- **Organizations** - Submit forms and view submissions at `/org/org-form.html`
+### For Organizations
+
+1. Login with organization account
+2. Fill out the submission form with your event details
+3. Upload a PDF document
+4. Submit and track your proposal
+
+### For OSA Staff
+
+1. Login with OSA account
+2. View all submitted proposals
+3. Review documents and track organization activities
+
+### For Admins
+
+1. Login with admin account
+2. See all online users
+
+---
 
 ## Project Structure
 
-- `index.html` - Login page
-- `admin/` - Admin dashboard and pages
-- `org/` - Organization pages and forms
-- `osa-staff/` - OSA staff management pages
-- `api/` - Backend PHP scripts for database operations
-- `scripts/` - JavaScript files
-- `styles/` - CSS stylesheets
-- `sql/` - Database schema and setup files
-
-## Troubleshooting
-
-**Database Connection Error:**
-
-- Make sure WAMP is running (green icon)
-- Check if MySQL service is started
-- Verify database name is `slu_org_db` in phpMyAdmin
-
-**Page Not Found:**
-
-- Verify the project is in `c:\wamp64\www\`
-- Check that you're using the correct URL path
-
-**WAMP Icon is Orange/Yellow:**
-
-- Port 80 might be in use by another application
-- Try changing Apache port or close conflicting applications
-
-## Support
-
-For questions or issues, contact the development team.
+```
+SLU-Student-Org-Portal/
+├── index.html                      # Main landing/login page
+├── README.md                       # This file
+├── Documentation.md                # Additional documentation
+├── TODO.md                         # Project task list
+│
+├── admin/                          # Admin portal (Node.js)
+│   ├── admin-login.html           # Admin login page
+│   ├── admin-login.js             # Admin login logic
+│   ├── admin-portal.html          # Admin dashboard
+│   ├── admin-portal.js            # Admin dashboard logic
+│   ├── package.json               # Node dependencies
+│   └── server.js                  # Express server
+│
+├── api/                           # Backend API (PHP)
+│   ├── db.php                     # Database connection
+│   ├── login.php                  # Login endpoint
+│   ├── logout.php                 # Logout endpoint
+│   ├── check-session.php          # Session validation
+│   ├── read.php                   # Read submissions
+│   └── submit.php                 # Create submission
+│
+├── pages/                         # Portal pages
+│   ├── org-portal.html            # Organization dashboard
+│   └── osa-portal.html            # OSA dashboard
+│
+├── scripts/                       # JavaScript files
+│   ├── login.js                   # Login page logic
+│   ├── org-portal.js              # Org portal logic
+│   ├── osa-portal.js              # OSA portal logic
+│   └── pdf-utils.js               # PDF handling utilities
+│
+├── styles/                        # CSS stylesheets
+│   ├── login-style.css            # Login page styles
+│   ├── org-portal.css             # Org portal styles
+│   ├── osa-portal.css             # OSA portal styles
+│   ├── admin-dashboard.css        # Admin dashboard styles
+│   └── fonts.css                  # Font definitions
+│
+├── resources/                     # Static assets
+│   ├── fonts/                     # Custom fonts
+│   ├── icons/                     # Icon files
+│   └── images/                    # Images
+│
+├── sql/                           # Database scripts
+│   └── 312team-unbelibables.sql   # Database schema & sample data
+│
+└── uploads/                       # Uploaded PDF files
+    ├── annual_event_proposal_sc.pdf
+    ├── workshop_registration_tc.pdf
+    ├── exhibition_request_as.pdf
+    ├── community_outreach_vc.pdf
+    └── sports_tournament_aa.pdf
+```
