@@ -7,18 +7,38 @@ const path = require('path');
 const app = express();
 const PORT = 3001;
 
-app.use(cors({ origin: ['http://0.0.0.0:3001', 'http://127.0.0.1:3001', 'http://localhost:3001'], credentials: true }));
+app.use(cors({ 
+    origin: 
+    ['http://0.0.0.0:3001', 
+    'http://127.0.0.1:3001', 
+    'http://localhost:3001'], 
+    credentials: true 
+}));
 app.use(express.json());
+
 app.use('/styles', express.static(path.join(__dirname, '..', 'styles')));
 app.use('/resources', express.static(path.join(__dirname, '..', 'resources')));
 app.use(express.static(path.join(__dirname)));
-app.use(session({ secret: 'admin-secret', resave: false, saveUninitialized: false, cookie: { secure: false } }));
+
+app.use(session(
+    { secret: 'admin-secret', 
+    resave: false, 
+    saveUninitialized: false, 
+    cookie: { secure: false } 
+}));
+
 app.use((req, res, next) => {
     res.setHeader('Cache-Control', 'no-store');
     next();
 });
 
-const db = { host: '127.0.0.1', port: '3306', user: 'root', password: '', database: 'slu_org_portal' };
+const db = {
+     host: '127.0.0.1', 
+     port: '3306', 
+     user: 'root', 
+     password: '', 
+     database: 'slu_org_portal' 
+    };
 
 app.get('/', (req, res) => res.redirect('/admin-login.html'));
 
