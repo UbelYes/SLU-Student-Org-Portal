@@ -55,28 +55,6 @@ if ($method === 'POST') {
     }
     $stmt->close();
     
-} elseif ($method === 'DELETE') {
-    $input = json_decode(file_get_contents('php://input'), true);
-    $id = intval($input['id'] ?? 0);
-    
-    if ($id <= 0) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Invalid ID'
-        ]);
-        exit;
-    }
-    
-    $stmt = $conn->prepare("DELETE FROM submissions WHERE id = ?");
-    $stmt->bind_param('i', $id);
-    
-    if ($stmt->execute()) {
-        echo json_encode(['success' => true, 'message' => 'Submission deleted successfully']);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Failed to delete submission']);
-    }
-    $stmt->close();
-    
 } else {
     echo json_encode([
         'success' => false,
