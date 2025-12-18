@@ -149,7 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
     loadSubmissions();
     loadDocuments();
 
-    setInterval(loadSubmissions, 10000);
+    setInterval(() => {
+        loadSubmissions();
+        loadDocuments();
+    }, 10000);
 });
 
 function returnForm(id) {
