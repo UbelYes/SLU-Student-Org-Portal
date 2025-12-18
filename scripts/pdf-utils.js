@@ -48,6 +48,9 @@ function generatePDFHTML(record) {
 <h2>Events</h2>
 ${eventsHTML || '<div class="value">No events listed</div>'}
 
+${record.file_path ? `<h2>Attached File</h2>
+<div class="label">File Name:</div><div class="value">${record.file_path || 'N/A'}</div>` : ''}
+
 <div style="margin-top:30px;padding-top:10px;border-top:1px solid #ddd;color:#777;font-size:12px">
     Submitted: ${record.created_at || 'N/A'}
 </div>

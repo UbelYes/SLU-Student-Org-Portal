@@ -36,6 +36,8 @@ CREATE TABLE `submissions` (
   `organization_type` varchar(50) NOT NULL,
   `events_json` text,
   `file_path` varchar(255),
+  `status` varchar(20) DEFAULT 'submitted',
+  `return_reason` text,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -135,11 +135,14 @@ function loadSubmissions() {
 function displayRecords(records) {
     const tbody = document.querySelector('.submissions-table tbody');
     tbody.innerHTML = records.map(record => `
-        <tr>
+        <tr ${record.status === 'returned' ? 'style="background:#fff3cd"' : ''}>
             <td>${record.org_name || ''}</td>
             <td>${record.submission_title || ''}</td>
             <td>${record.applicant_name || ''}</td>
             <td>${record.created_at}</td>
+            <td>
+                ${record.status === 'returned' ? `<span style="color:#856404;font-weight:bold">Returned</span><br><small>${record.return_reason || ''}</small>` : 'Submitted'}
+            </td>
             <td>
                 <button onclick="viewPDF(${record.id})" style="padding:5px 10px;margin-right:5px;background:#004080;color:white;border:none;border-radius:4px;cursor:pointer">View</button>
             </td>
