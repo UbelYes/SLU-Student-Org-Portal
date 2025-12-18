@@ -1,0 +1,7 @@
+# Disable directory browsing
+Options -Indexes
+
+# Block access to sensitive files
+<FilesMatch "(\.env|\.git|\.htaccess)$">
+    Require all denied
+</FilesMatch>
