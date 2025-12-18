@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     displayUserInfo();
     loadSubmissions();
-    setInterval(loadSubmissions, 10000);
+    setInterval(checkForReturned, 5000);
 });
 
 function displayUserInfo() {
@@ -81,14 +81,24 @@ function submitForm(event) {
     formData.append('organization_school', Array.from(document.querySelectorAll('input[name="category"]:checked')).map(c => c.value).join(','));
     formData.append('organization_type', document.querySelector('input[name="org_type"]:checked')?.value || '');
 
-    const events = Array.from(document.querySelectorAll('.event-section')).map(event => ({
-        name: event.querySelector('[name="event_name[]"]').value || '',
-        date: event.querySelector('[name="event_date[]"]').value || '',
-        venue: event.querySelector('[name="event_venue[]"]').value || '',
-        description: event.querySelector('[name="event_description[]"]').value || '',
-        participants: event.querySelector('[name="event_participants[]"]').value || '',
-        budget: event.querySelector('[name="event_budget[]"]').value || ''
-    }));
+    const eventNames = document.querySelectorAll('[name="event_name[]"]');
+    const eventDates = document.querySelectorAll('[name="event_date[]"]');
+    const eventVenues = document.querySelectorAll('[name="event_venue[]"]');
+    const eventDescriptions = document.querySelectorAll('[name="event_description[]"]');
+    const eventParticipants = document.querySelectorAll('[name="event_participants[]"]');
+    const eventBudgets = document.querySelectorAll('[name="event_budget[]"]');
+    
+    const events = [];
+    for (let i = 0; i < eventNames.length; i++) {
+        events.push({
+            name: eventNames[i]?.value || '',
+            date: eventDates[i]?.value || '',
+            venue: eventVenues[i]?.value || '',
+            description: eventDescriptions[i]?.value || '',
+            participants: eventParticipants[i]?.value || '',
+            budget: eventBudgets[i]?.value || ''
+        });
+    }
     formData.append('events', JSON.stringify(events));
 
     const fileInput = document.getElementById('uploaded_file');
@@ -130,6 +140,43 @@ function loadSubmissions() {
             }
         })
         .catch(() => console.error('Failed to load submissions'));
+}
+
+function checkForReturned() {
+    fetch('/api/read.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.records) {
+                allRecords = data.records;
+                const returnedForms = data.records.filter(r => r.status === 'returned');
+                const seenIds = sessionStorage.getItem('seenReturnedIds') || '';
+                const newReturned = returnedForms.filter(f => !seenIds.includes(`|${f.id}|`));
+                
+                if (newReturned.length > 0) {
+                    displayRecords(data.records);
+                    const notification = document.getElementById('returned-notification');
+                    const title = document.getElementById('notification-title');
+                    const text = document.getElementById('notification-text');
+                    
+                    if (notification && title && text) {
+                        title.textContent = newReturned.length === 1 ? 'Form Returned' : `${newReturned.length} Forms Returned`;
+                        const formTitles = newReturned.map(f => f.submission_title || 'Untitled').join(', ');
+                        text.textContent = `${formTitles} - Please review and resubmit.`;
+                        notification.style.display = 'block';
+                    }
+                }
+            }
+        })
+        .catch(() => {});
+}
+
+function closeNotification() {
+    const notification = document.getElementById('returned-notification');
+    if (notification) {
+        notification.style.display = 'none';
+        const returnedIds = allRecords.filter(r => r.status === 'returned').map(r => `|${r.id}|`).join('');
+        sessionStorage.setItem('seenReturnedIds', returnedIds);
+    }
 }
 
 function displayRecords(records) {

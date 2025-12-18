@@ -46,6 +46,17 @@
         </button>
     </aside>
 
+    <!-- Returned Forms Notification -->
+    <div id="returned-notification" style="display:none;position:fixed;top:20px;right:20px;background:#dc3545;color:white;padding:15px 20px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:9999;max-width:300px">
+        <div style="display:flex;justify-content:space-between;align-items:start;gap:10px">
+            <div>
+                <strong id="notification-title" style="display:block;margin-bottom:5px"></strong>
+                <span id="notification-text" style="font-size:14px"></span>
+            </div>
+            <button onclick="closeNotification()" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;padding:0;line-height:1">&times;</button>
+        </div>
+    </div>
+
     <!-- Overlay for closing menu -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
