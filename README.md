@@ -12,10 +12,11 @@ WACDAGAN, BENEDICT
 ## Quick Setup
 
 1. **Install WAMP Server** and start it
-2. **Import the database in PhpMyAdmin**:
+2. Place project files inside the **'www'** folder in wamp64 
+3. **Import the database in PhpMyAdmin**:
    - Go to `http://localhost/phpmyadmin`
    - Import `sql/312team-unbelibables.sql`
-3. **Open the app**: `http://localhost/`
+4. **Open the app**: `http://localhost/`
 
 To start the Admin server:
 
@@ -72,8 +73,9 @@ Use these test accounts to explore different roles:
 ### For OSA Staff
 
 1. Login with OSA account
-2. View all submitted proposals
+2. View all submitted proposals in Forms and Documents tabs
 3. Review documents and track organization activities
+4. Return forms to organizations with specific reasons for resubmission
 
 ### For Admins
 
@@ -105,7 +107,8 @@ SLU-Student-Org-Portal/
 │   ├── logout.php                 # Logout endpoint
 │   ├── check-session.php          # Session validation
 │   ├── read.php                   # Read submissions
-│   └── submit.php                 # Create submission
+│   ├── submit.php                 # Create submission
+│   └── return-form.php            # Return form to organization
 │
 ├── pages/                         # Portal pages
 │   ├── org-portal.html            # Organization dashboard

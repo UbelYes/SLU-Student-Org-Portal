@@ -65,7 +65,7 @@ function loadSubmissions() {
 function displayForms(data) {
     const tbody = document.querySelector('.form-table tbody');
     tbody.innerHTML = data.map(record => `
-                    <tr>
+                    <tr ${record.status === 'returned' ? 'style="background:#fff3cd"' : ''}>
                         <td>${record.submission_title || ''}</td>
                         <td>${record.org_name || ''}</td>
                         <td>${record.applicant_name || ''}</td>
@@ -73,6 +73,7 @@ function displayForms(data) {
                         <td>${record.organization_school || ''}</td>
                         <td>
                             <button onclick="viewPDF(${record.id})" style="padding:5px 10px;margin-right:5px;background:#004080;color:white;border:none;border-radius:4px;cursor:pointer">View</button>
+                            ${record.status !== 'returned' ? `<button onclick="returnForm(${record.id})" style="padding:5px 10px;background:#dc3545;color:white;border:none;border-radius:4px;cursor:pointer">Return</button>` : `<span style="color:#856404;font-weight:bold">Returned</span>`}
                         </td>
                     </tr>
                 `).join('');
@@ -99,7 +100,7 @@ function displayDocuments(data) {
     const tbody = document.getElementById('documents-table-body');
     const withFiles = data.filter(withFile => withFile.file_path);
     tbody.innerHTML = withFiles.map(record => `
-                    <tr>
+                    <tr ${record.status === 'returned' ? 'style="background:#fff3cd"' : ''}>
                         <td>${record.org_name || 'Document'}</td>
                         <td>${record.submission_title || ''}</td>
                         <td>${record.organization_school || ''}</td>
@@ -148,5 +149,28 @@ document.addEventListener('DOMContentLoaded', () => {
     loadSubmissions();
     loadDocuments();
 
-    setInterval(loadSubmissions, 10000);
+    setInterval(() => {
+        loadSubmissions();
+        loadDocuments();
+    }, 10000);
 });
+
+function returnForm(id) {
+    const reason = prompt('Enter reason for returning this form:');
+    if (!reason || !reason.trim()) return;
+    
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('reason', reason.trim());
+    
+    fetch('/api/return-form.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(r => r.json())
+    .then(data => {
+        alert(data.message);
+        if (data.success) loadSubmissions();
+    })
+    .catch(() => alert('Failed to return form'));
+}
