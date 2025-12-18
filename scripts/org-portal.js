@@ -148,6 +148,10 @@ function displayRecords(records) {
             </td>` : ''}
         </tr>
     `).join('');
+    
+    if (typeof makeTableSortable === 'function') {
+        makeTableSortable('.submissions-table');
+    }
 }
 
 function addEvent() {

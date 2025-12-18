@@ -76,6 +76,10 @@ function displayForms(data) {
                         </td>
                     </tr>
                 `).join('');
+    
+    if (typeof makeTableSortable === 'function') {
+        makeTableSortable('.form-table');
+    }
 }
 
 let allDocuments = [];
@@ -106,6 +110,10 @@ function displayDocuments(data) {
                         </td>
                     </tr>
                 `).join('');
+    
+    if (typeof makeTableSortable === 'function') {
+        makeTableSortable('.documents-table');
+    }
 }
 
 function viewPDF(id) {
